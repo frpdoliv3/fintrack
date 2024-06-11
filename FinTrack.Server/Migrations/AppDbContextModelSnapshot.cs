@@ -26,21 +26,27 @@ namespace FinTrack.Server.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ISIN")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)")
+                        .HasColumnName("isin");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("name");
 
                     b.Property<string>("NativeCurrency")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)")
+                        .HasColumnName("native_curency");
 
                     b.HasKey("Id");
 
@@ -54,47 +60,60 @@ namespace FinTrack.Server.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<float>("Commission")
-                        .HasColumnType("real");
+                        .HasColumnType("real")
+                        .HasColumnName("comission");
 
                     b.Property<string>("Currency")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)")
+                        .HasColumnName("currency");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date");
 
                     b.Property<float>("ExchangeRate")
-                        .HasColumnType("real");
+                        .HasColumnType("real")
+                        .HasColumnName("exchange_rate");
 
                     b.Property<int>("OrderType")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("order_type");
 
                     b.Property<float>("Price")
-                        .HasColumnType("real");
+                        .HasColumnType("real")
+                        .HasColumnName("price");
 
                     b.Property<long>("Quantity")
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("quantity");
 
-                    b.Property<int?>("SecurityId")
+                    b.Property<int>("security_id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SecurityId");
+                    b.HasIndex("security_id");
 
-                    b.ToTable("SecurityTransactions");
+                    b.ToTable("security_transactions");
                 });
 
             modelBuilder.Entity("FinTrack.Server.Models.SecurityTransaction", b =>
                 {
-                    b.HasOne("FinTrack.Server.Models.Security", null)
+                    b.HasOne("FinTrack.Server.Models.Security", "Security")
                         .WithMany("Transactions")
-                        .HasForeignKey("SecurityId");
+                        .HasForeignKey("security_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Security");
                 });
 
             modelBuilder.Entity("FinTrack.Server.Models.Security", b =>
