@@ -1,10 +1,26 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import axios from 'axios';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from "./App.tsx";
+import axiosRetry from 'axios-retry';
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import Login from "./pages/Login.tsx";
+
+axiosRetry(axios, { retries: 3, retryDelay: axiosRetry.exponentialDelay })
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <App />
+    },
+    {
+        path: "/login",
+        element: <Login />
+    }
+])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>,
-)
+);

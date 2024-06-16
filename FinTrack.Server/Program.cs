@@ -3,6 +3,7 @@ using FinTrack.Server.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using FinTrack.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +26,7 @@ app.UseDefaultFiles();
 app.UseStaticFiles();
 app.MapIdentityApi<User>();
 
-app.MapPost("/logout", async (SignInManager<User> signInManager) => 
+app.MapPost("logout", async (SignInManager<User> signInManager) => 
 {
     await signInManager.SignOutAsync();
     return Results.Ok();
