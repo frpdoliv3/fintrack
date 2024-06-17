@@ -8,6 +8,7 @@ import Login from "@pages/login/Login.tsx";
 import "./cssReset.css"
 import "bootswatch/dist/darkly/bootstrap.min.css";
 import "./main.css"
+import Register from "@pages/register/Register.tsx";
 
 axiosRetry(axios, { retries: 3, retryDelay: axiosRetry.exponentialDelay })
 
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
     {
         path: "/login",
         element: <Login />
+    },
+    {
+        path: "/register",
+        element: <Register />
     }
 ])
 

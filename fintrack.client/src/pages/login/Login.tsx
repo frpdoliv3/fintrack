@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import styles from "./Login.module.css";
 import {Formik} from "formik";
 import {z} from "zod";
-import {isInvalid, makeValidationFunction} from "../../utils/validation.ts";
+import {isInvalid, makeValidationFunction} from "@utils/validation.ts";
 import {ChangeEvent, useState} from "react";
 
 function Login() {
@@ -83,6 +83,12 @@ function Login() {
                             {loginError}
                         </Form.Control.Feedback>
                         <div className="pt-2 text-end">
+                            <Button 
+                                variant="outline-light"
+                                onClick={() => navigate("/register")}>
+                                
+                                Register
+                            </Button>
                             <Button variant="primary" type="submit">Login</Button>
                         </div>
                     </Form>
