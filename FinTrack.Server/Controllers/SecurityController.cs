@@ -3,7 +3,7 @@
 namespace FinTrack.Server.Controllers
 {
     [ApiController]
-    [Route("security")]
+    [Route("[controller]")]
     public class SecurityController : ControllerBase
     {
         [HttpGet(Name = "Hello")]

@@ -93,7 +93,36 @@ namespace FinTrack.Server.Migrations
                     b.ToTable("SecurityTransactions");
                 });
 
-            modelBuilder.Entity("FinTrack.Server.Models.User", b =>
+            modelBuilder.Entity("FinTrack.Server.Models.UserDetail", b =>
+                {
+                    b.Property<string>("UserIdentityId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AddressFirstLine")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AddressSecondLine")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("Birthdate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserIdentityId");
+
+                    b.ToTable("UserDetails");
+                });
+
+            modelBuilder.Entity("FinTrack.Server.Models.UserIdentity", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -302,6 +331,17 @@ namespace FinTrack.Server.Migrations
                     b.Navigation("Security");
                 });
 
+            modelBuilder.Entity("FinTrack.Server.Models.UserDetail", b =>
+                {
+                    b.HasOne("FinTrack.Server.Models.UserIdentity", "UserIdentity")
+                        .WithOne("UserDetails")
+                        .HasForeignKey("FinTrack.Server.Models.UserDetail", "UserIdentityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserIdentity");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -313,7 +353,7 @@ namespace FinTrack.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("FinTrack.Server.Models.User", null)
+                    b.HasOne("FinTrack.Server.Models.UserIdentity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -322,7 +362,7 @@ namespace FinTrack.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("FinTrack.Server.Models.User", null)
+                    b.HasOne("FinTrack.Server.Models.UserIdentity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -337,7 +377,7 @@ namespace FinTrack.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FinTrack.Server.Models.User", null)
+                    b.HasOne("FinTrack.Server.Models.UserIdentity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -346,7 +386,7 @@ namespace FinTrack.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("FinTrack.Server.Models.User", null)
+                    b.HasOne("FinTrack.Server.Models.UserIdentity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -356,6 +396,11 @@ namespace FinTrack.Server.Migrations
             modelBuilder.Entity("FinTrack.Server.Models.Security", b =>
                 {
                     b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("FinTrack.Server.Models.UserIdentity", b =>
+                {
+                    b.Navigation("UserDetails");
                 });
 #pragma warning restore 612, 618
         }

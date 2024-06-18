@@ -18,9 +18,8 @@ namespace FinTrack.Server.Models
         public float Price { get; set; }
         public float Commission { get; set; }
         public float ExchangeRate { get; set; }
-        [MaxLength(3)]
-        public string Currency { get; set; }
+        [MaxLength(3)] public string Currency { get; set; } = null!;
         public DateTime Date { get; set; } = DateTime.UtcNow;
-        public virtual Security Security { get; set; }
+        public virtual Security Security { get; set; } = null!;
     }
 }

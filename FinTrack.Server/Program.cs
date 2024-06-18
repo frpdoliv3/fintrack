@@ -17,26 +17,24 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DevelopmentConnection")
     ));
 builder.Services.AddAuthorization();
-builder.Services.AddIdentityApiEndpoints<User>()
+builder.Services.AddIdentityApiEndpoints<UserIdentity>()
     .AddEntityFrameworkStores<AppDbContext>();
 
 var app = builder.Build();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
-app.MapIdentityApi<User>();
 
-app.MapPost("logout", async (SignInManager<User> signInManager) => 
+var accountGroup = app.MapGroup("account");
+accountGroup.MapIdentityApi<UserIdentity>();
+
+accountGroup.MapPost("logout", async (SignInManager<UserIdentity> signInManager) => 
 {
     await signInManager.SignOutAsync();
     return Results.Ok();
 }).RequireAuthorization();
 
-app.MapGet("pingAuth", (ClaimsPrincipal user) =>
-{
-    var email = user.FindFirstValue(ClaimTypes.Email);
-    return Results.Json(new { email = email });
-}).RequireAuthorization();
+accountGroup.MapGet("pingAuth", () => TypedResults.Empty).RequireAuthorization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
