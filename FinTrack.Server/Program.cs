@@ -3,13 +3,17 @@ using FinTrack.Server.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using System.Text.Json;
 using FinTrack.Server;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddSingleton(TimeProvider.System);
+builder.Services.AddControllers()
+    .AddJsonOptions(o => o.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -17,24 +21,26 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DevelopmentConnection")
     ));
 builder.Services.AddAuthorization();
-builder.Services.AddIdentityApiEndpoints<UserIdentity>()
-    .AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.AddIdentity<User, IdentityRole>(o =>
+    {
+        o.User.RequireUniqueEmail = true;
+    })
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
 
 var app = builder.Build();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-var accountGroup = app.MapGroup("account");
-accountGroup.MapIdentityApi<UserIdentity>();
-
-accountGroup.MapPost("logout", async (SignInManager<UserIdentity> signInManager) => 
+/*accountGroup.MapPost("logout", async (SignInManager<User> signInManager) => 
 {
     await signInManager.SignOutAsync();
     return Results.Ok();
-}).RequireAuthorization();
+}).RequireAuthorization();*/
 
-accountGroup.MapGet("pingAuth", () => TypedResults.Empty).RequireAuthorization();
+//accountGroup.MapGet("pingAuth", () => TypedResults.Empty).RequireAuthorization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

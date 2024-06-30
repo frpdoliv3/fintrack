@@ -51,8 +51,7 @@ function Login() {
                 validate={validationFn}
                 onSubmit={onLogin}
                 validateOnChange={false}
-                validateOnBlur={true}
-            >
+                validateOnBlur={true}>
                 {({ handleSubmit, handleChange, values, errors }) => (
                     <Form onSubmit={handleSubmit} noValidate>
                         <Form.Group>

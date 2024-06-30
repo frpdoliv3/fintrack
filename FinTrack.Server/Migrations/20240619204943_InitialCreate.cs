@@ -30,6 +30,10 @@ namespace FinTrack.Server.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    AddressFirstLine = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    AddressSecondLine = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -172,28 +176,6 @@ namespace FinTrack.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserDetails",
-                columns: table => new
-                {
-                    UserIdentityId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Birthdate = table.Column<DateOnly>(type: "date", nullable: false),
-                    AddressFirstLine = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddressSecondLine = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserDetails", x => x.UserIdentityId);
-                    table.ForeignKey(
-                        name: "FK_UserDetails_AspNetUsers_UserIdentityId",
-                        column: x => x.UserIdentityId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "SecurityTransactions",
                 columns: table => new
                 {
@@ -292,16 +274,13 @@ namespace FinTrack.Server.Migrations
                 name: "SecurityTransactions");
 
             migrationBuilder.DropTable(
-                name: "UserDetails");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Securities");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Securities");
         }
     }
 }
