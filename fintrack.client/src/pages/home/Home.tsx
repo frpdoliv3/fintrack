@@ -1,6 +1,6 @@
-import AuthorizeView from "./components/AuthorizeView.tsx";
+import AuthorizeView from "@components/AuthorizeView.tsx";
 
-function App() {
+function Home() {
     return (
         <AuthorizeView>
             <p>Hello world!</p>
@@ -8,4 +8,4 @@ function App() {
     );
 }
 
-export default App;
+export default Home;

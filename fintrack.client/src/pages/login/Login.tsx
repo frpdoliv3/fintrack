@@ -7,6 +7,7 @@ import {Formik} from "formik";
 import {z} from "zod";
 import {isInvalid, makeValidationFunction} from "@utils/validation.ts";
 import {ChangeEvent, useState} from "react";
+import {Path} from "@navigation/routes.tsx";
 
 function Login() {
     const navigate = useNavigate()
@@ -20,7 +21,7 @@ function Login() {
         try {
             const response = await axios.post("/api/account/login", values)
             if (response.status == 200) {
-                navigate("/");
+                navigate(Path.Home);
             }
         } catch (e: any) {
             if (e instanceof AxiosError) {
@@ -84,7 +85,7 @@ function Login() {
                         <div className="pt-4 text-end">
                             <Button 
                                 variant="outline-light"
-                                onClick={() => navigate("/register")}
+                                onClick={() => navigate(Path.Register)}
                                 className="me-2">
                                 Register
                             </Button>

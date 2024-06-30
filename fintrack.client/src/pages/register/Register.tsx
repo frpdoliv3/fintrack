@@ -6,6 +6,7 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {z} from "zod";
 import {isInvalid, makeValidationFunction} from "@utils/validation.ts";
+import {Path} from "@navigation/routes.tsx";
 
 function Register() {
     const navigator = useNavigate();
@@ -24,7 +25,7 @@ function Register() {
                 user_name: values.username
             })
             if (response.status == 200) {
-                navigator("/")
+                navigator(Path.Home)
             }
         } catch (e: any) {
             console.error(e)
