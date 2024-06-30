@@ -6,13 +6,15 @@ using System.Security.Claims;
 using System.Text.Json;
 using FinTrack.Server;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddSingleton(TimeProvider.System);
-builder.Services.AddControllers()
+builder.Services
+    .AddControllers(options => options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())))
     .AddJsonOptions(o => o.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -21,13 +23,22 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DevelopmentConnection")
     ));
 builder.Services.AddAuthorization();
-
 builder.Services.AddIdentity<User, IdentityRole>(o =>
     {
         o.User.RequireUniqueEmail = true;
     })
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Events.OnRedirectToLogin = context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        return Task.CompletedTask;
+    };
+});
+
 
 var app = builder.Build();
 
@@ -39,8 +50,6 @@ app.UseStaticFiles();
     await signInManager.SignOutAsync();
     return Results.Ok();
 }).RequireAuthorization();*/
-
-//accountGroup.MapGet("pingAuth", () => TypedResults.Empty).RequireAuthorization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

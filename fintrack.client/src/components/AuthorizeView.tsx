@@ -18,8 +18,8 @@ function AuthorizeView(props: { children: ReactNode }) {
     
     const updateAuthorizationStatus = async () => {
         try {
-            const response = await axios.get("/api/pingAuth");
-            if (response.status == 200) {
+            const response = await axios.get("/api/account/ping-auth");
+            if (response.status == 204) {
                 let userData = response.data
                 setUser({ email: userData.email })
                 setAuthorized(true);

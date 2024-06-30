@@ -2,11 +2,33 @@ import FullPageScaffold from "@components/FullPageScaffold.tsx";
 import styles from "./Register.module.css";
 import {Formik} from "formik";
 import {Button, Form} from "react-bootstrap";
-import ZipCodeField from "@components/ZipCodeField.tsx";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
+import {z} from "zod";
+import {isInvalid, makeValidationFunction} from "@utils/validation.ts";
 
 function Register() {
-    const handleRegister = (values: any) => {
-        console.log(values)
+    const navigator = useNavigate();
+    const registerSchema = z.object({
+        email: z.string().email("Must be a valid email address"),
+        password: z.string(),
+        username: z.string()
+    })
+    type FormValues = z.infer<typeof registerSchema>;
+    const validationFn = makeValidationFunction(registerSchema);
+    const handleRegister = async (values: FormValues) => {
+        try {
+            const response = await axios.post("/api/account/register", {
+                email: values.email,
+                password: values.password,
+                user_name: values.username
+            })
+            if (response.status == 200) {
+                navigator("/")
+            }
+        } catch (e: any) {
+            console.error(e)
+        }
     }
     
     return (<FullPageScaffold>
@@ -15,11 +37,10 @@ function Register() {
                 initialValues={{
                     email: "",
                     password: "",
-                    addressFirstLine: "",
-                    addressSecondLine: "",
-                    zipCode: ""
+                    username: ""
                 }} 
                 onSubmit={handleRegister}
+                validate={validationFn}
                 validateOnChange={false}
                 validateOnBlur={true}>
                 {({ handleSubmit, handleChange, values, errors }) => (
@@ -27,13 +48,30 @@ function Register() {
                         <fieldset className={styles.formSection}>
                             <legend className="float-none w-auto px-1">Credentials</legend>
                             <Form.Group>
+                                <Form.Label>Username:</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter username"
+                                    name="username"
+                                    value={values.username}
+                                    onChange={handleChange}
+                                    isInvalid={isInvalid(errors.username)} />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.username}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group>
                                 <Form.Label>Email Address:</Form.Label>
                                 <Form.Control
                                     type="email"
                                     placeholder="Enter email"
                                     name="email"
                                     value={values.email}
-                                    onChange={handleChange}/>
+                                    onChange={handleChange} 
+                                    isInvalid={isInvalid(errors.email)} />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.email}
+                                </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Password</Form.Label>
@@ -42,33 +80,12 @@ function Register() {
                                     placeholder="Enter password"
                                     name="password"
                                     value={values.password}
-                                    onChange={handleChange}/>
+                                    onChange={handleChange}
+                                    isInvalid={isInvalid(errors.password)} />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.password}
+                                </Form.Control.Feedback>
                             </Form.Group>
-                        </fieldset>
-                        <fieldset className={styles.formSection}>
-                            <legend className="float-none w-auto px-1">Address</legend>
-                            <Form.Group>
-                                <Form.Label>Line 1</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Enter the address first line"
-                                    name="addressFirstLine"
-                                    value={values.addressFirstLine}
-                                    onChange={handleChange}/>
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Line 2</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Enter the address second line"
-                                    name="addressSecondLine"
-                                    value={values.addressSecondLine}
-                                    onChange={handleChange}/>
-                            </Form.Group>
-                            <ZipCodeField 
-                                name="zipCode"
-                                value={values.zipCode}
-                                onChange={handleChange} />
                         </fieldset>
                         <div className="d-flex justify-content-end pt-2">
                             <Button type="submit" className="px-3">Submit</Button>

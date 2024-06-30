@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using FinTrack.Server.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +43,12 @@ public class AccountController(SignInManager<User> signInManager, UserManager<Us
     public async Task<IResult> Login([FromBody] LoginRequest login)
     {
         signInManager.AuthenticationScheme = IdentityConstants.ApplicationScheme;
-        var result = await signInManager.PasswordSignInAsync(login.Email, login.Password, true, lockoutOnFailure: true);
+        var user = await userManager.FindByEmailAsync(login.Identity) ?? await userManager.FindByNameAsync(login.Identity);
+        if (user == null)
+        {
+            return TypedResults.NotFound();
+        }
+        var result = await signInManager.PasswordSignInAsync(user, login.Password, true, lockoutOnFailure: true);
         
         if (!result.Succeeded)
         {
@@ -68,13 +74,8 @@ public class AccountController(SignInManager<User> signInManager, UserManager<Us
             return CreateValidationProblem(IdentityResult.Failed(userManager.ErrorDescriber.InvalidEmail(email)));
         }
         
-        var user = new User(
-            registration.Name,
-            registration.AddressFirstLine,
-            registration.AddressSecondLine,
-            registration.ZipCode
-        );
-        await userStore.SetUserNameAsync(user, email, CancellationToken.None);
+        var user = new User();
+        await userStore.SetUserNameAsync(user, registration.UserName, CancellationToken.None);
         await emailStore.SetEmailAsync(user, email, CancellationToken.None);
         var result = await userManager.CreateAsync(user, registration.Password);
 
@@ -86,11 +87,19 @@ public class AccountController(SignInManager<User> signInManager, UserManager<Us
         //await SendConfirmationEmailAsync(user, userManager, context, email);
         return TypedResults.Ok();
     }
+    
+    [HttpGet]
+    [Route("[action]")]
+    [Authorize]
+    public IResult PingAuth()
+    {
+        return TypedResults.NoContent();
+    }
 }
 
 public record LoginRequest
 {
-    public string Email { get; init; } = null!;
+    public string Identity { get; init; } = null!;
     public string Password { get; init; } = null!;
 }
 
@@ -98,8 +107,5 @@ public record RegisterRequest
 {
     public string Email { get; init; } = null!;
     public string Password { get; init; } = null!;
-    public string Name { get; init; } = null!;
-    public string AddressFirstLine { get; init; } = null!;
-    public string? AddressSecondLine { get; init; } = null;
-    public string ZipCode { get; init; } = null!;
+    public string UserName { get; init; } = null!;
 }
