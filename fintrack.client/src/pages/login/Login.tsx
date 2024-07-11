@@ -8,6 +8,7 @@ import {z} from "zod";
 import {isInvalid, makeValidationFunction} from "@utils/validation.ts";
 import {ChangeEvent, useState} from "react";
 import {Path} from "@navigation/routes.tsx";
+import UnauthorizedView from "@components/UnauthorizedView";
 
 function Login() {
     const navigate = useNavigate()
@@ -42,60 +43,62 @@ function Login() {
         }
     }
     
-    return (<FullPageScaffold>
-        <div id={styles.mainDiv}>
-            <Formik
-                initialValues = {{
-                    identity: "",
-                    password: ""
-                }}
-                validate={validationFn}
-                onSubmit={onLogin}
-                validateOnChange={false}
-                validateOnBlur={true}>
-                {({ handleSubmit, handleChange, values, errors }) => (
-                    <Form onSubmit={handleSubmit} noValidate>
-                        <Form.Group>
-                            <Form.Label>Username or Email Address:</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter identity"
-                                name="identity"
-                                value={values.identity}
-                                onChange={handleChangeWrapper(handleChange)}
-                                isInvalid={isInvalid(errors.identity)} />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.identity}
+    return (<UnauthorizedView>
+        <FullPageScaffold>
+            <div id={styles.mainDiv}>
+                <Formik
+                    initialValues = {{
+                        identity: "",
+                        password: ""
+                    }}
+                    validate={validationFn}
+                    onSubmit={onLogin}
+                    validateOnChange={false}
+                    validateOnBlur={true}>
+                    {({ handleSubmit, handleChange, values, errors }) => (
+                        <Form onSubmit={handleSubmit} noValidate>
+                            <Form.Group>
+                                <Form.Label>Username or Email Address:</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter identity"
+                                    name="identity"
+                                    value={values.identity}
+                                    onChange={handleChangeWrapper(handleChange)}
+                                    isInvalid={isInvalid(errors.identity)} />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.identity}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group className="pt-2">
+                                <Form.Label>Password:</Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    placeholder="Enter password"
+                                    name="password"
+                                    value={values.password}
+                                    onChange={handleChangeWrapper(handleChange)} />
+                            </Form.Group>
+                            <Form.Control.Feedback 
+                                type="invalid" 
+                                style={{display: loginError.length > 0 ? "block": "none"}}>
+                                {loginError}
                             </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group className="pt-2">
-                            <Form.Label>Password:</Form.Label>
-                            <Form.Control
-                                type="password"
-                                placeholder="Enter password"
-                                name="password"
-                                value={values.password}
-                                onChange={handleChangeWrapper(handleChange)} />
-                        </Form.Group>
-                        <Form.Control.Feedback 
-                            type="invalid" 
-                            style={{display: loginError.length > 0 ? "block": "none"}}>
-                            {loginError}
-                        </Form.Control.Feedback>
-                        <div className="pt-4 text-end">
-                            <Button 
-                                variant="outline-light"
-                                onClick={() => navigate(Path.Register)}
-                                className="me-2">
-                                Register
-                            </Button>
-                            <Button variant="primary" type="submit">Login</Button>
-                        </div>
-                    </Form>
-                )}
-            </Formik>
-        </div>
-    </FullPageScaffold>)
+                            <div className="pt-4 text-end">
+                                <Button 
+                                    variant="outline-light"
+                                    onClick={() => navigate(Path.Register)}
+                                    className="me-2">
+                                    Register
+                                </Button>
+                                <Button variant="primary" type="submit">Login</Button>
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
+            </div>
+        </FullPageScaffold>
+    </UnauthorizedView>)
 }
 
 export default Login;

@@ -1,10 +1,10 @@
-import AuthorizeView from "@components/AuthorizeView.tsx";
+import AuthorizedView from "@components/AuthorizedView.tsx"
 
 function Home() {
     return (
-        <AuthorizeView>
-            <p>Hello world!</p>
-        </AuthorizeView>
+        <AuthorizedView>
+            <p>Home</p>
+        </AuthorizedView>
     );
 }
 

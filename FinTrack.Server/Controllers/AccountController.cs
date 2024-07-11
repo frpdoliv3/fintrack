@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using FinTrack.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -9,7 +10,7 @@ namespace FinTrack.Server.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AccountController(SignInManager<User> signInManager, UserManager<User> userManager, IUserStore<User> userStore) 
+public class AccountController(SignInManager<User> signInManager, UserManager<User> userManager, IUserStore<User> userStore): ControllerBase
 {
     private static readonly EmailAddressAttribute _emailAddressAttribute = new();
     
@@ -40,6 +41,7 @@ public class AccountController(SignInManager<User> signInManager, UserManager<Us
     
     [HttpPost]
     [Route("[action]")]
+    [AllowAnonymous]
     public async Task<IResult> Login([FromBody] LoginRequest login)
     {
         signInManager.AuthenticationScheme = IdentityConstants.ApplicationScheme;
@@ -59,6 +61,7 @@ public class AccountController(SignInManager<User> signInManager, UserManager<Us
 
     [HttpPost]
     [Route("[action]")]
+    [AllowAnonymous]
     public async Task<IResult> Register([FromBody] RegisterRequest registration)
     {
         if (!userManager.SupportsUserEmail)
@@ -90,11 +93,29 @@ public class AccountController(SignInManager<User> signInManager, UserManager<Us
     
     [HttpGet]
     [Route("[action]")]
-    [Authorize]
-    public IResult PingAuth()
+    public async Task<IResult> PingAuth()
     {
+        var user = await userManager.GetUserAsync(User);
+        return TypedResults.Ok(new PingAuthResponse
+        {
+            Email = user!.Email!,
+            UserName = user!.UserName!
+        });
+    }
+
+    [HttpPost]
+    [Route("[action]")]
+    public async Task<IResult> Logout()
+    {
+        await signInManager.SignOutAsync();
         return TypedResults.NoContent();
     }
+}
+
+public record PingAuthResponse
+{
+    public string Email { get; init; } = null!;
+    public string UserName { get; init; } = null!;
 }
 
 public record LoginRequest
