@@ -1,0 +1,13 @@
+#avatarContainer {
+    display: inline-block;
+    background-color: white;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 48px;
+}
+
+#avatarImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

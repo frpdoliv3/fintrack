@@ -23,7 +23,7 @@ function Register() {
             const response = await axios.post("/api/account/register", {
                 email: values.email,
                 password: values.password,
-                user_name: values.username
+                userName: values.username
             })
             if (response.status == 200) {
                 navigator(Path.Home)

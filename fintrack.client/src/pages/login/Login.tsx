@@ -6,11 +6,13 @@ import styles from "./Login.module.css";
 import {Formik} from "formik";
 import {z} from "zod";
 import {isInvalid, makeValidationFunction} from "@utils/validation.ts";
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, useContext, useState} from "react";
 import {Path} from "@navigation/routes.tsx";
 import UnauthorizedView from "@components/UnauthorizedView";
+import { UserContext } from "@components/UserContextProvider";
 
 function Login() {
+    const userContext = useContext(UserContext)
     const navigate = useNavigate()
     const loginSchema = z.object({
         identity: z.string(),
@@ -22,6 +24,7 @@ function Login() {
         try {
             const response = await axios.post("/api/account/login", values)
             if (response.status == 200) {
+                userContext?.updateUser()
                 navigate(Path.Home);
             }
         } catch (e: any) {

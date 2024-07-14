@@ -4,10 +4,10 @@ import { UserContext } from "./UserContextProvider";
 
 function AuthorizedView(props: { children: ReactNode }) {
     const userState = useContext(UserContext);
-    if (userState == null) {
+    if (userState!.user == null) {
         return (<p>Loading...</p>)
     }
-    if (userState.success) {
+    if (userState!.user.success) {
         return props.children
     }
     return <Navigate to="/login" replace={true} />

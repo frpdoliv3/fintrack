@@ -5,8 +5,7 @@ import { Path } from "@navigation/routes";
 
 function UnauthorizedView(props: { children: ReactNode }) {
     const userState = useContext(UserContext)
-
-    if (userState?.success) {
+    if (userState!.user?.success) {
         return <Navigate to={Path.Home} replace={true}/>
     }
     return props.children
