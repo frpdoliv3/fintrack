@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace FinTrack.Server.Controllers
+namespace FinTrack.Server.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class SecurityController : ControllerBase
 {
-    [ApiController]
-    [Route("security")]
-    public class SecurityController : ControllerBase
+    [HttpGet(Name = "Hello")]
+    public String Hello()
     {
-        [HttpGet(Name = "Hello")]
-        public String Hello()
-        {
-            return "Hello World";
-        }
+        return "Hello World";
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinTrack.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240611204047_AddSecuritiesAndUsers")]
-    partial class AddSecuritiesAndUsers
+    [Migration("20240630150800_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

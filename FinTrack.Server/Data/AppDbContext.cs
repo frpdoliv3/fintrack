@@ -1,7 +1,6 @@
 ﻿using FinTrack.Server.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata;
 
 namespace FinTrack.Server.Data
 {
@@ -9,7 +8,6 @@ namespace FinTrack.Server.Data
     {
         public virtual DbSet<Security> Securities { get; set; }
         public virtual DbSet<SecurityTransaction> SecurityTransactions { get; set; }
-
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinTrack.Server.Models
 {
@@ -9,11 +8,9 @@ namespace FinTrack.Server.Models
     {
         [Key]
         public int Id { get; set; }
-        [MaxLength(12)]
-        public string ISIN { get; set; }
-        public string Name { get; set; }
-        [MaxLength(3)]
-        public string NativeCurrency { get; set; }
+        [MaxLength(12)] public string ISIN { get; set; } = null!;
+        public string Name { get; set; } = null!;
+        [MaxLength(3)] public string NativeCurrency { get; set; } = null!;
         public ICollection<SecurityTransaction> Transactions { get; } = new List<SecurityTransaction>();
     }
 }
