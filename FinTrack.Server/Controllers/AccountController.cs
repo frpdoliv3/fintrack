@@ -9,10 +9,22 @@ namespace FinTrack.Server.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AccountController(SignInManager<User> signInManager, UserManager<User> userManager, IUserStore<User> userStore): ControllerBase
+public class AccountController: ControllerBase
 {
     private static readonly EmailAddressAttribute _emailAddressAttribute = new();
-    
+
+    private readonly SignInManager<User> _signInManager;
+    private readonly UserManager<User> _userManager;
+    private readonly IUserStore<User> _userStore;
+
+    public AccountController(SignInManager<User> signInManager, UserManager<User> userManager, IUserStore<User> userStore)
+    {
+        _signInManager = signInManager;
+        _userManager = userManager;
+        _userStore = userStore;
+    }
+
+
     private static ValidationProblem CreateValidationProblem(IdentityResult result)
     {
         var errorDictionary = new Dictionary<string, string[]>(1);
@@ -43,13 +55,13 @@ public class AccountController(SignInManager<User> signInManager, UserManager<Us
     [AllowAnonymous]
     public async Task<IResult> Login([FromBody] LoginRequest login)
     {
-        signInManager.AuthenticationScheme = IdentityConstants.ApplicationScheme;
-        var user = await userManager.FindByEmailAsync(login.Identity) ?? await userManager.FindByNameAsync(login.Identity);
+        _signInManager.AuthenticationScheme = IdentityConstants.ApplicationScheme;
+        var user = await _userManager.FindByEmailAsync(login.Identity) ?? await _userManager.FindByNameAsync(login.Identity);
         if (user == null)
         {
             return TypedResults.NotFound();
         }
-        var result = await signInManager.PasswordSignInAsync(user, login.Password, true, lockoutOnFailure: true);
+        var result = await _signInManager.PasswordSignInAsync(user, login.Password, true, lockoutOnFailure: true);
         
         if (!result.Succeeded)
         {
@@ -63,23 +75,23 @@ public class AccountController(SignInManager<User> signInManager, UserManager<Us
     [AllowAnonymous]
     public async Task<IResult> Register([FromBody] RegisterRequest registration)
     {
-        if (!userManager.SupportsUserEmail)
+        if (!_userManager.SupportsUserEmail)
         {
             throw new NotSupportedException($"{nameof(Register)} requires a user store with email support.");
         }
         
-        var emailStore = (IUserEmailStore<User>)userStore;
+        var emailStore = (IUserEmailStore<User>)_userStore;
         var email = registration.Email;
     
         if (string.IsNullOrEmpty(email) || !_emailAddressAttribute.IsValid(email))
         {
-            return CreateValidationProblem(IdentityResult.Failed(userManager.ErrorDescriber.InvalidEmail(email)));
+            return CreateValidationProblem(IdentityResult.Failed(_userManager.ErrorDescriber.InvalidEmail(email)));
         }
         
         var user = new User();
-        await userStore.SetUserNameAsync(user, registration.UserName, CancellationToken.None);
+        await _userStore.SetUserNameAsync(user, registration.UserName, CancellationToken.None);
         await emailStore.SetEmailAsync(user, email, CancellationToken.None);
-        var result = await userManager.CreateAsync(user, registration.Password);
+        var result = await _userManager.CreateAsync(user, registration.Password);
 
         if (!result.Succeeded)
         {
@@ -94,7 +106,7 @@ public class AccountController(SignInManager<User> signInManager, UserManager<Us
     [Route("[action]")]
     public async Task<IResult> PingAuth()
     {
-        var user = await userManager.GetUserAsync(User);
+        var user = await _userManager.GetUserAsync(User);
         return TypedResults.Ok(new PingAuthResponse
         {
             Email = user!.Email!,
@@ -106,7 +118,7 @@ public class AccountController(SignInManager<User> signInManager, UserManager<Us
     [Route("[action]")]
     public async Task<IResult> Logout()
     {
-        await signInManager.SignOutAsync();
+        await _signInManager.SignOutAsync();
         return TypedResults.NoContent();
     }
 }
