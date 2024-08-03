@@ -51,21 +51,6 @@ namespace FinTrack.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Securities",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ISIN = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NativeCurrency = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Securities", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -172,6 +157,27 @@ namespace FinTrack.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Securities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ISIN = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NativeCurrency = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Securities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Securities_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SecurityTransactions",
                 columns: table => new
                 {
@@ -196,6 +202,11 @@ namespace FinTrack.Server.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "1cd2cae2-21c3-453b-950e-9f9303bf5e9e", 0, "81f81cb4-8001-44da-a34d-29b96cbdaba3", "fpoliveira@example.com", true, false, null, "FPOLIVEIRA@EXAMPLE.COM", "FPOLIVEIRA", "AQAAAAIAAYagAAAAEHsc24k3vZeZyDGrrhhkWw0z18LpDUD2sZxpIsd+ZCMVj/M2OUAyArojHeFMgLCT1g==", null, false, "9b60ce22-6e3b-4808-8deb-0610b18fa019", false, "fpoliveira" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -237,6 +248,11 @@ namespace FinTrack.Server.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Securities_AuthorId",
+                table: "Securities",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Securities_ISIN",
                 table: "Securities",
                 column: "ISIN",
@@ -273,10 +289,10 @@ namespace FinTrack.Server.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Securities");
 
             migrationBuilder.DropTable(
-                name: "Securities");
+                name: "AspNetUsers");
         }
     }
 }

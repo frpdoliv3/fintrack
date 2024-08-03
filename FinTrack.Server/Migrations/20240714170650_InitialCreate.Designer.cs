@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinTrack.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240630150800_InitialCreate")]
+    [Migration("20240714170650_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -33,6 +33,9 @@ namespace FinTrack.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("ISIN")
                         .IsRequired()
                         .HasMaxLength(12)
@@ -48,6 +51,8 @@ namespace FinTrack.Server.Migrations
                         .HasColumnType("nvarchar(3)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("ISIN")
                         .IsUnique();
@@ -159,6 +164,24 @@ namespace FinTrack.Server.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1cd2cae2-21c3-453b-950e-9f9303bf5e9e",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "81f81cb4-8001-44da-a34d-29b96cbdaba3",
+                            Email = "fpoliveira@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "FPOLIVEIRA@EXAMPLE.COM",
+                            NormalizedUserName = "FPOLIVEIRA",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHsc24k3vZeZyDGrrhhkWw0z18LpDUD2sZxpIsd+ZCMVj/M2OUAyArojHeFMgLCT1g==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "9b60ce22-6e3b-4808-8deb-0610b18fa019",
+                            TwoFactorEnabled = false,
+                            UserName = "fpoliveira"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -292,6 +315,15 @@ namespace FinTrack.Server.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("FinTrack.Server.Models.Security", b =>
+                {
+                    b.HasOne("FinTrack.Server.Models.User", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("FinTrack.Server.Models.SecurityTransaction", b =>

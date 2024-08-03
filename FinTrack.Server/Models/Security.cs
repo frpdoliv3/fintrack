@@ -12,5 +12,6 @@ namespace FinTrack.Server.Models
         public string Name { get; set; } = null!;
         [MaxLength(3)] public string NativeCurrency { get; set; } = null!;
         public ICollection<SecurityTransaction> Transactions { get; } = new List<SecurityTransaction>();
+        public virtual User Author { get; init; } = null!;
     }
 }
