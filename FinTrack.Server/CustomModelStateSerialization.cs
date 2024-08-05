@@ -14,10 +14,6 @@ internal class CustomModelStateSerialization
 
     public IActionResult OnSerialize(ActionContext actionContext)
     {
-        foreach (var error in actionContext.ModelState)
-        {
-            Console.WriteLine(error.Key);
-        }
         var errorRoot = _errorParserService.ParseErrors(actionContext.ModelState) as ObjectError;
         return new BadRequestObjectResult(JsonSerializer.Serialize(errorRoot));
     }
