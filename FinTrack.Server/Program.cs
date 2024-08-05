@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
+using FinTrack.Server.Service;
+using FinTrack.Server.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,9 +23,10 @@ builder.Services
         options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
     });
 
+var invalidModelStateSerialization = new CustomModelStateSerialization(new APIErrorParserService());
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
-    options.InvalidModelStateResponseFactory = CustomModelStateSerialization.OnSerialize;
+    options.InvalidModelStateResponseFactory = invalidModelStateSerialization.OnSerialize;
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

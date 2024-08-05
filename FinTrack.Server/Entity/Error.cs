@@ -1,7 +1,10 @@
-﻿using System.Text.Json;
+﻿using FinTrack.Server.Serialization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace FinTrack.Server.Entity;
 
+[JsonConverter(typeof(IErrorJsonConverter))]
 internal interface IError
 {
     public IError AddError(string varName, IError error);
@@ -16,6 +19,7 @@ internal interface IError
     }
 }
 
+[JsonConverter(typeof(StringErrorJsonConverter))]
 internal class StringError: IError
 {
     public List<string> ErrorMessages { get; init; } = new();
@@ -68,39 +72,7 @@ internal class StringError: IError
     }
 }
 
-internal class RootError : IError 
-{
-    public Dictionary<string, IError> ChildErrors { get; init; } = new();
-
-    public IError AddError(string varName, IError error)
-    {
-        varName = IError.ConvertCamelCase(varName);
-        ChildErrors[varName] = error;
-        return this;
-    }
-
-    public IError AddError(int index, IError error)
-    {
-        throw new InvalidDataException("Impossible to add variable index errors to list");
-    }
-
-    public IError AddError(List<string> errors)
-    {
-        throw new InvalidOperationException("Impossible to add error to root");
-    }
-
-    public IError? GetError(int index)
-    {
-        throw new InvalidOperationException("ObjectError has no index based children");
-    }
-
-    public IError? GetError(string varName)
-    {
-        varName = IError.ConvertCamelCase(varName);
-        return ChildErrors.GetValueOrDefault(varName);
-    }
-}
-
+[JsonConverter(typeof(ObjectErrorJsonConverter))]
 internal class ObjectError: IError
 {
     public List<string> ErrorMessages { get; init; } = new();
@@ -139,6 +111,7 @@ internal class ObjectError: IError
     }
 }
 
+[JsonConverter(typeof(ListErrorJsonConverter))]
 internal class ListError: IError
 {
     public List<string> ErrorMessages { get; init; } = new();
