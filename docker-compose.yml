@@ -1,0 +1,6 @@
+﻿services:
+  fintrack:
+    image: fintrack
+    build:
+      context: .
+      dockerfile: FinTrack/Dockerfile
