@@ -1,0 +1,1 @@
+"Server=localhost,1433;Database=FinTrack;Trusted_Connection=True;TrustServerCertificate=True;User Id=SA;Password=P@ssw0rd;Integrated Security=false;"
