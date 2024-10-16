@@ -6,12 +6,15 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9E35F2E0-D518-422D-BF0D-43B74090ABF3}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
-		temp.txt = temp.txt
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinTrack.Web", "FinTrack.App\FinTrack.Web.csproj", "{6592FC6B-ED3B-4083-8EC2-0ED4B8A00F5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinTrack.Web", "FinTrack.Web\FinTrack.Web.csproj", "{6592FC6B-ED3B-4083-8EC2-0ED4B8A00F5E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinTrack.DomainModel", "FinTrack.DomainModel\FinTrack.DomainModel.csproj", "{AA6ACEA2-8488-457C-BBCB-015BB11A92A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinTrack.Domain", "FinTrack.DomainModel\FinTrack.Domain.csproj", "{AA6ACEA2-8488-457C-BBCB-015BB11A92A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinTrack.Persistence", "FinTrack.Persistence\FinTrack.Persistence.csproj", "{456B964B-DF4E-4DC9-83D8-60E0C6F7F528}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinTrack.Application", "FinTrack.Application\FinTrack.Application.csproj", "{C0B53BF9-A73A-425F-9CFB-CB29B936A5CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +30,14 @@ Global
 		{AA6ACEA2-8488-457C-BBCB-015BB11A92A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA6ACEA2-8488-457C-BBCB-015BB11A92A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA6ACEA2-8488-457C-BBCB-015BB11A92A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{456B964B-DF4E-4DC9-83D8-60E0C6F7F528}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{456B964B-DF4E-4DC9-83D8-60E0C6F7F528}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{456B964B-DF4E-4DC9-83D8-60E0C6F7F528}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{456B964B-DF4E-4DC9-83D8-60E0C6F7F528}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0B53BF9-A73A-425F-9CFB-CB29B936A5CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0B53BF9-A73A-425F-9CFB-CB29B936A5CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0B53BF9-A73A-425F-9CFB-CB29B936A5CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0B53BF9-A73A-425F-9CFB-CB29B936A5CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,10 +2,15 @@ using FinTrack;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using System.Text.Json;
+using FinTrack.Persistence;
+using FinTrack.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.ConfigurePersistenceApp(builder.Configuration);
+builder.Services.ConfigureApplication();
 
 builder.Services.AddControllers(opts =>
 {

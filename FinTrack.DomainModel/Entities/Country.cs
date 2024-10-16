@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FinTrack.DomainModel
+namespace FinTrack.Domain.Entities
 {
     public class Country
     {
@@ -11,11 +11,11 @@ namespace FinTrack.DomainModel
         public string Name { get; set; } = string.Empty;
 
         [Required(AllowEmptyStrings = false)]
-        [Length(2, 2)]
+        [MaxLength(2)]
         public string Alpha2Code { get; set; } = string.Empty;
 
         [Required(AllowEmptyStrings = false)]
-        [Length(3, 3)]
+        [MaxLength(3)]
         public string Alpha3Code { get; set; } = string.Empty;
 
         [Required]

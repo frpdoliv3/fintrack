@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\FinTrack.Application\FinTrack.Application.csproj" />
+    <ProjectReference Include="..\FinTrack.Persistence\FinTrack.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

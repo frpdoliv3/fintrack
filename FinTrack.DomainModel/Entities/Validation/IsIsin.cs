@@ -1,7 +1,7 @@
 ﻿using CheckDigits.Net;
 using System.ComponentModel.DataAnnotations;
 
-namespace FinTrack.DomainModel
+namespace FinTrack.Domain.Entities.Validation
 {
     internal sealed class IsIsin : ValidationAttribute
     {
