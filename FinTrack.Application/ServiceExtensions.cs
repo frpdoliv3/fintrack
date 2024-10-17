@@ -1,8 +1,9 @@
-﻿using Application;
-using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
+﻿using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
 using System.Reflection;
+using FinTrack.Application.Country;
+using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 
 namespace FinTrack.Application
 {
@@ -16,6 +17,7 @@ namespace FinTrack.Application
             {
                 opts.DisableBuiltInModelValidation = true;
             });
+            services.AddFluentValidationRulesToSwagger();
         }
     }
 }

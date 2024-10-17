@@ -1,4 +1,5 @@
 ﻿using FinTrack.Domain.Interfaces;
+using FinTrack.Persistence.Context;
 using FinTrack.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

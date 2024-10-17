@@ -1,5 +1,7 @@
 ﻿using FinTrack.Domain.Entities;
 using FinTrack.Domain.Interfaces;
+using FinTrack.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinTrack.Persistence.Repositories
 {
@@ -16,6 +18,14 @@ namespace FinTrack.Persistence.Repositories
         {
             _context.Countries.Add(country);
             await _context.SaveChangesAsync();
+        }
+        
+        public IAsyncEnumerable<Country> ListCountries(int pageNumber, int pageSize)
+        {
+            return _context.Countries
+                .AsNoTracking()
+                .OrderBy(c => c.Name)
+                .AsAsyncEnumerable();
         }
     }
 }

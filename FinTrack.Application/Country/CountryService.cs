@@ -1,7 +1,8 @@
-﻿using FinTrack.Application.UseCases.CreateCountry;
+﻿using FinTrack.Application.Country.CreateCountry;
 using FinTrack.Domain.Interfaces;
+using Entities = FinTrack.Domain.Entities;
 
-namespace Application
+namespace FinTrack.Application.Country
 {
     public class CountryService
     {
@@ -17,6 +18,11 @@ namespace Application
             var country = createCountry.ToCountry();
 
             _countryRepository.AddCountry(country);
+        }
+
+        public IAsyncEnumerable<Entities.Country> ListCountries(int pageNumber, int pageSize)
+        {
+            return _countryRepository.ListCountries(pageNumber, pageSize);
         }
     }
 }
