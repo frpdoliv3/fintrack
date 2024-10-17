@@ -13,10 +13,7 @@ namespace FinTrack.Application
         {
             services.AddScoped<CountryService>();
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddFluentValidationAutoValidation(opts =>
-            {
-                opts.DisableBuiltInModelValidation = true;
-            });
+            services.AddFluentValidationAutoValidation();
             services.AddFluentValidationRulesToSwagger();
         }
     }

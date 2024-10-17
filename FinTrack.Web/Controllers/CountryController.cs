@@ -17,9 +17,9 @@ namespace FinTrack.Web.Controllers
         }
 
         [HttpPost]
-        public void CreateCountry([FromBody] CreateCountryRequest createCountry)
+        public async Task CreateCountry([FromBody] CreateCountryRequest createCountry)
         {
-            _countryService.AddCountry(createCountry);
+            await _countryService.AddCountry(createCountry);
         }
 
         [HttpGet]

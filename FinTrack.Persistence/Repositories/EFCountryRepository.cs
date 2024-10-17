@@ -27,5 +27,25 @@ namespace FinTrack.Persistence.Repositories
                 .OrderBy(c => c.Name)
                 .AsAsyncEnumerable();
         }
+
+        public async Task<bool> ExistsName(string countryName)
+        {
+            return await _context.Countries.AnyAsync(x => x.Name == countryName);
+        }
+
+        public async Task<bool> ExistsAlpha2Code(string alpha2Code)
+        {
+            return await _context.Countries.AnyAsync(x => x.Alpha2Code == alpha2Code);
+        }
+
+        public async Task<bool> ExistsAlpha3Code(string alpha3Code)
+        {
+            return await _context.Countries.AnyAsync(x => x.Alpha3Code == alpha3Code);
+        }
+
+        public async Task<bool> ExistsNumericCode(int numericCode)
+        {
+            return await _context.Countries.AnyAsync(x => x.NumericCode == numericCode);
+        }
     }
 }
