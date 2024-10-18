@@ -11,6 +11,7 @@ namespace FinTrack.Persistence.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             SetupCountryConstraints(modelBuilder);
+            SetupSecurityConstraints(modelBuilder);
         }
     }
 }

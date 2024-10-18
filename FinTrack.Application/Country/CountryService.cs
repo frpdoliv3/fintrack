@@ -37,9 +37,5 @@ namespace FinTrack.Application.Country
         {
             return await _countryRepository.ExistsAlpha3Code(alpha3Code);
         }
-        internal async Task<bool> ExistsNumericCode(int numericCode)
-        {
-            return await _countryRepository.ExistsNumericCode(numericCode);
-        }
     }
 }

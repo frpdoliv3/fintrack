@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace FinTrack.Application.Country.CreateCountry
 {
-    public sealed class CreateCountryValidatior : AbstractValidator<CreateCountryRequest>
+    internal sealed class CreateCountryValidatior : AbstractValidator<CreateCountryRequest>
     {
         public CreateCountryValidatior(CountryService countryService)
         {
@@ -28,14 +28,6 @@ namespace FinTrack.Application.Country.CreateCountry
                     return !await countryService.ExistsAlpha2Code(request);
                 })
                 .WithMessage("Country with same Alpha 2 Code already exists");
-            RuleFor(x => x.NumericCode)
-                .GreaterThan(0)
-                .LessThan(1000)
-                .MustAsync(async(request, cancellation) =>
-                {
-                    return !await countryService.ExistsNumericCode(request);
-                })
-                .WithMessage("Country with same Numeric Code already exists");
         }
     }
 }

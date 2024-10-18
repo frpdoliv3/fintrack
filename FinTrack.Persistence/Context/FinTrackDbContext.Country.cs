@@ -40,11 +40,6 @@ namespace FinTrack.Persistence.Context
             modelBuilder.Entity<Country>()
                 .HasIndex(c => c.Alpha3Code)
                 .IsUnique();
-
-            // NumericCode
-            modelBuilder.Entity<Country>()
-                .Property(c => c.NumericCode)
-                .IsRequired();
         }
     }
 }

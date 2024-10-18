@@ -9,6 +9,5 @@ namespace FinTrack.Domain.Interfaces
         public Task<bool> ExistsName(string countryName);
         public Task<bool> ExistsAlpha2Code(string alpha2Code);
         public Task<bool> ExistsAlpha3Code(string alpha3Code);
-        public Task<bool> ExistsNumericCode(int numericCode);
     }
 }

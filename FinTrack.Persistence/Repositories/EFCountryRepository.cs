@@ -42,10 +42,5 @@ namespace FinTrack.Persistence.Repositories
         {
             return await _context.Countries.AnyAsync(x => x.Alpha3Code == alpha3Code);
         }
-
-        public async Task<bool> ExistsNumericCode(int numericCode)
-        {
-            return await _context.Countries.AnyAsync(x => x.NumericCode == numericCode);
-        }
     }
 }
