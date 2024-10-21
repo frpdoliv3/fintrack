@@ -16,6 +16,7 @@ namespace FinTrack.Persistence
 
             // Put other DI services here
             services.AddScoped<ICountryRepository, EFCountryRepository>();
+            services.AddScoped<ICurrencyRepository, EFCurrencyRepository>();
         }
     }
 }

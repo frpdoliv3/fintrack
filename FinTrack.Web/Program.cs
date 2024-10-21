@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using System.Text.Json;
 using FinTrack.Persistence;
 using FinTrack.Application;
-using FinTrack.Persistence.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 

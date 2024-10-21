@@ -18,12 +18,28 @@ namespace FinTrack.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Alpha2Code = table.Column<string>(type: "nchar(2)", fixedLength: true, maxLength: 2, nullable: false),
-                    Alpha3Code = table.Column<string>(type: "nchar(3)", fixedLength: true, maxLength: 3, nullable: false),
-                    NumericCode = table.Column<int>(type: "int", nullable: false)
+                    Alpha3Code = table.Column<string>(type: "nchar(3)", fixedLength: true, maxLength: 3, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Countries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Currencies",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Alpha3Code = table.Column<string>(type: "nchar(3)", fixedLength: true, maxLength: 3, nullable: false),
+                    Symbol = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Decimals = table.Column<byte>(type: "tinyint", nullable: false),
+                    NumberToMajor = table.Column<byte>(type: "tinyint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Currencies", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(
@@ -43,6 +59,18 @@ namespace FinTrack.Persistence.Migrations
                 table: "Countries",
                 column: "Name",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Currencies_Alpha3Code",
+                table: "Currencies",
+                column: "Alpha3Code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Currencies_Name",
+                table: "Currencies",
+                column: "Name",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -50,6 +78,9 @@ namespace FinTrack.Persistence.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Countries");
+
+            migrationBuilder.DropTable(
+                name: "Currencies");
         }
     }
 }

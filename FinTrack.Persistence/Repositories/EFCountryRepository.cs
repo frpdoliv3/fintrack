@@ -1,7 +1,10 @@
-﻿using FinTrack.Domain.Entities;
+﻿
+
+using FinTrack.Domain.Entities;
 using FinTrack.Domain.Interfaces;
 using FinTrack.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace FinTrack.Persistence.Repositories
 {
@@ -28,19 +31,9 @@ namespace FinTrack.Persistence.Repositories
                 .AsAsyncEnumerable();
         }
 
-        public async Task<bool> ExistsName(string countryName)
+        public async Task<bool> Exists(Expression<Func<Country, bool>> predicate)
         {
-            return await _context.Countries.AnyAsync(x => x.Name == countryName);
-        }
-
-        public async Task<bool> ExistsAlpha2Code(string alpha2Code)
-        {
-            return await _context.Countries.AnyAsync(x => x.Alpha2Code == alpha2Code);
-        }
-
-        public async Task<bool> ExistsAlpha3Code(string alpha3Code)
-        {
-            return await _context.Countries.AnyAsync(x => x.Alpha3Code == alpha3Code);
+            return await _context.Countries.AnyAsync(predicate);
         }
     }
 }
