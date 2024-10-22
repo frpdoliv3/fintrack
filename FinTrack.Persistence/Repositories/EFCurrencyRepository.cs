@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace FinTrack.Persistence.Repositories;
 
-internal class EFCurrencyRepository: ICurrencyRepository
+internal class EFCurrencyRepository : ICurrencyRepository
 {
     private readonly FinTrackDbContext _context;
 
@@ -15,14 +15,20 @@ internal class EFCurrencyRepository: ICurrencyRepository
         _context = context;
     }
 
-    public async Task AddCurrency(Currency currency)
+    public async Task<Currency> AddCurrency(Currency currency)
     {
         _context.Currencies.Add(currency);
         await _context.SaveChangesAsync();
+        return currency;
     }
 
     public async Task<bool> Exists(Expression<Func<Currency, bool>> predicate)
     {
         return await _context.Currencies.AnyAsync(predicate);
+    }
+
+    public async Task<Currency?> FindCurrencyById(uint id)
+    {
+        return await _context.Currencies.FindAsync(id);
     }
 }

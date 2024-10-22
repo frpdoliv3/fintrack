@@ -1,5 +1,4 @@
-﻿using FinTrack.Application.Country;
-using FinTrack.Application.Country.CreateCountry;
+﻿using FinTrack.Application.Country.CreateCountry;
 using FinTrack.Domain.Entities;
 using FinTrack.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
