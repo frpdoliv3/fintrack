@@ -77,6 +77,15 @@ public class SeedData
             (await _userManager.FindByEmailAsync(adminUser.Email))!,
             "Admin"
         );
+
+        var regularUser = new CreateUser
+        {
+            UserName = "fpoliveira",
+            Email = "fpoliveira@gmail.com",
+            Password = "Example_user1"
+        };
+
+        await _authRepo.RegisterUser(regularUser);
     }
 
     private async Task CreateCountries()

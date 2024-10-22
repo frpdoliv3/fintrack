@@ -2,15 +2,19 @@
 using FinTrack.Application.Country.CreateCountry;
 using FinTrack.Domain.Entities;
 using FinTrack.Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinTrack.Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize(Roles = "Admin")]
 public class CountryController : ControllerBase
 {
     private readonly ICountryRepository _countryRepository;
+
+    private const string GET_COUNTRY_BY_ID_NAME = "GetCountryById";
 
     public CountryController(ICountryRepository countryRepository)
     {
@@ -18,9 +22,26 @@ public class CountryController : ControllerBase
     }
 
     [HttpPost]
-    public async Task CreateCountry([FromBody] CreateCountryRequest createCountry)
+    public async Task<IResult> CreateCountry([FromBody] CreateCountryRequest createCountry)
     {
-        await _countryRepository.AddCountry(createCountry.ToCountry());
+        var createdCountry = await _countryRepository.AddCountry(createCountry.ToCountry());
+        return Results.CreatedAtRoute(
+            GET_COUNTRY_BY_ID_NAME, 
+            new { id = createdCountry.Id },
+            createdCountry
+        );
+    }
+
+    [HttpGet("{id}", Name = GET_COUNTRY_BY_ID_NAME)]
+    public async Task<IResult> GetCountryById(
+        [FromRoute] uint id
+    ) {
+        var country = await _countryRepository.GetCountryById(id);
+        if (country == null)
+        {
+            return Results.NotFound();
+        }
+        return Results.Ok(country);
     }
 
     [HttpGet]

@@ -55,7 +55,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthorization();
 
-app.MapControllers();
+if (app.Environment.IsDevelopment())
+{
+    app.MapControllers().AllowAnonymous();
+} else
+{
+    app.MapControllers();
+}
+
 //app.MapIdentityApi<EFUser>();
 
 using (var scope = app.Services.CreateScope())
