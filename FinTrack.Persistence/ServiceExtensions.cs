@@ -17,5 +17,6 @@ public static class ServiceExtensions
         // Put other DI services here
         services.AddScoped<ICountryRepository, EFCountryRepository>();
         services.AddScoped<ICurrencyRepository, EFCurrencyRepository>();
+        services.AddScoped<IAuthRepository, EFAuthRepository>();
     }
 }

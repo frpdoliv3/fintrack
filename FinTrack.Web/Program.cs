@@ -7,6 +7,7 @@ using FinTrack.Persistence;
 using Microsoft.AspNetCore.Identity;
 using FinTrack.Persistence.Models;
 using FinTrack.Persistence.Contexts;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,12 +16,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.ConfigurePersistenceApp(builder.Configuration);
 builder.Services.ConfigureApplication();
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(opts =>
+{
+    opts.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+});
 builder.Services.AddAuthentication()
     .AddBearerToken(IdentityConstants.BearerScheme);
 
 builder.Services
     .AddIdentityCore<EFUser>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<FinTrackDbContext>()
     .AddApiEndpoints();
 
