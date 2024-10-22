@@ -1,0 +1,1193 @@
+[
+  {
+    "alpha3Code": "ADP",
+    "name": "PESETA DE ANDORRA (até 2003-07-31)"
+  },
+  {
+    "alpha3Code": "AED",
+    "name": "DIRHAM DOS EMIRATOS ÁRABES UN.",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "د.إ."
+  },
+  {
+    "alpha3Code": "AFA",
+    "name": "AFEGANI (até 2003-01-31)"
+  },
+  {
+    "alpha3Code": "ALL",
+    "name": "LEK",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "L"
+  },
+  {
+    "alpha3Code": "AMD",
+    "name": "DRAM DA ARMÉNIA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "֏"
+  },
+  {
+    "alpha3Code": "ANG",
+    "name": "FLORIM DAS ANTILHAS HOLANDESAS",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "ƒ"
+  },
+  {
+    "alpha3Code": "AOA",
+    "name": "KWANZA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Kz"
+  },
+  {
+    "alpha3Code": "ARS",
+    "name": "PESO ARGENTINO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "AR$"
+  },
+  {
+    "alpha3Code": "ATS",
+    "name": "XELIM AUSTRÍACO"
+  },
+  {
+    "alpha3Code": "AUD",
+    "name": "DÓLAR AUSTRALIANO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "AU$"
+  },
+  {
+    "alpha3Code": "AWG",
+    "name": "FLORIM DE ARUBA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "ƒ"
+  },
+  {
+    "alpha3Code": "AYM",
+    "name": "MANAT DO AZERBEIJÃO (até 2005-10-31)"
+  },
+  {
+    "alpha3Code": "AZM",
+    "name": "MANAT DO AZERBEIJÃO (até 2006-01-31)"
+  },
+  {
+    "alpha3Code": "AZN",
+    "name": "NOVO MANAT DO AZERBEIJÃO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "ман"
+  },
+  {
+    "alpha3Code": "BAM",
+    "name": "MARCO CONVERTÍVEL",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "KM"
+  },
+  {
+    "alpha3Code": "BBD",
+    "name": "DÓLAR DOS BARBADOS",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "BBD$"
+  },
+  {
+    "alpha3Code": "BDT",
+    "name": "TAKA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "৳"
+  },
+  {
+    "alpha3Code": "BEF",
+    "name": "FRANCO BELGA"
+  },
+  {
+    "alpha3Code": "BGL",
+    "name": "LEV DA BULGÁRIA (até 2003-11-30)"
+  },
+  {
+    "alpha3Code": "BHD",
+    "name": "DINAR DO BAREIN",
+    "decimals": 3,
+    "numberToMajor": 1000,
+    "symbol": "BD"
+  },
+  {
+    "alpha3Code": "BIF",
+    "name": "FRANCO DO BURUNDI",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "FBu"
+  },
+  {
+    "alpha3Code": "BMD",
+    "name": "DÓLAR DAS BERMUDAS",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "$"
+  },
+  {
+    "alpha3Code": "BND",
+    "name": "DÓLAR - BRUNEI",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "B$"
+  },
+  {
+    "alpha3Code": "BOB",
+    "name": "BOLIVIANO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Bs."
+  },
+  {
+    "alpha3Code": "BRL",
+    "name": "REAL",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "R$"
+  },
+  {
+    "alpha3Code": "BSD",
+    "name": "DÓLAR DAS BAHAMAS",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "$"
+  },
+  {
+    "alpha3Code": "BTN",
+    "name": "NGULTRUM",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Nu."
+  },
+  {
+    "alpha3Code": "BWP",
+    "name": "PULA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "P"
+  },
+  {
+    "alpha3Code": "BYR",
+    "name": "RUBLO BIELORUSSO"
+  },
+  {
+    "alpha3Code": "BZD",
+    "name": "DÓLAR DE BELIZE",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "BZ$"
+  },
+  {
+    "alpha3Code": "CAD",
+    "name": "DÓLAR CANADIANO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "CA$"
+  },
+  {
+    "alpha3Code": "CDF",
+    "name": "FRANCO CONGOLÊS",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "FC"
+  },
+  {
+    "alpha3Code": "CHF",
+    "name": "FRANCO SUÍÇO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Fr."
+  },
+  {
+    "alpha3Code": "CLP",
+    "name": "PESO CHILENO",
+    "decimals": 0,
+    "numberToMajor": 100,
+    "symbol": "CL$"
+  },
+  {
+    "alpha3Code": "CNY",
+    "name": "YUAN REN-MIN-BI",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "CN¥"
+  },
+  {
+    "alpha3Code": "COP",
+    "name": "PESO COLOMBIANO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "CO$"
+  },
+  {
+    "alpha3Code": "CRC",
+    "name": "COLON DA COSTA RICA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "₡"
+  },
+  {
+    "alpha3Code": "CSD",
+    "name": "DINAR SÉRVIO (até 2006-10-25)"
+  },
+  {
+    "alpha3Code": "CUC",
+    "name": "PESO CONVERTIBLE CUBANO (a partir de 01-03-2009)",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "CUC$"
+  },
+  {
+    "alpha3Code": "CUP",
+    "name": "PESO CUBANO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "$MN"
+  },
+  {
+    "alpha3Code": "CVE",
+    "name": "ESCUDO DE CABO VERDE",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "CV$"
+  },
+  {
+    "alpha3Code": "CYP",
+    "name": "LIBRA CIPRIOTA"
+  },
+  {
+    "alpha3Code": "CZK",
+    "name": "COROA CHECA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Kč"
+  },
+  {
+    "alpha3Code": "DEM",
+    "name": "MARCO ALEMÃO"
+  },
+  {
+    "alpha3Code": "DJF",
+    "name": "FRANCO DE DJIBOUTI",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Fdj"
+  },
+  {
+    "alpha3Code": "DKK",
+    "name": "COROA DINAMARQUESA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "kr."
+  },
+  {
+    "alpha3Code": "DOP",
+    "name": "PESO DOMINICANO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "RD$"
+  },
+  {
+    "alpha3Code": "DZD",
+    "name": "DINAR ARGELINO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "DA"
+  },
+  {
+    "alpha3Code": "EEK",
+    "name": "KROON"
+  },
+  {
+    "alpha3Code": "EGP",
+    "name": "LIBRA EGÍPCIA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "E£"
+  },
+  {
+    "alpha3Code": "ERN",
+    "name": "NAKFA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Nkf"
+  },
+  {
+    "alpha3Code": "ESP",
+    "name": "PESETA ESPANHOLA"
+  },
+  {
+    "alpha3Code": "ETB",
+    "name": "BIRR DA ETIÓPIA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Br"
+  },
+  {
+    "alpha3Code": "EUR",
+    "name": "EURO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "€"
+  },
+  {
+    "alpha3Code": "FIM",
+    "name": "MARKKA"
+  },
+  {
+    "alpha3Code": "FJD",
+    "name": "DÓLAR DE FIDJI",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "FJ$"
+  },
+  {
+    "alpha3Code": "FRF",
+    "name": "FRANCO FRANCÊS"
+  },
+  {
+    "alpha3Code": "GBP",
+    "name": "LIBRA ESTERLINA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "£"
+  },
+  {
+    "alpha3Code": "GEL",
+    "name": "LARL",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "₾"
+  },
+  {
+    "alpha3Code": "GHC",
+    "name": "CEDI (até 2008-01-01)"
+  },
+  {
+    "alpha3Code": "GHS",
+    "name": "CEDI DO GANA (a partir de 2007-07-01)",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "GH₵"
+  },
+  {
+    "alpha3Code": "GIP",
+    "name": "LIBRA DE GIBRALTAR",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "£"
+  },
+  {
+    "alpha3Code": "GMD",
+    "name": "DALASI",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "D"
+  },
+  {
+    "alpha3Code": "GNF",
+    "name": "FRANCO DA GUINÉ",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "FG"
+  },
+  {
+    "alpha3Code": "GRD",
+    "name": "DRACMA"
+  },
+  {
+    "alpha3Code": "GTQ",
+    "name": "QUETZAL",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Q"
+  },
+  {
+    "alpha3Code": "GWP",
+    "name": "PESO DA GUINÉ-BISSAU"
+  },
+  {
+    "alpha3Code": "GYD",
+    "name": "DÓLAR DA GUIANA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "G$"
+  },
+  {
+    "alpha3Code": "HKD",
+    "name": "DÓLAR DE HONG KONG",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "HK$"
+  },
+  {
+    "alpha3Code": "HNL",
+    "name": "LEMPIRA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "L"
+  },
+  {
+    "alpha3Code": "HRK",
+    "name": "KUNA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "kn"
+  },
+  {
+    "alpha3Code": "HTG",
+    "name": "GOURDE",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "G"
+  },
+  {
+    "alpha3Code": "HUF",
+    "name": "FORINT",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Ft"
+  },
+  {
+    "alpha3Code": "IDR",
+    "name": "RUPIA INDONÉSIA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Rp"
+  },
+  {
+    "alpha3Code": "IEP",
+    "name": "LIBRA IRLANDESA"
+  },
+  {
+    "alpha3Code": "ILS",
+    "name": "SHEKEL",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "₪"
+  },
+  {
+    "alpha3Code": "INR",
+    "name": "RUPIA INDIANA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Rs."
+  },
+  {
+    "alpha3Code": "IQD",
+    "name": "DINAR IRAQUIANO",
+    "decimals": 3,
+    "numberToMajor": 1000,
+    "symbol": "د.ع."
+  },
+  {
+    "alpha3Code": "IRR",
+    "name": "RIAL IRANIANO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "﷼"
+  },
+  {
+    "alpha3Code": "ISK",
+    "name": "COROA ISLANDESA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "kr"
+  },
+  {
+    "alpha3Code": "ITL",
+    "name": "LIRA ITALIANA"
+  },
+  {
+    "alpha3Code": "JMD",
+    "name": "DÓLAR DA JAMAICA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "J$"
+  },
+  {
+    "alpha3Code": "JOD",
+    "name": "DINAR JORDANIANO",
+    "decimals": 3,
+    "numberToMajor": 1000,
+    "symbol": "JD"
+  },
+  {
+    "alpha3Code": "JPY",
+    "name": "YEN",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "¥"
+  },
+  {
+    "alpha3Code": "KES",
+    "name": "XELIM DO QUÉNIA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "KSh"
+  },
+  {
+    "alpha3Code": "KGS",
+    "name": "SOM",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "с"
+  },
+  {
+    "alpha3Code": "KHR",
+    "name": "RIEL",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "៛"
+  },
+  {
+    "alpha3Code": "KMF",
+    "name": "FRANCO DAS COMOROS",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "CF"
+  },
+  {
+    "alpha3Code": "KPW",
+    "name": "WON DA COREIA DO NORTE",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "₩"
+  },
+  {
+    "alpha3Code": "KRW",
+    "name": "WON (REPÚBLICA DA COREIA)",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "₩"
+  },
+  {
+    "alpha3Code": "KWD",
+    "name": "DINAR DO KOWEIT",
+    "decimals": 3,
+    "numberToMajor": 1000,
+    "symbol": "KD"
+  },
+  {
+    "alpha3Code": "KYD",
+    "name": "DÓLAR DAS CAYMAN",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "CI$"
+  },
+  {
+    "alpha3Code": "KZT",
+    "name": "TENJE",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "₸"
+  },
+  {
+    "alpha3Code": "LAK",
+    "name": "KIP",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "₭N"
+  },
+  {
+    "alpha3Code": "LBP",
+    "name": "LIBRA LIBANESA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "LL."
+  },
+  {
+    "alpha3Code": "LKR",
+    "name": "RUPIA DO SRI LANKA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Rs."
+  },
+  {
+    "alpha3Code": "LRD",
+    "name": "DÓLAR LIBERIANO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "L$"
+  },
+  {
+    "alpha3Code": "LSL",
+    "name": "LOTI",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "L"
+  },
+  {
+    "alpha3Code": "LTL",
+    "name": "LITAS DA LITUÂNIA"
+  },
+  {
+    "alpha3Code": "LUF",
+    "name": "FRANCO LUXEMBURGUÊS"
+  },
+  {
+    "alpha3Code": "LVL",
+    "name": "LATS DA LETÓNIA"
+  },
+  {
+    "alpha3Code": "LYD",
+    "name": "DINAR DA LÍBIA",
+    "decimals": 3,
+    "numberToMajor": 1000,
+    "symbol": "LD"
+  },
+  {
+    "alpha3Code": "MAD",
+    "name": "DIRHAM MARROQUINO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "DH"
+  },
+  {
+    "alpha3Code": "MDL",
+    "name": "LEU MOLDOVO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "L"
+  },
+  {
+    "alpha3Code": "MGA",
+    "name": "ARIARY MALGACHE",
+    "decimals": 0,
+    "numberToMajor": 5,
+    "symbol": "Ar"
+  },
+  {
+    "alpha3Code": "MGF",
+    "name": "FRANCO MALGACHE (até 2004-12-31)"
+  },
+  {
+    "alpha3Code": "MKD",
+    "name": "DENAR",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "den"
+  },
+  {
+    "alpha3Code": "MNT",
+    "name": "TUGRIK",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "₮"
+  },
+  {
+    "alpha3Code": "MOP",
+    "name": "PATACA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "MOP$"
+  },
+  {
+    "alpha3Code": "MRO",
+    "name": "OUGUIYA"
+  },
+  {
+    "alpha3Code": "MTL",
+    "name": "LIRA MALTESA"
+  },
+  {
+    "alpha3Code": "MUR",
+    "name": "RUPIA DAS MAURÍCIAS",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Rs."
+  },
+  {
+    "alpha3Code": "MVR",
+    "name": "RUFYAA DAS MALDIVAS",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "MRf"
+  },
+  {
+    "alpha3Code": "MWK",
+    "name": "KWACHA (MALAWI)",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "MK"
+  },
+  {
+    "alpha3Code": "MXN",
+    "name": "PESO MEXICANO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "MX$"
+  },
+  {
+    "alpha3Code": "MYR",
+    "name": "RINGGIT DA MALÁSIA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "RM"
+  },
+  {
+    "alpha3Code": "MZM",
+    "name": "METICAL (até 2006-06-30)"
+  },
+  {
+    "alpha3Code": "MZN",
+    "name": "METICAL DE MOÇAMBIQUE",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "MTn"
+  },
+  {
+    "alpha3Code": "NAD",
+    "name": "DÓLAR DA NAMÍBIA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "N$"
+  },
+  {
+    "alpha3Code": "NGN",
+    "name": "NAIRA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "₦"
+  },
+  {
+    "alpha3Code": "NIO",
+    "name": "CÓRDOBA OURO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "C$"
+  },
+  {
+    "alpha3Code": "NLG",
+    "name": "FLORIM HOLANDÊS"
+  },
+  {
+    "alpha3Code": "NOK",
+    "name": "COROA NORUEGUESA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "kr"
+  },
+  {
+    "alpha3Code": "NPR",
+    "name": "RUPIA DO NEPAL",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Rs."
+  },
+  {
+    "alpha3Code": "NZD",
+    "name": "DÓLAR NEO-ZELANDÊS",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "NZ$"
+  },
+  {
+    "alpha3Code": "OMR",
+    "name": "RIAL OMANI",
+    "decimals": 3,
+    "numberToMajor": 1000,
+    "symbol": "OR"
+  },
+  {
+    "alpha3Code": "PAB",
+    "name": "BALBOA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "B/."
+  },
+  {
+    "alpha3Code": "PEN",
+    "name": "SOL (NOVO)",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "S/."
+  },
+  {
+    "alpha3Code": "PGK",
+    "name": "KINA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "K"
+  },
+  {
+    "alpha3Code": "PHP",
+    "name": "PESO FILIPINO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "₱"
+  },
+  {
+    "alpha3Code": "PKR",
+    "name": "RUPIA DO PAQUISTÃO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Rs."
+  },
+  {
+    "alpha3Code": "PLN",
+    "name": "ZLOTY",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "zł"
+  },
+  {
+    "alpha3Code": "PYG",
+    "name": "GUARANI",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "₲"
+  },
+  {
+    "alpha3Code": "QAR",
+    "name": "RIAL DO QATAR",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "QR"
+  },
+  {
+    "alpha3Code": "ROL",
+    "name": "LEU DA ROMÉNIA (até 2005-06-30)"
+  },
+  {
+    "alpha3Code": "RON",
+    "name": "NOVO LEU DA ROMÉNIA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "L"
+  },
+  {
+    "alpha3Code": "RSD",
+    "name": "DINAR SÉRVIO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "din"
+  },
+  {
+    "alpha3Code": "RUB",
+    "name": "RUBLO RUSSO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "₽"
+  },
+  {
+    "alpha3Code": "RUR",
+    "name": "RUBLO RUSSO (até 2004-01-31)"
+  },
+  {
+    "alpha3Code": "RWF",
+    "name": "FRANCO DO RUANDA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "FRw"
+  },
+  {
+    "alpha3Code": "SAR",
+    "name": "RIAL SAUDITA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "SR"
+  },
+  {
+    "alpha3Code": "SBD",
+    "name": "DÓLAR DE SALOMÃO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "SI$"
+  },
+  {
+    "alpha3Code": "SCR",
+    "name": "RUPIA DAS SEYCHELLES",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Rs."
+  },
+  {
+    "alpha3Code": "SDD",
+    "name": "DINAR SUDÂNES"
+  },
+  {
+    "alpha3Code": "SEK",
+    "name": "COROA SUECA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "kr"
+  },
+  {
+    "alpha3Code": "SGD",
+    "name": "DÓLAR DE SINGAPURA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "S$"
+  },
+  {
+    "alpha3Code": "SIT",
+    "name": "TOLAR DA ESLOVÉNIA"
+  },
+  {
+    "alpha3Code": "SKK",
+    "name": "COROA ESLOVACA (até 2008-12-31)"
+  },
+  {
+    "alpha3Code": "SLL",
+    "name": "LEONE",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Le"
+  },
+  {
+    "alpha3Code": "SOS",
+    "name": "XELIM DA SOMÁLIA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Sh.So."
+  },
+  {
+    "alpha3Code": "SRD",
+    "name": "DÓLAR DO SURINAME",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Sr$"
+  },
+  {
+    "alpha3Code": "SRG",
+    "name": "FLORIM DE SURINAME (até 2003-12-31)"
+  },
+  {
+    "alpha3Code": "STD",
+    "name": "DOBRA"
+  },
+  {
+    "alpha3Code": "SVC",
+    "name": "COLON DE EL SALVADOR",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "₡"
+  },
+  {
+    "alpha3Code": "SYP",
+    "name": "LIBRA DA SÍRIA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "LS"
+  },
+  {
+    "alpha3Code": "SZL",
+    "name": "LILANGENI",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "L"
+  },
+  {
+    "alpha3Code": "THB",
+    "name": "BAHT",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "฿"
+  },
+  {
+    "alpha3Code": "TJS",
+    "name": "SOMONI",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "SM"
+  },
+  {
+    "alpha3Code": "TMM",
+    "name": "MANAT DO TURQUEMENISTÃO (até 2008-12-31)"
+  },
+  {
+    "alpha3Code": "TMT",
+    "name": "NOVO MANAT DO TURQUEMENISTÃO (a partir de 2009-01-01)",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "m."
+  },
+  {
+    "alpha3Code": "TND",
+    "name": "DINAR TUNISINO",
+    "decimals": 3,
+    "numberToMajor": 1000,
+    "symbol": "DT"
+  },
+  {
+    "alpha3Code": "TOP",
+    "name": "PA'ANGA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "T$"
+  },
+  {
+    "alpha3Code": "TPE",
+    "name": "ESCUDO DE TIMOR"
+  },
+  {
+    "alpha3Code": "TRL",
+    "name": "LIRA TURCA (até 2005-12-31)"
+  },
+  {
+    "alpha3Code": "TRY",
+    "name": "LIRA TURCA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "TL"
+  },
+  {
+    "alpha3Code": "TTD",
+    "name": "DÓLAR DE TRINDADE E TOBAGO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "TT$"
+  },
+  {
+    "alpha3Code": "TWD",
+    "name": "DÓLAR DE TAIWAN (NOVO)",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "NT$"
+  },
+  {
+    "alpha3Code": "TZS",
+    "name": "XELIM DA TANZÂNIA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "TSh"
+  },
+  {
+    "alpha3Code": "UAH",
+    "name": "HRYVNIA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "₴"
+  },
+  {
+    "alpha3Code": "UGX",
+    "name": "XELIM UGANDÊS",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "USh"
+  },
+  {
+    "alpha3Code": "USD",
+    "name": "DÓLAR DOS E.U.A.",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "$"
+  },
+  {
+    "alpha3Code": "UYU",
+    "name": "PESO DO URUGUAI",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "$U"
+  },
+  {
+    "alpha3Code": "UZS",
+    "name": "SUM DO UZBEQUISTÃO",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "сум"
+  },
+  {
+    "alpha3Code": "VEB",
+    "name": "BOLÍVAR (até 2008-07-01)"
+  },
+  {
+    "alpha3Code": "VEF",
+    "name": "BOLIVAR FORTE (a partir de 2008-01-01)"
+  },
+  {
+    "alpha3Code": "VND",
+    "name": "DONG",
+    "decimals": 2,
+    "numberToMajor": 10,
+    "symbol": "₫"
+  },
+  {
+    "alpha3Code": "VUV",
+    "name": "VATU",
+    "decimals": 0,
+    "numberToMajor": null,
+    "symbol": "VT"
+  },
+  {
+    "alpha3Code": "WST",
+    "name": "TALA",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "T"
+  },
+  {
+    "alpha3Code": "XAF",
+    "name": "FRANCO CFA - B.E.A.C.",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Fr"
+  },
+  {
+    "alpha3Code": "XCD",
+    "name": "DÓLAR DAS CARAÍBAS ORIENTAIS",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "$"
+  },
+  {
+    "alpha3Code": "XOF",
+    "name": "FRANCO CFA - B.C.E.A.O.",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "₣"
+  },
+  {
+    "alpha3Code": "XPF",
+    "name": "FRANCO CFP",
+    "decimals": 0,
+    "numberToMajor": 100,
+    "symbol": "₣"
+  },
+  {
+    "alpha3Code": "YER",
+    "name": "RIAL DO YEMEN",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "YR"
+  },
+  {
+    "alpha3Code": "YUM",
+    "name": "DINAR JUGOSLAVO (até 2003-07-31)"
+  },
+  {
+    "alpha3Code": "ZAR",
+    "name": "RAND",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "R"
+  },
+  {
+    "alpha3Code": "ZWL",
+    "name": "DÓLAR DO ZIMBABWE (a partir de 2009-02-01)",
+    "decimals": 2,
+    "numberToMajor": 100,
+    "symbol": "Z$"
+  },
+  {
+    "alpha3Code": "ZWR",
+    "name": "DÓLAR DO ZIMBABWE (a partir de 2008-08-01 até 2009-06-30)"
+  },
+  {
+    "alpha3Code": "ZMK",
+    "name": "KWACHA (ZÂMBIA)"
+  },
+  {
+    "alpha3Code": "ZWD",
+    "name": "DÓLAR DO ZIMBABWE (até 2008-07-31)"
+  }
+]
