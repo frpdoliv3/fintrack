@@ -4,31 +4,30 @@ using FinTrack.Domain.Entities;
 using FinTrack.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FinTrack.Web.Controllers
+namespace FinTrack.Web.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class CountryController : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class CountryController : ControllerBase
+    private readonly ICountryRepository _countryRepository;
+
+    public CountryController(ICountryRepository countryRepository)
     {
-        private readonly ICountryRepository _countryRepository;
+        _countryRepository = countryRepository;
+    }
 
-        public CountryController(ICountryRepository countryRepository)
-        {
-            _countryRepository = countryRepository;
-        }
+    [HttpPost]
+    public async Task CreateCountry([FromBody] CreateCountryRequest createCountry)
+    {
+        await _countryRepository.AddCountry(createCountry.ToCountry());
+    }
 
-        [HttpPost]
-        public async Task CreateCountry([FromBody] CreateCountryRequest createCountry)
-        {
-            await _countryRepository.AddCountry(createCountry.ToCountry());
-        }
-
-        [HttpGet]
-        public IAsyncEnumerable<Country> ListCountries(
-            [FromQuery(Name = "page_number")] int pageNumber = 1, 
-            [FromQuery(Name = "page_size")] int pageSize = 10
-        ) {
-            return _countryRepository.ListCountries(pageNumber, pageSize);
-        }
+    [HttpGet]
+    public IAsyncEnumerable<Country> ListCountries(
+        [FromQuery(Name = "page_number")] int pageNumber = 1, 
+        [FromQuery(Name = "page_size")] int pageSize = 10
+    ) {
+        return _countryRepository.ListCountries(pageNumber, pageSize);
     }
 }

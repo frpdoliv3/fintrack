@@ -2,8 +2,11 @@ using FinTrack;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using System.Text.Json;
-using FinTrack.Persistence;
 using FinTrack.Application;
+using FinTrack.Persistence;
+using Microsoft.AspNetCore.Identity;
+using FinTrack.Persistence.Models;
+using FinTrack.Persistence.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ConfigurePersistenceApp(builder.Configuration);
 builder.Services.ConfigureApplication();
+
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication()
+    .AddBearerToken(IdentityConstants.BearerScheme);
+
+builder.Services
+    .AddIdentityCore<EFUser>()
+    .AddEntityFrameworkStores<FinTrackDbContext>()
+    .AddApiEndpoints();
 
 builder.Services.AddControllers(opts =>
 {
@@ -21,7 +33,6 @@ builder.Services.AddControllers(opts =>
     opts.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
 });
 
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

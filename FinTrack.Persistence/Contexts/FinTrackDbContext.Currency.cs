@@ -1,7 +1,7 @@
 ﻿using FinTrack.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace FinTrack.Persistence.Context
+namespace FinTrack.Persistence.Contexts
 {
     public partial class FinTrackDbContext
     {

@@ -4,15 +4,14 @@ using FluentValidation;
 using System.Reflection;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 
-namespace FinTrack.Application
+namespace FinTrack.Application;
+
+public static class ServiceExtensions
 {
-    public static class ServiceExtensions
+    public static void ConfigureApplication(this IServiceCollection services)
     {
-        public static void ConfigureApplication(this IServiceCollection services)
-        {
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddFluentValidationAutoValidation();
-            services.AddFluentValidationRulesToSwagger();
-        }
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        services.AddFluentValidationAutoValidation();
+        services.AddFluentValidationRulesToSwagger();
     }
 }
