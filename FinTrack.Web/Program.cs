@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using FinTrack.Persistence.Models;
 using FinTrack.Persistence.Contexts;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +40,7 @@ builder.Services.AddControllers(opts =>
 }).AddJsonOptions(opts =>
 {
     opts.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

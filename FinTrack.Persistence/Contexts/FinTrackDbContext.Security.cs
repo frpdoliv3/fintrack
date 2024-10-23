@@ -21,6 +21,16 @@ namespace FinTrack.Persistence.Contexts
                 .Property(s => s.Isin)
                 .HasMaxLength(12)
                 .IsFixedLength();
+
+            // NativeCurrency
+            modelBuilder.Entity<Security>()
+                .Property(s => s.NativeCurrency)
+                .IsRequired();
+
+            // CounterpartyCountry
+            modelBuilder.Entity<Security>()
+                .Property(s => s.CounterpartyCountry)
+                .IsRequired();
         }
     }
 }
