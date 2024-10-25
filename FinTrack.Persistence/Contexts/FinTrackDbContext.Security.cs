@@ -1,36 +1,46 @@
 ﻿using FinTrack.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace FinTrack.Persistence.Contexts
+namespace FinTrack.Persistence.Contexts;
+
+public partial class FinTrackDbContext
 {
-    public partial class FinTrackDbContext
+    private void SetupSecurityConstraints(ModelBuilder modelBuilder)
     {
-        private void SetupSecurityConstraints(ModelBuilder modelBuilder)
-        {
-            // Id
-            modelBuilder.Entity<Security>()
-                .HasKey(s => s.Id);
+        // Id
+        modelBuilder.Entity<Security>()
+            .HasKey(s => s.Id);
 
-            // Name
-            modelBuilder.Entity<Security>()
-                .Property(s => s.Name)
-                .IsRequired();
+        // Name
+        modelBuilder.Entity<Security>()
+            .Property(s => s.Name)
+            .IsRequired();
 
-            // Isin
-            modelBuilder.Entity<Security>()
-                .Property(s => s.Isin)
-                .HasMaxLength(12)
-                .IsFixedLength();
+        // Isin
+        modelBuilder.Entity<Security>()
+            .Property(s => s.Isin)
+            .HasMaxLength(12)
+            .IsFixedLength();
 
-            // NativeCurrency
-            modelBuilder.Entity<Security>()
-                .Property(s => s.NativeCurrency)
-                .IsRequired();
+        // NativeCurrency
+        modelBuilder.Entity<Security>()
+            .HasOne(s => s.NativeCurrency)
+            .WithMany()
+            .HasForeignKey("NativeCurrencyId")
+            .IsRequired();
 
-            // CounterpartyCountry
-            modelBuilder.Entity<Security>()
-                .Property(s => s.CounterpartyCountry)
-                .IsRequired();
-        }
+        // CounterpartyCountry
+        modelBuilder.Entity<Security>()
+            .HasOne(s => s.CounterpartyCountry)
+            .WithMany()
+            .HasForeignKey("CounterpartyCountryId")
+            .IsRequired(false);
+
+        // SourceCountry
+        modelBuilder.Entity<Security>()
+            .HasOne(s => s.SourceCountry)
+            .WithMany()
+            .HasForeignKey("SourceCountryId")
+            .IsRequired(false);
     }
 }

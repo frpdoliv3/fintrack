@@ -11,4 +11,5 @@ public class Operation
     public required uint Quantiy { get; set; } = 1;
     public decimal ForeignTaxes { get; set; } = 0;
     public required decimal ExpensesAndCharges { get; set; }
+    public Security Security { get; set; } = null!;
 }

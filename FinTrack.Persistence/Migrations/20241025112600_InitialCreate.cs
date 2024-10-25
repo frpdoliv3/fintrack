@@ -188,6 +188,65 @@ namespace FinTrack.Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Security",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Isin = table.Column<string>(type: "nchar(12)", fixedLength: true, maxLength: 12, nullable: false),
+                    NativeCurrencyId = table.Column<long>(type: "bigint", nullable: false),
+                    CounterpartyCountryId = table.Column<long>(type: "bigint", nullable: true),
+                    SourceCountryId = table.Column<long>(type: "bigint", nullable: true),
+                    IssuingNIF = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Security", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Security_Countries_CounterpartyCountryId",
+                        column: x => x.CounterpartyCountryId,
+                        principalTable: "Countries",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Security_Countries_SourceCountryId",
+                        column: x => x.SourceCountryId,
+                        principalTable: "Countries",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Security_Currencies_NativeCurrencyId",
+                        column: x => x.NativeCurrencyId,
+                        principalTable: "Currencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Operations",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OperationType = table.Column<int>(type: "int", nullable: false),
+                    OperationDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    Value = table.Column<decimal>(type: "decimal(19,4)", nullable: false),
+                    Quantiy = table.Column<long>(type: "bigint", nullable: false),
+                    ForeignTaxes = table.Column<decimal>(type: "decimal(19,4)", nullable: false),
+                    ExpensesAndCharges = table.Column<decimal>(type: "decimal(19,4)", nullable: false),
+                    SecurityId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Operations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Operations_Security_SecurityId",
+                        column: x => x.SecurityId,
+                        principalTable: "Security",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -256,6 +315,26 @@ namespace FinTrack.Persistence.Migrations
                 table: "Currencies",
                 column: "Name",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Operations_SecurityId",
+                table: "Operations",
+                column: "SecurityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Security_CounterpartyCountryId",
+                table: "Security",
+                column: "CounterpartyCountryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Security_NativeCurrencyId",
+                table: "Security",
+                column: "NativeCurrencyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Security_SourceCountryId",
+                table: "Security",
+                column: "SourceCountryId");
         }
 
         /// <inheritdoc />
@@ -277,16 +356,22 @@ namespace FinTrack.Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Countries");
-
-            migrationBuilder.DropTable(
-                name: "Currencies");
+                name: "Operations");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Security");
+
+            migrationBuilder.DropTable(
+                name: "Countries");
+
+            migrationBuilder.DropTable(
+                name: "Currencies");
         }
     }
 }

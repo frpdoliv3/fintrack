@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinTrack.Persistence.Migrations
 {
     [DbContext(typeof(FinTrackDbContext))]
-    [Migration("20241022151726_InitialCreate")]
+    [Migration("20241025112600_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -101,6 +101,83 @@ namespace FinTrack.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Currencies");
+                });
+
+            modelBuilder.Entity("FinTrack.Domain.Entities.Operation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("ExpensesAndCharges")
+                        .HasColumnType("decimal(19,4)");
+
+                    b.Property<decimal>("ForeignTaxes")
+                        .HasColumnType("decimal(19,4)");
+
+                    b.Property<DateOnly>("OperationDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("OperationType")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Quantiy")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SecurityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Value")
+                        .HasColumnType("decimal(19,4)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SecurityId");
+
+                    b.ToTable("Operations");
+                });
+
+            modelBuilder.Entity("FinTrack.Domain.Entities.Security", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("CounterpartyCountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Isin")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nchar(12)")
+                        .IsFixedLength();
+
+                    b.Property<string>("IssuingNIF")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("NativeCurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("SourceCountryId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CounterpartyCountryId");
+
+                    b.HasIndex("NativeCurrencyId");
+
+                    b.HasIndex("SourceCountryId");
+
+                    b.ToTable("Security");
                 });
 
             modelBuilder.Entity("FinTrack.Persistence.Models.EFUser", b =>
@@ -301,6 +378,40 @@ namespace FinTrack.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("FinTrack.Domain.Entities.Operation", b =>
+                {
+                    b.HasOne("FinTrack.Domain.Entities.Security", "Security")
+                        .WithMany("Operations")
+                        .HasForeignKey("SecurityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Security");
+                });
+
+            modelBuilder.Entity("FinTrack.Domain.Entities.Security", b =>
+                {
+                    b.HasOne("FinTrack.Domain.Entities.Country", "CounterpartyCountry")
+                        .WithMany()
+                        .HasForeignKey("CounterpartyCountryId");
+
+                    b.HasOne("FinTrack.Domain.Entities.Currency", "NativeCurrency")
+                        .WithMany()
+                        .HasForeignKey("NativeCurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinTrack.Domain.Entities.Country", "SourceCountry")
+                        .WithMany()
+                        .HasForeignKey("SourceCountryId");
+
+                    b.Navigation("CounterpartyCountry");
+
+                    b.Navigation("NativeCurrency");
+
+                    b.Navigation("SourceCountry");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -350,6 +461,11 @@ namespace FinTrack.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("FinTrack.Domain.Entities.Security", b =>
+                {
+                    b.Navigation("Operations");
                 });
 #pragma warning restore 612, 618
         }

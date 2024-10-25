@@ -14,6 +14,7 @@ public partial class FinTrackDbContext : IdentityDbContext<EFUser>
         base.OnModelCreating(modelBuilder);
         SetupCountryConstraints(modelBuilder);
         SetupCurrencyConstraints(modelBuilder);
-        //SetupSecurityConstraints(modelBuilder);
+        SetupSecurityConstraints(modelBuilder);
+        SetupOperationConstraints(modelBuilder);
     }
 }
