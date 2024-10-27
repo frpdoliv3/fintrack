@@ -12,7 +12,7 @@ public class CurrencyController : ControllerBase
 {
     private readonly ICurrencyRepository _currencyRepository;
 
-    private const string GET_CURRENCY_BY_ID_NAME = "GetCurrencyById";
+    private const string GetCurrencyByIdName = "GetCurrencyById";
 
     public CurrencyController(ICurrencyRepository currencyRepository)
     {
@@ -24,16 +24,16 @@ public class CurrencyController : ControllerBase
     {
         var createdCurrency = await _currencyRepository.AddCurrency(currencyRequest.ToCurrency());
         return Results.CreatedAtRoute(
-            GET_CURRENCY_BY_ID_NAME,
+            GetCurrencyByIdName,
             new { id = createdCurrency.Id },
             createdCurrency
         );
     }
 
-    [HttpGet("{id}", Name = GET_CURRENCY_BY_ID_NAME)]
+    [HttpGet("{id}", Name = GetCurrencyByIdName)]
     public async Task<IResult> GetCurrencyById([FromRoute] uint id)
     {
-        var currency = await _currencyRepository.FindCurrencyById(id);
+        var currency = await _currencyRepository.GetCurrencyById(id);
         if (currency == null)
         {
             return Results.NotFound();

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinTrack.Persistence.Migrations
 {
     [DbContext(typeof(FinTrackDbContext))]
-    [Migration("20241025112600_InitialCreate")]
+    [Migration("20241025175149_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -177,7 +177,7 @@ namespace FinTrack.Persistence.Migrations
 
                     b.HasIndex("SourceCountryId");
 
-                    b.ToTable("Security");
+                    b.ToTable("Securities");
                 });
 
             modelBuilder.Entity("FinTrack.Persistence.Models.EFUser", b =>

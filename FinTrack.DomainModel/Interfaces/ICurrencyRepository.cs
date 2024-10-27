@@ -7,5 +7,5 @@ public interface ICurrencyRepository
 {
     public Task<bool> Exists(Expression<Func<Currency, bool>> predicate);
     public Task<Currency> AddCurrency(Currency currency);
-    public Task<Currency?> FindCurrencyById(uint id);
+    public Task<Currency?> GetCurrencyById(uint id);
 }

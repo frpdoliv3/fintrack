@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FinTrack.Persistence.Contexts;
 public partial class FinTrackDbContext
 {
-    public DbSet<Operation> Operations { get; set; }
+    public DbSet<Operation> Operations => Set<Operation>();
 
     private void SetupOperationConstraints(ModelBuilder modelBuilder)
     {

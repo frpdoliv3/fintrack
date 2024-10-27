@@ -5,6 +5,8 @@ namespace FinTrack.Persistence.Contexts;
 
 public partial class FinTrackDbContext
 {
+    public DbSet<Security> Securities => Set<Security>();
+    
     private void SetupSecurityConstraints(ModelBuilder modelBuilder)
     {
         // Id

@@ -174,7 +174,7 @@ namespace FinTrack.Persistence.Migrations
 
                     b.HasIndex("SourceCountryId");
 
-                    b.ToTable("Security");
+                    b.ToTable("Securities");
                 });
 
             modelBuilder.Entity("FinTrack.Persistence.Models.EFUser", b =>

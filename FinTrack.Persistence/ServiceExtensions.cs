@@ -18,5 +18,6 @@ public static class ServiceExtensions
         services.AddScoped<ICountryRepository, EFCountryRepository>();
         services.AddScoped<ICurrencyRepository, EFCurrencyRepository>();
         services.AddScoped<IAuthRepository, EFAuthRepository>();
+        services.AddScoped<ISecurityRepository, EFSecurityRepository>();
     }
 }

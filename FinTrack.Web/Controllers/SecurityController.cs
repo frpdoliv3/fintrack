@@ -1,4 +1,6 @@
-﻿using FinTrack.Application.Security.CreateSecurity;
+﻿using FinTrack.Application.Security;
+using FinTrack.Application.Security.CreateSecurity;
+using FinTrack.Domain.Interfaces;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,16 +10,17 @@ namespace FinTrack.Web.Controllers;
 [Route("[controller]")]
 public class SecurityController
 {
-    private readonly CreateSecurityValidator _validator;
+    private readonly SecurityService _securityService;
 
-    public SecurityController(CreateSecurityValidator validator)
+    public SecurityController(SecurityService securityService)
     {
-        _validator = validator;
+        _securityService = securityService;
     }
 
     [HttpPost]
-    public async Task<ValidationResult> CreateSecurity([FromBody] CreateSecurityRequest security)
+    public async Task<IResult> CreateSecurity([FromBody] CreateSecurityRequest security)
     {
-        return await _validator.ValidateAsync(security);
+        await _securityService.AddSecurity(security);
+        return Results.Created();
     }
 }

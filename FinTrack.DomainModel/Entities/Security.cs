@@ -2,12 +2,12 @@
 
 public class Security
 {
-    public long Id { get; set; }
-    public string Name { get; set; } = null!;
-    public string Isin { get; set; } = null!;
-    public Currency NativeCurrency { get; set; } = null!;
-    public Country? CounterpartyCountry { get; set; }
-    public Country? SourceCountry { get; set; }
-    public string? IssuingNIF { get; set; }
-    public ICollection<Operation> Operations { get; } = new List<Operation>();
+    public long Id { get; init; }
+    public string Name { get; init; } = null!;
+    public string Isin { get; init; } = null!;
+    public Currency NativeCurrency { get; init; } = null!;
+    public Country? CounterpartyCountry { get; init; }
+    public Country? SourceCountry { get; init; }
+    public string? IssuingNIF { get; init; }
+    public ICollection<Operation> Operations { get; init; } = new List<Operation>();
 }

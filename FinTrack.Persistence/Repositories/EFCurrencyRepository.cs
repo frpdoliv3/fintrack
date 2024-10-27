@@ -27,7 +27,7 @@ internal class EFCurrencyRepository : ICurrencyRepository
         return await _context.Currencies.AnyAsync(predicate);
     }
 
-    public async Task<Currency?> FindCurrencyById(uint id)
+    public async Task<Currency?> GetCurrencyById(uint id)
     {
         return await _context.Currencies.FindAsync(id);
     }

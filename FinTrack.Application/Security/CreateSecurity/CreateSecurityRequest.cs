@@ -2,13 +2,13 @@
 
 namespace FinTrack.Application.Security.CreateSecurity;
 
-public class CreateSecurityRequest
+public record CreateSecurityRequest
 {
-    public string Name { get; set; } = null!;
-    public string Isin { get; set; } = null!;
-    public uint NativeCurrency { get; set; }
-    public uint? CounterpartyCountry { get; set; }
-    public uint? SourceCountry { get; set; }
-    public string? IssuingNIF { get; set; }
-    public List<CreateOperationRequest> Operations { get; set; } = new List<CreateOperationRequest>();
+    public string Name { get; init; } = null!;
+    public string Isin { get; init; } = null!;
+    public uint NativeCurrency { get; init; }
+    public uint? CounterpartyCountry { get; init; }
+    public uint? SourceCountry { get; init; }
+    public string? IssuingNIF { get; init; }
+    public List<CreateOperationRequest> Operations { get; init; } = new();
 }
