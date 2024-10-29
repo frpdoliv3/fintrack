@@ -1,6 +1,7 @@
-﻿using FluentValidation;
+﻿using FinTrack.Application.Utils;
+using FluentValidation;
 
-namespace FinTrack.Application.Operation;
+namespace FinTrack.Application.Operation.CreateOperation;
 
 public class CreateOperationValidator: ValidatorBase<CreateOperationRequest>
 {

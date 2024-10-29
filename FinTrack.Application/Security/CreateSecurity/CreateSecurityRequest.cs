@@ -1,14 +1,18 @@
 ﻿using FinTrack.Application.Operation;
+using FinTrack.Application.Operation.CreateOperation;
+using FinTrack.Application.Utils;
 
 namespace FinTrack.Application.Security.CreateSecurity;
 
-public record CreateSecurityRequest
+public record CreateSecurityRequest(
+    string Name,
+    string Isin,
+    uint NativeCurrency,
+    List<CreateOperationRequest> Operations,
+    uint? CounterpartyCountry,
+    uint? SourceCountry,
+    string? IssuingNIF
+) : IHasOwnerId
 {
-    public string Name { get; init; } = null!;
-    public string Isin { get; init; } = null!;
-    public uint NativeCurrency { get; init; }
-    public uint? CounterpartyCountry { get; init; }
-    public uint? SourceCountry { get; init; }
-    public string? IssuingNIF { get; init; }
-    public List<CreateOperationRequest> Operations { get; init; } = new();
+    public string? OwnerId { get; set; }
 }

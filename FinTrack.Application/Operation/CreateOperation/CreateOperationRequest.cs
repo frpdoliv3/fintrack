@@ -1,17 +1,16 @@
 ﻿using FinTrack.Domain.Entities;
 using Entities = FinTrack.Domain.Entities;
 
-namespace FinTrack.Application.Operation;
+namespace FinTrack.Application.Operation.CreateOperation;
 
-public class CreateOperationRequest
-{
-    public required OperationType OperationType { get; set; }
-    public required DateOnly OperationDate { get; set; }
-    public required decimal Value { get; set; }
-    public required int Quantity { get; set; }
-    public decimal ForeignTaxes { get; set; } = decimal.Zero;
-    public decimal ExpensesAndCharges { get; set; } = decimal.Zero;
-
+public record CreateOperationRequest(
+    OperationType OperationType,
+    DateOnly OperationDate,
+    decimal Value,
+    int Quantity,
+    decimal ForeignTaxes,
+    decimal ExpensesAndCharges
+) {
     public Entities.Operation ToOperation()
     {
         return new Entities.Operation

@@ -1,4 +1,5 @@
-﻿using FinTrack.Domain.Interfaces;
+﻿using FinTrack.Application.Operation.CreateOperation;
+using FinTrack.Domain.Interfaces;
 using Entities = FinTrack.Domain.Entities; 
 
 namespace FinTrack.Application.Security.CreateSecurity;
@@ -35,9 +36,24 @@ public class CreateSecurityMapper
             CounterpartyCountry = counterpartyCountry,
             SourceCountry = sourceCountry,
             IssuingNIF = createSecurityRequest.IssuingNIF,
+            OwnerId = createSecurityRequest.OwnerId!,
             Operations = createSecurityRequest.Operations
                 .Select(o => o.ToOperation())
                 .ToList()
         };
+    }
+
+    public CreateSecurityResponse ToCreateSecurityResponse(Entities.Security security)
+    {
+        return new CreateSecurityResponse(
+            Id: security.Id,
+            Name: security.Name,
+            Isin: security.Isin,
+            NativeCurrency: security.NativeCurrency,
+            Operations: security.Operations.Select(o => o.ToOperationResponse()).ToList(),
+            CounterpartyCountry: security.CounterpartyCountry,
+            SourceCountry: security.SourceCountry,
+            IssuingNIF: security.IssuingNIF
+        );
     }
 }

@@ -1,16 +1,19 @@
 ﻿using CheckDigits.Net;
 using FinTrack.Application.Operation;
+using FinTrack.Application.Operation.CreateOperation;
+using FinTrack.Application.Utils;
 using FinTrack.Domain.Entities;
 using FinTrack.Domain.Interfaces;
 using FluentValidation;
 
 namespace FinTrack.Application.Security.CreateSecurity;
 
-public sealed class CreateSecurityValidator: ValidatorBase<CreateSecurityRequest> 
+public sealed class CreateSecurityValidator: HasOwnerIdValidator<CreateSecurityRequest> 
 {
     public CreateSecurityValidator(
         ICountryRepository countryRepo,
-        ICurrencyRepository currencyRepo
+        ICurrencyRepository currencyRepo,
+        ISecurityRepository securityRepo
     ) {
         RuleFor(s => s.Name)
             .NotEmpty();
@@ -22,7 +25,14 @@ public sealed class CreateSecurityValidator: ValidatorBase<CreateSecurityRequest
                 var isinAlgorithm = Algorithms.Isin;
                 return isinAlgorithm.Validate(request);
             }).WithMessage("Invalid ISIN");
-
+        
+        RuleFor(s => s.Isin)
+            .MustAsync(async (request, isin, _) =>
+            {
+                return !await securityRepo
+                    .Exists(s => s.Isin == isin && s.OwnerId == request.OwnerId);
+            });
+        
         RuleFor(s => s.NativeCurrency)
             .NotEmpty()
             .MustAsync(async (request, cancellation) =>
@@ -52,6 +62,7 @@ public sealed class CreateSecurityValidator: ValidatorBase<CreateSecurityRequest
 
         RuleFor(s => s.IssuingNIF)
             .NotEmpty()
+            .Must(IsValidNIF.Validate!)
             .When(s => s.SourceCountry == null);
 
         RuleFor(s => s.IssuingNIF)
@@ -62,23 +73,25 @@ public sealed class CreateSecurityValidator: ValidatorBase<CreateSecurityRequest
             .Must(ValidateOperations);
     }
 
-    public static bool ValidateOperations(List<CreateOperationRequest> operations)
+    private static bool ValidateOperations(List<CreateOperationRequest> operations)
     {
-        operations.Sort((a, b) =>
-        {
-            return a.OperationDate.CompareTo(b.OperationDate);
-        });
+        operations.Sort((a, b) => 
+            a.OperationDate.CompareTo(b.OperationDate));
         decimal curQuantity = 0;
         foreach (CreateOperationRequest operation in operations)
         {
-            if (operation.OperationType == OperationType.Sell)
+            switch (operation.OperationType)
             {
-                curQuantity -= operation.Quantity;
+                case OperationType.Sell:
+                    curQuantity -= operation.Quantity;
+                    break;
+                case OperationType.Buy:
+                    curQuantity += operation.Quantity;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-            if (operation.OperationType == OperationType.Buy)
-            {
-                curQuantity += operation.Quantity;
-            }
+
             if (curQuantity < 0)
             {
                 return false;

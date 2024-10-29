@@ -1,4 +1,5 @@
-﻿using FinTrack.Domain.Interfaces;
+﻿using FinTrack.Application.Utils;
+using FinTrack.Domain.Interfaces;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 

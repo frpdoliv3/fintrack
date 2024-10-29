@@ -1,8 +1,8 @@
 ﻿using FinTrack.Application.Authentication.LoginUser;
-using FinTrack.Application.Authentication.RegisterUser;
 using FinTrack.Domain.Entities;
 using FinTrack.Domain.Interfaces;
 using FinTrack.Persistence.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,12 +22,14 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("[action]")]
+    [AllowAnonymous]
     public async Task Register([FromBody] CreateUser registerRequest)
     {
         await _authRepo.RegisterUser(registerRequest);
     }
 
     [HttpPost("[action]")]
+    [AllowAnonymous]
     public async Task Login([FromBody] LoginUserRequest userIdentity)
     {
         var user = await _authRepo.FindUserByEmail(userIdentity.Identity);

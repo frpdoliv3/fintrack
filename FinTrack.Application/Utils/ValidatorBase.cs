@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace FinTrack.Application;
+namespace FinTrack.Application.Utils;
 
 public class ValidatorBase<T>: AbstractValidator<T>
 {
-    public ValidatorBase() 
+    protected ValidatorBase() 
     {
         ValidatorOptions.Global.PropertyNameResolver = (type, memberInfo, lambda) =>
         {

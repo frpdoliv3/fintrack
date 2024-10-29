@@ -1,4 +1,5 @@
-﻿using FinTrack.Domain.Entities;
+﻿using FinTrack.Application.Utils;
+using FinTrack.Domain.Entities;
 using FluentValidation;
 
 namespace FinTrack.Application.Authentication.RegisterUser;
