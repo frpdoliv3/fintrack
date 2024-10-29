@@ -192,18 +192,25 @@ namespace FinTrack.Persistence.Migrations
                 name: "Securities",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Isin = table.Column<string>(type: "nchar(12)", fixedLength: true, maxLength: 12, nullable: false),
                     NativeCurrencyId = table.Column<long>(type: "bigint", nullable: false),
                     CounterpartyCountryId = table.Column<long>(type: "bigint", nullable: true),
                     SourceCountryId = table.Column<long>(type: "bigint", nullable: true),
-                    IssuingNIF = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    IssuingNIF = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Securities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Securities_AspNetUsers_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Securities_Countries_CounterpartyCountryId",
                         column: x => x.CounterpartyCountryId,
@@ -234,7 +241,7 @@ namespace FinTrack.Persistence.Migrations
                     Quantiy = table.Column<long>(type: "bigint", nullable: false),
                     ForeignTaxes = table.Column<decimal>(type: "decimal(19,4)", nullable: false),
                     ExpensesAndCharges = table.Column<decimal>(type: "decimal(19,4)", nullable: false),
-                    SecurityId = table.Column<long>(type: "bigint", nullable: false)
+                    SecurityId = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -332,6 +339,11 @@ namespace FinTrack.Persistence.Migrations
                 column: "NativeCurrencyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Securities_OwnerId",
+                table: "Securities",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Securities_SourceCountryId",
                 table: "Securities",
                 column: "SourceCountryId");
@@ -362,10 +374,10 @@ namespace FinTrack.Persistence.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Securities");
 
             migrationBuilder.DropTable(
-                name: "Securities");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Countries");

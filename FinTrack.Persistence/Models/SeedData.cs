@@ -7,9 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 
 namespace FinTrack.Persistence.Models;
-public class SeedData
+internal class SeedData
 {
-    private readonly static string[] Roles = { "Admin" };
+    private static readonly string[] Roles = ["Admin"];
 
     private readonly string _resourceBasePath;
     private readonly IAuthRepository _authRepo;

@@ -10,20 +10,14 @@ using FinTrack.Persistence.Contexts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Text.Json.Serialization;
+using FinTrack.Web;
+using FinTrack.Web.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.ConfigurePersistenceApp(builder.Configuration);
-builder.Services.ConfigureApplication();
-
-builder.Services.AddAuthorization(opts =>
-{
-    opts.FallbackPolicy = new AuthorizationPolicyBuilder()
-        .RequireAuthenticatedUser()
-        .Build();
-});
+builder.Services.AddAuthorization();
 builder.Services.AddAuthentication()
     .AddBearerToken(IdentityConstants.BearerScheme);
 
@@ -41,11 +35,16 @@ builder.Services.AddControllers(opts =>
 {
     opts.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    opts.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Add other layer's services
+builder.Services.ConfigurePersistenceApp(builder.Configuration);
+builder.Services.ConfigureApplication();
 
 var app = builder.Build();
 
@@ -54,24 +53,17 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    MigrationService.DeleteDatabase(app.Services).Wait();
+    MigrationService.ApplyMigrationsAndSeed(services, "Resources").Wait();
 }
 
 app.UseAuthorization();
 
-if (app.Environment.IsDevelopment())
-{
-    app.MapControllers().AllowAnonymous();
-} else
-{
-    app.MapControllers();
-}
+app.MapControllers();
 
 //app.MapIdentityApi<EFUser>();
-
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    new SeedData(services, "Resources").Initialize().Wait();
-}
 
 app.Run();

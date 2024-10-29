@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinTrack.Persistence.Migrations
 {
     [DbContext(typeof(FinTrackDbContext))]
-    [Migration("20241025175149_InitialCreate")]
+    [Migration("20241029153908_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -126,8 +126,8 @@ namespace FinTrack.Persistence.Migrations
                     b.Property<long>("Quantiy")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("SecurityId")
-                        .HasColumnType("bigint");
+                    b.Property<decimal>("SecurityId")
+                        .HasColumnType("decimal(20,0)");
 
                     b.Property<decimal>("Value")
                         .HasColumnType("decimal(19,4)");
@@ -141,11 +141,11 @@ namespace FinTrack.Persistence.Migrations
 
             modelBuilder.Entity("FinTrack.Domain.Entities.Security", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<decimal>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("decimal(20,0)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
 
                     b.Property<long?>("CounterpartyCountryId")
                         .HasColumnType("bigint");
@@ -166,6 +166,10 @@ namespace FinTrack.Persistence.Migrations
                     b.Property<long>("NativeCurrencyId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<long?>("SourceCountryId")
                         .HasColumnType("bigint");
 
@@ -174,6 +178,8 @@ namespace FinTrack.Persistence.Migrations
                     b.HasIndex("CounterpartyCountryId");
 
                     b.HasIndex("NativeCurrencyId");
+
+                    b.HasIndex("OwnerId");
 
                     b.HasIndex("SourceCountryId");
 
@@ -398,6 +404,12 @@ namespace FinTrack.Persistence.Migrations
                     b.HasOne("FinTrack.Domain.Entities.Currency", "NativeCurrency")
                         .WithMany()
                         .HasForeignKey("NativeCurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinTrack.Persistence.Models.EFUser", null)
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
