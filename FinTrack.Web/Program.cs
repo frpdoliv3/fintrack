@@ -7,8 +7,6 @@ using FinTrack.Persistence;
 using Microsoft.AspNetCore.Identity;
 using FinTrack.Persistence.Models;
 using FinTrack.Persistence.Contexts;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Text.Json.Serialization;
 using FinTrack.Web;
 using FinTrack.Web.Filters;
@@ -29,6 +27,8 @@ builder.Services
 
 builder.Services.AddControllers(opts =>
 {
+    opts.Filters.Add<LockoutAuthorizationPolicy>();
+    opts.Filters.Add<UserIdActionFilter>(order: int.MinValue);
     opts.ModelMetadataDetailsProviders.Add(new SystemTextJsonValidationMetadataProvider());
     opts.Conventions.Add(new RouteTokenTransformerConvention(new PascalToKebabParameterTransformer()));
 }).AddJsonOptions(opts =>

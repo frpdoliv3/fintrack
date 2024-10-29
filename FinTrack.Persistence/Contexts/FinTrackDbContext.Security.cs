@@ -1,4 +1,5 @@
 ﻿using FinTrack.Domain.Entities;
+using FinTrack.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinTrack.Persistence.Contexts;
@@ -44,5 +45,12 @@ public partial class FinTrackDbContext
             .WithMany()
             .HasForeignKey("SourceCountryId")
             .IsRequired(false);
+        
+        // Ownership
+        modelBuilder.Entity<EFUser>()
+            .HasMany<Security>()
+            .WithOne()
+            .HasForeignKey("OwnerId")
+            .IsRequired();
     }
 }

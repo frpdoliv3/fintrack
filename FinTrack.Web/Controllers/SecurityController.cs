@@ -1,4 +1,5 @@
-﻿using FinTrack.Application.Security;
+﻿using System.Security.Claims;
+using FinTrack.Application.Security;
 using FinTrack.Application.Security.CreateSecurity;
 using FinTrack.Domain.Interfaces;
 using FluentValidation.Results;
@@ -8,19 +9,30 @@ namespace FinTrack.Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class SecurityController
+public class SecurityController: ControllerBase
 {
+    private const string GetSecurityByIdName = "GetSecurityById";
+    
     private readonly SecurityService _securityService;
 
-    public SecurityController(SecurityService securityService)
-    {
+    public SecurityController(SecurityService securityService) {
         _securityService = securityService;
     }
 
     [HttpPost]
     public async Task<IResult> CreateSecurity([FromBody] CreateSecurityRequest security)
     {
-        await _securityService.AddSecurity(security);
-        return Results.Created();
+        var createdSecurity = await _securityService.AddSecurity(security);
+        return Results.CreatedAtRoute(
+            GetSecurityByIdName,
+            new { id = createdSecurity.Id },
+            createdSecurity
+        );
+    }
+
+    [HttpGet("{id}", Name = GetSecurityByIdName)]
+    public async Task<IResult> GetSecurityById([FromRoute] uint id)
+    {
+        throw new NotImplementedException();
     }
 }

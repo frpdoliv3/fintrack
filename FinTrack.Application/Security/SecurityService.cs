@@ -1,5 +1,6 @@
 ﻿using FinTrack.Application.Security.CreateSecurity;
 using FinTrack.Domain.Interfaces;
+using Entities = FinTrack.Domain.Entities;
 
 namespace FinTrack.Application.Security;
 
@@ -14,9 +15,10 @@ public class SecurityService
         _securityRepo = securityRepo;
     }
 
-    public async Task AddSecurity(CreateSecurityRequest createSecurityRequest)
+    public async Task<CreateSecurityResponse> AddSecurity(CreateSecurityRequest createSecurityRequest)
     {
-        await _securityRepo
-            .AddSecurity(await _createSecurityMapper.ToSecurity(createSecurityRequest));
+        var domainSecurity = await _createSecurityMapper.ToSecurity(createSecurityRequest); 
+        var createdSecurity = await _securityRepo.AddSecurity(domainSecurity);
+        return _createSecurityMapper.ToCreateSecurityResponse(createdSecurity);
     }
 }

@@ -1,6 +1,8 @@
-﻿using FinTrack.Domain.Entities;
+﻿using System.Linq.Expressions;
+using FinTrack.Domain.Entities;
 using FinTrack.Domain.Interfaces;
 using FinTrack.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinTrack.Persistence.Repositories;
 internal class EFSecurityRepository: ISecurityRepository
@@ -17,5 +19,10 @@ internal class EFSecurityRepository: ISecurityRepository
         await _context.Securities.AddAsync(security);
         await _context.SaveChangesAsync();
         return security;
+    }
+    
+    public async Task<bool> Exists(Expression<Func<Security, bool>> predicate)
+    {
+        return await _context.Securities.AnyAsync(predicate);
     }
 }
