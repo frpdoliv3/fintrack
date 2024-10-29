@@ -27,6 +27,11 @@ internal class EFAuthRepository : IAuthRepository
         _context = context;
     }
 
+    public async Task<bool> ExistsWithId(string userId)
+    {
+        return await _userManager.Users.AnyAsync(u => u.Id == userId);
+    }
+
     public Task<bool> ExistsAnyUser()
     {
         return _context.Users.AnyAsync();
