@@ -33,6 +33,9 @@ public class SecurityController: ControllerBase
     [HttpGet("{id}", Name = GetSecurityByIdName)]
     public async Task<IResult> GetSecurityById([FromRoute] uint id)
     {
-        throw new NotImplementedException();
+        var fetchedSecurity = await _securityService.GetSecurityById(id);
+        return fetchedSecurity == null ? 
+            Results.NotFound() :
+            Results.Ok(fetchedSecurity);
     }
 }

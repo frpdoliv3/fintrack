@@ -1,4 +1,5 @@
 ﻿using FinTrack.Application.Security.CreateSecurity;
+using FinTrack.Application.Security.GetSecurity;
 using FinTrack.Domain.Interfaces;
 using Entities = FinTrack.Domain.Entities;
 
@@ -6,19 +7,25 @@ namespace FinTrack.Application.Security;
 
 public class SecurityService
 {
-    private readonly CreateSecurityMapper _createSecurityMapper;
+    private readonly SecurityMapper _securityMapper;
     private readonly ISecurityRepository _securityRepo;
     
-    public SecurityService(CreateSecurityMapper createSecurityMapper, ISecurityRepository securityRepo)
+    public SecurityService(SecurityMapper securityMapper, ISecurityRepository securityRepo)
     {
-        _createSecurityMapper = createSecurityMapper;
+        _securityMapper = securityMapper;
         _securityRepo = securityRepo;
     }
 
-    public async Task<CreateSecurityResponse> AddSecurity(CreateSecurityRequest createSecurityRequest)
+    public async Task<GetSecurityResponse> AddSecurity(CreateSecurityRequest createSecurityRequest)
     {
-        var domainSecurity = await _createSecurityMapper.ToSecurity(createSecurityRequest); 
+        var domainSecurity = await _securityMapper.ToSecurity(createSecurityRequest); 
         var createdSecurity = await _securityRepo.AddSecurity(domainSecurity);
-        return _createSecurityMapper.ToCreateSecurityResponse(createdSecurity);
+        return _securityMapper.ToGetSecurityResponse(createdSecurity);
+    }
+
+    public async Task<GetSecurityResponse?> GetSecurityById(ulong securityId)
+    {
+        var domainSecurity = await _securityRepo.GetSecurityById(securityId);
+        return domainSecurity == null ? null : _securityMapper.ToGetSecurityResponse(domainSecurity);
     }
 }

@@ -20,9 +20,16 @@ internal class EFSecurityRepository: ISecurityRepository
         await _context.SaveChangesAsync();
         return security;
     }
+
+    public async Task<Security?> GetSecurityById(ulong id)
+    {
+        return await _context.Securities
+            .FindAsync(id);
+    }
     
     public async Task<bool> Exists(Expression<Func<Security, bool>> predicate)
     {
-        return await _context.Securities.AnyAsync(predicate);
+        return await _context.Securities
+            .AnyAsync(predicate);
     }
 }

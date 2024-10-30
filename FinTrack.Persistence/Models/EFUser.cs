@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FinTrack.Persistence.Models;
 
-public sealed class EFUser: IdentityUser
+public class EFUser: IdentityUser
 {
     public User ToUser()
     {

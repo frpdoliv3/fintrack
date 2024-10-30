@@ -8,9 +8,9 @@ namespace FinTrack.Application.Country.CreateCountry;
 /*
  * Making this class internal breaks the reflection necessary to inject valitators into the request pipeline
  */
-public sealed class CreateCountryValidatior : ValidatorBase<CreateCountryRequest>
+public sealed class CreateCountryValidator : ValidatorBase<CreateCountryRequest>
 {
-    public CreateCountryValidatior(ICountryRepository countryRepository): base()
+    public CreateCountryValidator(ICountryRepository countryRepository): base()
     {
         RuleFor(x => x.Name)
             .NotEmpty()

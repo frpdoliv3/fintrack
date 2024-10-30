@@ -5,5 +5,6 @@ namespace FinTrack.Domain.Interfaces;
 public interface ISecurityRepository
 {
     public Task<Security> AddSecurity(Security security);
+    public Task<Security?> GetSecurityById(ulong id);
     public Task<bool> Exists(Expression<Func<Security, bool>> predicate);
 }

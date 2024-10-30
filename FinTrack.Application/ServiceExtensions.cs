@@ -16,7 +16,7 @@ public static class ServiceExtensions
         services.AddScoped<SecurityService>();
         
         //Mappers
-        services.AddScoped<CreateSecurityMapper>();
+        services.AddScoped<SecurityMapper>();
         
         // Validation Services
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());

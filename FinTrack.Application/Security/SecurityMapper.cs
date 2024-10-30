@@ -1,15 +1,16 @@
 ﻿using FinTrack.Application.Operation.CreateOperation;
+using FinTrack.Application.Security.GetSecurity;
 using FinTrack.Domain.Interfaces;
 using Entities = FinTrack.Domain.Entities; 
 
 namespace FinTrack.Application.Security.CreateSecurity;
 
-public class CreateSecurityMapper
+public class SecurityMapper
 {
     private readonly ICountryRepository _countryRepo;
     private readonly ICurrencyRepository _currencyRepo;
     
-    public CreateSecurityMapper(ICountryRepository countryRepo, ICurrencyRepository currencyRepo)
+    public SecurityMapper(ICountryRepository countryRepo, ICurrencyRepository currencyRepo)
     {
         _currencyRepo = currencyRepo;
         _countryRepo = countryRepo;
@@ -43,9 +44,9 @@ public class CreateSecurityMapper
         };
     }
 
-    public CreateSecurityResponse ToCreateSecurityResponse(Entities.Security security)
+    public GetSecurityResponse ToGetSecurityResponse(Entities.Security security)
     {
-        return new CreateSecurityResponse(
+        return new GetSecurityResponse(
             Id: security.Id,
             Name: security.Name,
             Isin: security.Isin,

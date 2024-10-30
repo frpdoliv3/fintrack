@@ -18,7 +18,7 @@ public partial class FinTrackDbContext
         modelBuilder.Entity<Security>()
             .Property(s => s.Name)
             .IsRequired();
-
+        
         // Isin
         modelBuilder.Entity<Security>()
             .Property(s => s.Isin)
@@ -31,7 +31,7 @@ public partial class FinTrackDbContext
             .WithMany()
             .HasForeignKey("NativeCurrencyId")
             .IsRequired();
-
+        
         // CounterpartyCountry
         modelBuilder.Entity<Security>()
             .HasOne(s => s.CounterpartyCountry)
