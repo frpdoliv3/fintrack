@@ -1,21 +1,18 @@
-﻿using System.Security.Claims;
-using FinTrack.Application.Security;
+﻿using FinTrack.Application.Security;
 using FinTrack.Application.Security.CreateSecurity;
-using FinTrack.Domain.Interfaces;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinTrack.Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class SecurityController: ControllerBase
+public class SecuritiesController: ControllerBase
 {
     private const string GetSecurityByIdName = "GetSecurityById";
     
     private readonly SecurityService _securityService;
 
-    public SecurityController(SecurityService securityService) {
+    public SecuritiesController(SecurityService securityService) {
         _securityService = securityService;
     }
 

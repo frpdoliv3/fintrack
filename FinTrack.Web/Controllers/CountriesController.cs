@@ -1,4 +1,5 @@
 ﻿using FinTrack.Application.Country.CreateCountry;
+using FinTrack.Application.Security.GetSecurity;
 using FinTrack.Domain.Entities;
 using FinTrack.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -9,13 +10,13 @@ namespace FinTrack.Web.Controllers;
 [ApiController]
 [Route("[controller]")]
 [Authorize(Roles = "Admin")]
-public class CountryController : ControllerBase
+public class CountriesController : ControllerBase
 {
     private readonly ICountryRepository _countryRepository;
 
     private const string GET_COUNTRY_BY_ID_NAME = "GetCountryById";
 
-    public CountryController(ICountryRepository countryRepository)
+    public CountriesController(ICountryRepository countryRepository)
     {
         _countryRepository = countryRepository;
     }
@@ -32,6 +33,7 @@ public class CountryController : ControllerBase
     }
 
     [HttpGet("{id}", Name = GET_COUNTRY_BY_ID_NAME)]
+    [ProducesResponseType(typeof(GetSecurityResponse), 200)]
     public async Task<IResult> GetCountryById(
         [FromRoute] uint id
     ) {

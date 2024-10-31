@@ -8,13 +8,13 @@ namespace FinTrack.Web.Controllers;
 [ApiController]
 [Route("[controller]")]
 [Authorize(Roles = "Admin")]
-public class CurrencyController : ControllerBase
+public class CurrenciesController : ControllerBase
 {
     private readonly ICurrencyRepository _currencyRepository;
 
     private const string GetCurrencyByIdName = "GetCurrencyById";
 
-    public CurrencyController(ICurrencyRepository currencyRepository)
+    public CurrenciesController(ICurrencyRepository currencyRepository)
     {
         _currencyRepository = currencyRepository;
     }
