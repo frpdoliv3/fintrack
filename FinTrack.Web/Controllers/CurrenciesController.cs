@@ -20,10 +20,10 @@ public class CurrenciesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IResult> AddCurrency([FromBody] CreateCurrencyRequest currencyRequest)
+    public async Task<IActionResult> AddCurrency([FromBody] CreateCurrencyRequest currencyRequest)
     {
         var createdCurrency = await _currencyRepository.AddCurrency(currencyRequest.ToCurrency());
-        return Results.CreatedAtRoute(
+        return CreatedAtRoute(
             GetCurrencyByIdName,
             new { id = createdCurrency.Id },
             createdCurrency
@@ -31,13 +31,13 @@ public class CurrenciesController : ControllerBase
     }
 
     [HttpGet("{id}", Name = GetCurrencyByIdName)]
-    public async Task<IResult> GetCurrencyById([FromRoute] uint id)
+    public async Task<IActionResult> GetCurrencyById([FromRoute] uint id)
     {
         var currency = await _currencyRepository.GetCurrencyById(id);
         if (currency == null)
         {
-            return Results.NotFound();
+            return NotFound();
         }
-        return Results.Ok(currency);
+        return Ok(currency);
     }
 }

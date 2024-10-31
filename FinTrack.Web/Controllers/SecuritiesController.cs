@@ -17,10 +17,10 @@ public class SecuritiesController: ControllerBase
     }
 
     [HttpPost]
-    public async Task<IResult> CreateSecurity([FromBody] CreateSecurityRequest security)
+    public async Task<IActionResult> CreateSecurity([FromBody] CreateSecurityRequest security)
     {
         var createdSecurity = await _securityService.AddSecurity(security);
-        return Results.CreatedAtRoute(
+        return CreatedAtRoute(
             GetSecurityByIdName,
             new { id = createdSecurity.Id },
             createdSecurity
@@ -28,11 +28,11 @@ public class SecuritiesController: ControllerBase
     }
 
     [HttpGet("{id}", Name = GetSecurityByIdName)]
-    public async Task<IResult> GetSecurityById([FromRoute] uint id)
+    public async Task<IActionResult> GetSecurityById([FromRoute] uint id)
     {
         var fetchedSecurity = await _securityService.GetSecurityById(id);
         return fetchedSecurity == null ? 
-            Results.NotFound() :
-            Results.Ok(fetchedSecurity);
+            NotFound() :
+            Ok(fetchedSecurity);
     }
 }
