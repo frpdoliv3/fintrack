@@ -1,4 +1,6 @@
-﻿namespace FinTrack.Domain.Entities;
+﻿using System.Text.Json.Serialization;
+
+namespace FinTrack.Domain.Entities;
 
 public class Security
 {

@@ -31,7 +31,21 @@ builder.Services.AddControllers(opts =>
     opts.Filters.Add<UserIdActionFilter>(order: int.MinValue);
     opts.ModelMetadataDetailsProviders.Add(new SystemTextJsonValidationMetadataProvider());
     opts.Conventions.Add(new RouteTokenTransformerConvention(new PascalToKebabParameterTransformer()));
-}).AddJsonOptions(opts =>
+});
+
+/*
+ * For some reason some options when added through AddJsonOptions are not applied.
+ * Duplicating the code for these two namespaces seems so solve the problems.
+ * It seems that Microsoft.AspNetCore.Mvc.JsonOptions is being used when parsing requests and
+ * Microsoft.AspNetCore.Http.Json.JsonOptions is used when serializing responses
+ */
+builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(opts =>
+{
+    opts.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    opts.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    opts.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});
+builder.Services.Configure<Microsoft.AspNetCore.Mvc.JsonOptions>(opts =>
 {
     opts.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());

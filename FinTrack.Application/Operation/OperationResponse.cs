@@ -1,4 +1,5 @@
-﻿using FinTrack.Domain.Entities;
+﻿using System.Text.Json.Serialization;
+using FinTrack.Domain.Entities;
 
 namespace FinTrack.Application.Operation;
 
