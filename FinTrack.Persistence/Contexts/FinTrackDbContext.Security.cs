@@ -31,6 +31,10 @@ public partial class FinTrackDbContext
             .WithMany()
             .HasForeignKey("NativeCurrencyId")
             .IsRequired();
+
+        modelBuilder.Entity<Security>()
+            .Navigation(s => s.NativeCurrency)
+            .AutoInclude();
         
         // CounterpartyCountry
         modelBuilder.Entity<Security>()
@@ -39,12 +43,20 @@ public partial class FinTrackDbContext
             .HasForeignKey("CounterpartyCountryId")
             .IsRequired(false);
 
+        modelBuilder.Entity<Security>()
+            .Navigation(s => s.CounterpartyCountry)
+            .AutoInclude();
+        
         // SourceCountry
         modelBuilder.Entity<Security>()
             .HasOne(s => s.SourceCountry)
             .WithMany()
             .HasForeignKey("SourceCountryId")
             .IsRequired(false);
+        
+        modelBuilder.Entity<Security>()
+            .Navigation(s => s.SourceCountry)
+            .AutoInclude();
         
         // Ownership
         modelBuilder.Entity<EFUser>()
