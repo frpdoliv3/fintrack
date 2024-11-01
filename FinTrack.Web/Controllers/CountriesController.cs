@@ -2,6 +2,7 @@
 using FinTrack.Application.Security.GetSecurity;
 using FinTrack.Domain.Entities;
 using FinTrack.Domain.Interfaces;
+using FinTrack.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,7 @@ public class CountriesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = UserRole.Admin)]
     public async Task<IActionResult> CreateCountry([FromBody] CreateCountryRequest createCountry)
     {
         var createdCountry = await _countryRepository.AddCountry(createCountry.ToCountry());

@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace FinTrack.Web.Filters;
 
-public class PaginationHeaderAction: IActionFilter
+public class PaginationHeaderActionFilter: IActionFilter
 {
-    private readonly ILogger<PaginationHeaderAction> _logger;
+    private readonly ILogger<PaginationHeaderActionFilter> _logger;
     
-    public PaginationHeaderAction(ILogger<PaginationHeaderAction> logger)
+    public PaginationHeaderActionFilter(ILogger<PaginationHeaderActionFilter> logger)
     {
         _logger = logger;
     }

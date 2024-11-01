@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace FinTrack.Web.Filters;
 
-public class LockoutAuthorizationPolicy: IAsyncAuthorizationFilter
+public class LockoutAuthorizationActionPolicy: IAsyncAuthorizationFilter
 {
     private readonly IAuthRepository _authRepo;
-    private readonly ILogger<LockoutAuthorizationPolicy> _logger;
+    private readonly ILogger<LockoutAuthorizationActionPolicy> _logger;
     
-    public LockoutAuthorizationPolicy(ILogger<LockoutAuthorizationPolicy> logger, IAuthRepository authRepo)
+    public LockoutAuthorizationActionPolicy(ILogger<LockoutAuthorizationActionPolicy> logger, IAuthRepository authRepo)
     {
         _authRepo = authRepo;
         _logger = logger;

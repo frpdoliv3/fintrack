@@ -5,12 +5,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
+using FinTrack.Shared;
 
 namespace FinTrack.Persistence.Models;
 internal class SeedData
 {
-    private static readonly string[] Roles = ["Admin"];
-
     private readonly string _resourceBasePath;
     private readonly IAuthRepository _authRepo;
     private readonly RoleManager<IdentityRole> _roleManager;
@@ -43,7 +42,7 @@ internal class SeedData
         {
             return false;
         }
-        foreach (var role in Roles) 
+        foreach (var role in UserRole.GetUserRoles()) 
         {
             if (await _roleManager.RoleExistsAsync(role))
             {
@@ -68,14 +67,14 @@ internal class SeedData
         };
 
         await _authRepo.RegisterUser(adminUser);
-        foreach (var role in Roles)
+        foreach (var role in UserRole.GetUserRoles())
         {
             await _roleManager.CreateAsync(new IdentityRole(role));
         }
 
         await _userManager.AddToRoleAsync(
             (await _userManager.FindByEmailAsync(adminUser.Email))!,
-            "Admin"
+            UserRole.Admin
         );
 
         var regularUser = new CreateUser
@@ -94,7 +93,8 @@ internal class SeedData
         {
             return;
         }
-        using FileStream stream = File.OpenRead($"{_resourceBasePath}/countries.json");
+
+        await using FileStream stream = File.OpenRead($"{_resourceBasePath}/countries.json");
         var options = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase

@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinTrack.DomainModel\FinTrack.Domain.csproj" />
+    <ProjectReference Include="..\FinTrack.Shared\FinTrack.Shared.csproj" />
   </ItemGroup>
 
 </Project>
