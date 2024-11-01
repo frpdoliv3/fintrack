@@ -9,14 +9,17 @@ namespace FinTrack.Web.Filters;
 public class LockoutAuthorizationPolicy: IAsyncAuthorizationFilter
 {
     private readonly IAuthRepository _authRepo;
+    private readonly ILogger<LockoutAuthorizationPolicy> _logger;
     
-    public LockoutAuthorizationPolicy(IAuthRepository authRepo)
+    public LockoutAuthorizationPolicy(ILogger<LockoutAuthorizationPolicy> logger, IAuthRepository authRepo)
     {
         _authRepo = authRepo;
+        _logger = logger;
     }
     
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
+        _logger.LogInformation("Running lockout authorization policy (no checks)");
         var allowAnonymous = context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
         if (allowAnonymous)
         {

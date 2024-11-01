@@ -51,7 +51,6 @@ public class SecurityMapper
             Name: security.Name,
             Isin: security.Isin,
             NativeCurrency: security.NativeCurrency,
-            Operations: security.Operations.Select(o => o.ToOperationResponse()).ToList(),
             CounterpartyCountry: security.CounterpartyCountry,
             SourceCountry: security.SourceCountry,
             IssuingNIF: security.IssuingNIF

@@ -28,6 +28,7 @@ builder.Services
 builder.Services.AddControllers(opts =>
 {
     opts.Filters.Add<LockoutAuthorizationPolicy>();
+    opts.Filters.Add<PaginationHeaderAction>();
     opts.Filters.Add<UserIdActionFilter>(order: int.MinValue);
     opts.ModelMetadataDetailsProviders.Add(new SystemTextJsonValidationMetadataProvider());
     opts.Conventions.Add(new RouteTokenTransformerConvention(new PascalToKebabParameterTransformer()));

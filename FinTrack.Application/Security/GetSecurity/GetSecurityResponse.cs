@@ -8,7 +8,6 @@ public record GetSecurityResponse(
     string Name,
     string Isin,
     Entities.Currency NativeCurrency,
-    List<OperationResponse> Operations,
     Entities.Country? CounterpartyCountry,
     Entities.Country? SourceCountry,
     string? IssuingNIF

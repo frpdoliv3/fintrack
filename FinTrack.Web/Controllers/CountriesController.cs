@@ -14,7 +14,7 @@ public class CountriesController : ControllerBase
 {
     private readonly ICountryRepository _countryRepository;
 
-    private const string GET_COUNTRY_BY_ID_NAME = "GetCountryById";
+    private const string GetCountryByIdName = "GetCountryById";
 
     public CountriesController(ICountryRepository countryRepository)
     {
@@ -22,34 +22,37 @@ public class CountriesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IResult> CreateCountry([FromBody] CreateCountryRequest createCountry)
+    public async Task<IActionResult> CreateCountry([FromBody] CreateCountryRequest createCountry)
     {
         var createdCountry = await _countryRepository.AddCountry(createCountry.ToCountry());
-        return Results.CreatedAtRoute(
-            GET_COUNTRY_BY_ID_NAME, 
+        
+        return CreatedAtRoute(
+            GetCountryByIdName, 
             new { id = createdCountry.Id },
             createdCountry
         );
     }
 
-    [HttpGet("{id}", Name = GET_COUNTRY_BY_ID_NAME)]
+    [HttpGet("{id}", Name = GetCountryByIdName)]
     [ProducesResponseType(typeof(GetSecurityResponse), 200)]
-    public async Task<IResult> GetCountryById(
+    public async Task<IActionResult> GetCountryById(
         [FromRoute] uint id
     ) {
         var country = await _countryRepository.GetCountryById(id);
         if (country == null)
         {
-            return Results.NotFound();
+            return NotFound();
         }
-        return Results.Ok(country);
+        return Ok(country);
     }
 
     [HttpGet]
-    public IAsyncEnumerable<Country> ListCountries(
-        [FromQuery(Name = "page_number")] int pageNumber = 1, 
+    public async Task<IActionResult> ListCountries(
+        [FromQuery(Name = "search_query")] string searchQuery = "",
+        [FromQuery(Name = "page")] int pageNumber = 1, 
         [FromQuery(Name = "page_size")] int pageSize = 10
     ) {
-        return _countryRepository.ListCountries(pageNumber, pageSize);
+        var countries = await _countryRepository.GetCountries(searchQuery, pageNumber, pageSize);
+        return Ok(countries);
     }
 }

@@ -23,12 +23,13 @@ internal class EFCountryRepository : ICountryRepository
         return country;
     }
     
-    public IAsyncEnumerable<Country> ListCountries(int pageNumber, int pageSize)
+    public async Task<PagedList<Country>> GetCountries(string searchQuery, int pageNumber, int pageSize)
     {
-        return _context.Countries
-            .AsNoTracking()
-            .OrderBy(c => c.Name)
-            .AsAsyncEnumerable();
+        var countries = _context.Countries.Where(
+            c => c.Name.Contains(searchQuery)
+        ).OrderBy(c => c.Id);
+        
+        return await PagedRepository<Country>.PagedQuery(countries, pageNumber, pageSize);
     }
 
     public async Task<bool> Exists(Expression<Func<Country, bool>> predicate)
