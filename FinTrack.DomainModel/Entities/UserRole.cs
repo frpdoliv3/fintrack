@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace FinTrack.Shared;
+namespace FinTrack.Domain.Entities;
 
 public static class UserRole
 {

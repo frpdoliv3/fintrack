@@ -2,6 +2,7 @@
 using FinTrack.Application.Security.GetSecurity;
 using FinTrack.Domain.Interfaces;
 using Entities = FinTrack.Domain.Entities;
+using UnauthorizedAccessException = FinTrack.Domain.Exceptions.UnauthorizedAccessException;
 
 namespace FinTrack.Application.Security;
 
@@ -23,9 +24,13 @@ public class SecurityService
         return _securityMapper.ToGetSecurityResponse(createdSecurity);
     }
 
-    public async Task<GetSecurityResponse?> GetSecurityById(ulong securityId)
+    public async Task<GetSecurityResponse?> GetSecurityById(ulong securityId, string userId)
     {
         var domainSecurity = await _securityRepo.GetSecurityById(securityId);
-        return domainSecurity == null ? null : _securityMapper.ToGetSecurityResponse(domainSecurity);
+        if (domainSecurity == null || domainSecurity.OwnerId != userId)
+        {
+            return null;
+        }
+        return _securityMapper.ToGetSecurityResponse(domainSecurity);
     }
 }

@@ -16,8 +16,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinTrack.Persistence", "Fin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinTrack.Application", "FinTrack.Application\FinTrack.Application.csproj", "{C0B53BF9-A73A-425F-9CFB-CB29B936A5CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinTrack.Shared", "FinTrack.Shared\FinTrack.Shared.csproj", "{62962973-2D4C-4C05-BF55-B0A2D7FCD8D9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,10 +38,6 @@ Global
 		{C0B53BF9-A73A-425F-9CFB-CB29B936A5CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0B53BF9-A73A-425F-9CFB-CB29B936A5CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0B53BF9-A73A-425F-9CFB-CB29B936A5CC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{62962973-2D4C-4C05-BF55-B0A2D7FCD8D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62962973-2D4C-4C05-BF55-B0A2D7FCD8D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62962973-2D4C-4C05-BF55-B0A2D7FCD8D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62962973-2D4C-4C05-BF55-B0A2D7FCD8D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

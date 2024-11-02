@@ -1,4 +1,5 @@
-﻿using FinTrack.Application.Security;
+﻿using System.Security.Claims;
+using FinTrack.Application.Security;
 using FinTrack.Application.Security.CreateSecurity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,7 +31,8 @@ public class SecuritiesController: ControllerBase
     [HttpGet("{id}", Name = GetSecurityByIdName)]
     public async Task<IActionResult> GetSecurityById([FromRoute] uint id)
     {
-        var fetchedSecurity = await _securityService.GetSecurityById(id);
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+        var fetchedSecurity = await _securityService.GetSecurityById(id, userId);
         return fetchedSecurity == null ? 
             NotFound() :
             Ok(fetchedSecurity);
