@@ -7,7 +7,6 @@ namespace FinTrack.Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize(Roles = "Admin")]
 public class CurrenciesController : ControllerBase
 {
     private readonly ICurrencyRepository _currencyRepo;
@@ -20,6 +19,7 @@ public class CurrenciesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AddCurrency([FromBody] CreateCurrencyRequest currencyRequest)
     {
         var createdCurrency = await _currencyRepo.AddCurrency(currencyRequest.ToCurrency());
@@ -41,6 +41,7 @@ public class CurrenciesController : ControllerBase
         return Ok(currency);
     }
 
+    [HttpGet]
     public async Task<IActionResult> GetCurrencies(
         [FromQuery(Name = "search_query")] string searchQuery = "",
         [FromQuery(Name = "page")] int pageNumber = 1, 

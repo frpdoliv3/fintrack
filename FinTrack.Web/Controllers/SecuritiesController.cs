@@ -2,6 +2,7 @@
 using FinTrack.Application.Security;
 using FinTrack.Application.Security.CreateSecurity;
 using Microsoft.AspNetCore.Mvc;
+using UnauthorizedAccessException = FinTrack.Domain.Exceptions.UnauthorizedAccessException;
 
 namespace FinTrack.Web.Controllers;
 
@@ -37,6 +38,23 @@ public class SecuritiesController: ControllerBase
             NotFound() :
             Ok(fetchedSecurity);
     }
-    
-    //public async Task<IActionResult> GetOperations
+
+    [HttpGet("{id}/operations")]
+    public async Task<IActionResult> GetOperationsForId(
+        [FromRoute] uint id,
+        [FromQuery(Name = "page")] int pageNumber = 1, 
+        [FromQuery(Name = "page_size")] int pageSize = 10
+    ) {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+        try
+        {
+            var operations = await _securityService
+                .GetOperationsForId(userId, id, pageNumber, pageSize);
+            return Ok(operations);
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return NotFound();
+        }
+    }
 }

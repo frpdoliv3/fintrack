@@ -33,4 +33,21 @@ public class SecurityService
         }
         return _securityMapper.ToGetSecurityResponse(domainSecurity);
     }
+
+    public async Task<Entities.PagedList<Entities.Operation>> GetOperationsForId(
+        string ownerId,
+        ulong securityId,
+        int pageNumber,
+        int pageSize
+    ) {
+        Console.WriteLine(ownerId);
+        Console.WriteLine(securityId);
+        var existsForId = await _securityRepo
+            .Exists(s => s.OwnerId == ownerId && s.Id == securityId);
+        if (!existsForId)
+        {
+            throw new UnauthorizedAccessException();
+        }
+        return await _securityRepo.GetOperationsForSecurity(securityId, pageNumber, pageSize);
+    }
 }

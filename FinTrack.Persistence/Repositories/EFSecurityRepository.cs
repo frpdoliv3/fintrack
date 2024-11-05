@@ -20,11 +20,21 @@ internal class EFSecurityRepository: ISecurityRepository
         await _context.SaveChangesAsync();
         return security;
     }
-
+    
     public async Task<Security?> GetSecurityById(ulong id)
     {
         return await _context.Securities
             .FindAsync(id);
+    }
+
+    public async Task<PagedList<Operation>> GetOperationsForSecurity(ulong securityId, int pageNumber, int pageSize)
+    {
+        var operations = _context.Operations
+            .Where(o => o.Security.Id == securityId)
+            .IgnoreAutoIncludes()
+            .OrderBy(o => o.OperationDate);
+        
+        return await PagedRepository<Operation>.PagedQuery(operations, pageNumber, pageSize);
     }
     
     public async Task<bool> Exists(Expression<Func<Security, bool>> predicate)

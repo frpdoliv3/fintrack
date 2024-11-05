@@ -9,7 +9,6 @@ namespace FinTrack.Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize(Roles = "Admin")]
 public class CountriesController : ControllerBase
 {
     private readonly ICountryRepository _countryRepository;

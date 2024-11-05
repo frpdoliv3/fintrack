@@ -81,4 +81,6 @@ app.MapControllers();
 
 //app.MapIdentityApi<EFUser>();
 
+app.Services.SaveSwaggerJson();
+
 app.Run();
