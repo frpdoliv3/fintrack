@@ -48,7 +48,7 @@ public class CountriesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> ListCountries(
+    public async Task<IActionResult> GetCountries(
         [FromQuery(Name = "search_query")] string searchQuery = "",
         [FromQuery(Name = "page")] int pageNumber = 1, 
         [FromQuery(Name = "page_size")] int pageSize = 10

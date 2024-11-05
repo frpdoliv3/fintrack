@@ -10,19 +10,19 @@ namespace FinTrack.Web.Controllers;
 [Authorize(Roles = "Admin")]
 public class CurrenciesController : ControllerBase
 {
-    private readonly ICurrencyRepository _currencyRepository;
+    private readonly ICurrencyRepository _currencyRepo;
 
     private const string GetCurrencyByIdName = "GetCurrencyById";
 
-    public CurrenciesController(ICurrencyRepository currencyRepository)
+    public CurrenciesController(ICurrencyRepository currencyRepo)
     {
-        _currencyRepository = currencyRepository;
+        _currencyRepo = currencyRepo;
     }
 
     [HttpPost]
     public async Task<IActionResult> AddCurrency([FromBody] CreateCurrencyRequest currencyRequest)
     {
-        var createdCurrency = await _currencyRepository.AddCurrency(currencyRequest.ToCurrency());
+        var createdCurrency = await _currencyRepo.AddCurrency(currencyRequest.ToCurrency());
         return CreatedAtRoute(
             GetCurrencyByIdName,
             new { id = createdCurrency.Id },
@@ -33,11 +33,21 @@ public class CurrenciesController : ControllerBase
     [HttpGet("{id}", Name = GetCurrencyByIdName)]
     public async Task<IActionResult> GetCurrencyById([FromRoute] uint id)
     {
-        var currency = await _currencyRepository.GetCurrencyById(id);
+        var currency = await _currencyRepo.GetCurrencyById(id);
         if (currency == null)
         {
             return NotFound();
         }
         return Ok(currency);
+    }
+
+    public async Task<IActionResult> GetCurrencies(
+        [FromQuery(Name = "search_query")] string searchQuery = "",
+        [FromQuery(Name = "page")] int pageNumber = 1, 
+        [FromQuery(Name = "page_size")] int pageSize = 10
+    )
+    {
+        var currencies = await _currencyRepo.GetCurrencies(searchQuery, pageNumber, pageSize);
+        return Ok(currencies);
     }
 }

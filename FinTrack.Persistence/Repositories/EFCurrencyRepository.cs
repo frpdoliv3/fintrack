@@ -31,4 +31,13 @@ internal class EFCurrencyRepository : ICurrencyRepository
     {
         return await _context.Currencies.FindAsync(id);
     }
+
+    public async Task<PagedList<Currency>> GetCurrencies(string searchQuery, int pageNumber, int pageSize)
+    {
+        var currencies = _context.Currencies.Where(
+            c => c.Name.Contains(searchQuery)
+        ).OrderBy(c => c.Id);
+        
+        return await PagedRepository<Currency>.PagedQuery(currencies, pageNumber, pageSize);
+    }
 }
