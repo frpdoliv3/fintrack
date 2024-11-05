@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
-using FinTrack.Shared;
 
 namespace FinTrack.Persistence.Models;
 internal class SeedData

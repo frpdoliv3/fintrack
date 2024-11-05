@@ -16,6 +16,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinTrack.Persistence", "Fin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinTrack.Application", "FinTrack.Application\FinTrack.Application.csproj", "{C0B53BF9-A73A-425F-9CFB-CB29B936A5CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinTrack.Resources", "FinTrack.Resources\FinTrack.Resources.csproj", "{B98B3175-9344-4286-8C69-A541ACA4CF3A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{C0B53BF9-A73A-425F-9CFB-CB29B936A5CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0B53BF9-A73A-425F-9CFB-CB29B936A5CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0B53BF9-A73A-425F-9CFB-CB29B936A5CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B98B3175-9344-4286-8C69-A541ACA4CF3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B98B3175-9344-4286-8C69-A541ACA4CF3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B98B3175-9344-4286-8C69-A541ACA4CF3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B98B3175-9344-4286-8C69-A541ACA4CF3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

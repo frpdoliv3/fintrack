@@ -4,6 +4,7 @@ using FinTrack.Application.Operation.CreateOperation;
 using FinTrack.Application.Utils;
 using FinTrack.Domain.Entities;
 using FinTrack.Domain.Interfaces;
+using FinTrack.Resources;
 using FluentValidation;
 
 namespace FinTrack.Application.Security.CreateSecurity;
@@ -15,46 +16,58 @@ public sealed class CreateSecurityValidator: HasOwnerIdValidator<CreateSecurityR
         ICurrencyRepository currencyRepo,
         ISecurityRepository securityRepo
     ) {
+        // Rules for Name
         RuleFor(s => s.Name)
-            .NotEmpty();
-
-        RuleFor(s => s.Isin)
             .NotEmpty()
+            .WithMessage(_ => GeneralMessages.EmptyNameError);
+
+        // Rules for ISIN
+        RuleFor(s => s.Isin)
             .Must((request) =>
             {
                 var isinAlgorithm = Algorithms.Isin;
                 return isinAlgorithm.Validate(request);
-            }).WithMessage("Invalid ISIN");
+            }).WithMessage(_ => SecurityMessages.IsinValueError);
         
         RuleFor(s => s.Isin)
             .MustAsync(async (request, isin, _) =>
             {
                 return !await securityRepo
                     .Exists(s => s.Isin == isin && s.OwnerId == request.OwnerId);
-            });
-        
+            }).WithMessage(_ => SecurityMessages.DuplicateIsinError);
+
+        // Rules for NativeCurrency
         RuleFor(s => s.NativeCurrency)
             .NotEmpty()
+            .WithMessage(_ => GeneralMessages.EmptyCurrencyError);
+        
+        RuleFor(s => s.NativeCurrency)
             .MustAsync(async (request, cancellation) =>
             {
                 return await currencyRepo.Exists(c => c.Id == request);
-            }).WithMessage("Currency does not exist");
-
+            }).WithMessage(_ => GeneralMessages.InvalidCurrencyError);
+        
+        // Rules for CounterpartyCountry
         RuleFor(s => s.CounterpartyCountry)
             .MustAsync(async (request, cancellation) =>
             {
                 return await countryRepo.Exists(c => c.Id == request);
             })
             .When(s => s.CounterpartyCountry != null)
-            .WithMessage("Country does not exist");
+            .WithMessage(GeneralMessages.InvalidCountryError);
 
+        // Rules for source country
         RuleFor(s => s.SourceCountry)
             .NotEmpty()
-            .MustAsync(async (request, cancellation) =>
+            .WithMessage(_ => GeneralMessages.EmptyCountryError);
+        
+        RuleFor(s => s.SourceCountry)
+            .MustAsync(async (request, _) =>
             {
                 return await countryRepo.Exists(c => c.Id == request);
             })
-            .When(s => s.IssuingNIF == null);
+            .When(s => s.IssuingNIF == null)
+            .WithMessage(_ => GeneralMessages.InvalidCountryError);
             
         RuleFor(s => s.SourceCountry)
             .Empty()
@@ -70,7 +83,8 @@ public sealed class CreateSecurityValidator: HasOwnerIdValidator<CreateSecurityR
             .Unless(s => s.SourceCountry == null);
 
         RuleFor(s => s.Operations)
-            .Must(ValidateOperations);
+            .Must(ValidateOperations)
+            .WithMessage(_ => SecurityMessages.InvalidOperationOrderError);
     }
 
     private static bool ValidateOperations(List<CreateOperationRequest> operations)

@@ -2,7 +2,6 @@
 using FinTrack.Application.Security.GetSecurity;
 using FinTrack.Domain.Entities;
 using FinTrack.Domain.Interfaces;
-using FinTrack.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
