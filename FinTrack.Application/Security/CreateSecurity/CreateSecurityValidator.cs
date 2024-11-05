@@ -68,7 +68,8 @@ public sealed class CreateSecurityValidator: HasOwnerIdValidator<CreateSecurityR
             })
             .When(s => s.IssuingNIF == null)
             .WithMessage(_ => GeneralMessages.InvalidCountryError);
-            
+        
+        //Inter-property rules
         RuleFor(s => s.SourceCountry)
             .Empty()
             .Unless(s => s.IssuingNIF == null);
@@ -82,6 +83,7 @@ public sealed class CreateSecurityValidator: HasOwnerIdValidator<CreateSecurityR
             .Empty()
             .Unless(s => s.SourceCountry == null);
 
+        // Rules for operations
         RuleFor(s => s.Operations)
             .Must(ValidateOperations)
             .WithMessage(_ => SecurityMessages.InvalidOperationOrderError);
