@@ -2,7 +2,7 @@ using Microsoft.OpenApi.Extensions;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace FinTrack;
+namespace FinTrack.Web;
 
 public static class SwaggerExtensions
 {
