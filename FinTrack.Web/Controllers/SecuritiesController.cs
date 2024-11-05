@@ -37,4 +37,6 @@ public class SecuritiesController: ControllerBase
             NotFound() :
             Ok(fetchedSecurity);
     }
+    
+    //public async Task<IActionResult> GetOperations
 }

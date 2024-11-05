@@ -27,6 +27,11 @@ public class PaginationHeaderActionFilter: IActionFilter
 
         if (result.Value is not IPagedList paginationContents) { return; }
         context.Result = new OkObjectResult(paginationContents.Items);
+        // There is only one page in the pagination
+        if (paginationContents is { HasPreviousPage: false, HasNextPage: false })
+        {
+            return;
+        }
         context.HttpContext.Response.Headers.Link =
             CreateLinkHeader(context.HttpContext.Request, paginationContents);
     }
