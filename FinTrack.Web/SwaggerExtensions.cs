@@ -8,9 +8,9 @@ public static class SwaggerExtensions
 {
     public static void SaveSwaggerJson(this IServiceProvider provider)
     {
-        ISwaggerProvider sw = provider.GetRequiredService<ISwaggerProvider>();
-        OpenApiDocument doc = sw.GetSwagger("v1", null, "/");
-        string swaggerFile = doc.SerializeAsYaml(Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0);
+        var sw = provider.GetRequiredService<ISwaggerProvider>();
+        var doc = sw.GetSwagger("v1", null, "/");
+        var swaggerFile = doc.SerializeAsYaml(Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0);
         File.WriteAllText("../docs/swaggerfile.yml", swaggerFile);
     }
 }
