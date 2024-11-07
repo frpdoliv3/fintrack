@@ -40,8 +40,6 @@ public class SecurityService
         int pageNumber,
         int pageSize
     ) {
-        Console.WriteLine(ownerId);
-        Console.WriteLine(securityId);
         var existsForId = await _securityRepo
             .Exists(s => s.OwnerId == ownerId && s.Id == securityId);
         if (!existsForId)

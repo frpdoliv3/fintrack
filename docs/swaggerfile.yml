@@ -165,6 +165,20 @@ paths:
       responses:
         '200':
           description: OK
+  '/operations/{operationId}':
+    get:
+      tags:
+        - Operations
+      parameters:
+        - name: operationId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
   /securities:
     post:
       tags:
@@ -183,13 +197,13 @@ paths:
       responses:
         '200':
           description: OK
-  '/securities/{id}':
+  '/securities/{securityId}':
     get:
       tags:
         - Securities
       operationId: GetSecurityById
       parameters:
-        - name: id
+        - name: securityId
           in: path
           required: true
           schema:
@@ -198,12 +212,12 @@ paths:
       responses:
         '200':
           description: OK
-  '/securities/{id}/operations':
+  '/securities/{securityId}/operations':
     get:
       tags:
         - Securities
       parameters:
-        - name: id
+        - name: securityId
           in: path
           required: true
           schema:

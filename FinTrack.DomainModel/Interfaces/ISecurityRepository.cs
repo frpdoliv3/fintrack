@@ -8,4 +8,6 @@ public interface ISecurityRepository
     public Task<Security?> GetSecurityById(ulong id);
     public Task<bool> Exists(Expression<Func<Security, bool>> predicate);
     public Task<PagedList<Operation>> GetOperationsForSecurity(ulong securityId, int pageNumber, int pageSize);
+    public Task<Operation?> GetOperationById(ulong operationId);
+    public Task DeleteOperation(Operation operation);
 }

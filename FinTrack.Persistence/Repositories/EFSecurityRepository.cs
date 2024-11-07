@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using FinTrack.Domain.Entities;
+using FinTrack.Domain.Exceptions;
 using FinTrack.Domain.Interfaces;
 using FinTrack.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -39,7 +40,20 @@ internal class EFSecurityRepository: ISecurityRepository
     
     public async Task<bool> Exists(Expression<Func<Security, bool>> predicate)
     {
-        return await _context.Securities
-            .AnyAsync(predicate);
+        return await _context.Securities.AnyAsync(predicate);
+    }
+
+    public async Task<Operation?> GetOperationById(ulong operationId)
+    {
+        return await _context.Operations
+            .Include(o => o.Security)
+            .Where(o => o.Id == operationId)
+            .FirstOrDefaultAsync();
+    }
+    
+    public async Task DeleteOperation(Operation operation)
+    {
+        _context.Operations.Remove(operation);
+        await _context.SaveChangesAsync();
     }
 }

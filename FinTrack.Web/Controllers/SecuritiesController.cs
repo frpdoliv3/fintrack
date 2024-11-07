@@ -29,19 +29,19 @@ public class SecuritiesController: ControllerBase
         );
     }
 
-    [HttpGet("{id}", Name = GetSecurityByIdName)]
-    public async Task<IActionResult> GetSecurityById([FromRoute] uint id)
+    [HttpGet("{securityId}", Name = GetSecurityByIdName)]
+    public async Task<IActionResult> GetSecurityById([FromRoute] uint securityId)
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
-        var fetchedSecurity = await _securityService.GetSecurityById(id, userId);
+        var fetchedSecurity = await _securityService.GetSecurityById(securityId, userId);
         return fetchedSecurity == null ? 
             NotFound() :
             Ok(fetchedSecurity);
     }
 
-    [HttpGet("{id}/operations")]
+    [HttpGet("{securityId}/operations")]
     public async Task<IActionResult> GetOperationsForId(
-        [FromRoute] uint id,
+        [FromRoute] uint securityId,
         [FromQuery(Name = "page")] int pageNumber = 1, 
         [FromQuery(Name = "page_size")] int pageSize = 10
     ) {
@@ -49,7 +49,7 @@ public class SecuritiesController: ControllerBase
         try
         {
             var operations = await _securityService
-                .GetOperationsForId(userId, id, pageNumber, pageSize);
+                .GetOperationsForId(userId, securityId, pageNumber, pageSize);
             return Ok(operations);
         }
         catch (UnauthorizedAccessException)
