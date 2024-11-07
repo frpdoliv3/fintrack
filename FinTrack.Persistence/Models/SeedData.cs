@@ -16,7 +16,9 @@ internal class SeedData
     private readonly ICountryRepository _countryRepo;
     private readonly FinTrackDbContext _context;
     private readonly ICurrencyRepository _currencyRepo;
-
+    private readonly ISecurityRepository _securityRepo;
+    private string RegularUserId = string.Empty;
+    
     public SeedData(IServiceProvider serviceProvider, string resourceBasePath)
     {
         _resourceBasePath = resourceBasePath;
@@ -26,6 +28,7 @@ internal class SeedData
         _countryRepo = serviceProvider.GetRequiredService<ICountryRepository>();
         _context = serviceProvider.GetRequiredService<FinTrackDbContext>();
         _currencyRepo = serviceProvider.GetRequiredService<ICurrencyRepository>();
+        _securityRepo = serviceProvider.GetRequiredService<ISecurityRepository>();
     }
 
     public async Task Initialize()
@@ -33,8 +36,9 @@ internal class SeedData
         await CreateUsers();
         await CreateCountries();
         await CreateCurrencies();
+        await CreateSecurities();
     }
-
+    
     private async Task<bool> ShouldCreateAuthentication()
     {
         if (await _authRepo.ExistsAnyUser())
@@ -51,6 +55,67 @@ internal class SeedData
         return true;
     }
 
+    private async Task CreateSecurities()
+    {
+        if (await _context.Securities.AnyAsync())
+        {
+            return;
+        }
+
+        var nativeCurrency = await _currencyRepo
+            .GetCurrencies("Euro", 1, 5);
+        var sourceCountry = await _countryRepo
+            .GetCountries("Irlanda", 1, 5);
+        var security = new Security
+        {
+            Name = "Vanguard FTSE All-World UCITS ETF USD Acc",
+            Isin = "IE00BK5BQT80",
+            NativeCurrency = nativeCurrency.Items[0],
+            OwnerId = RegularUserId,
+            SourceCountry = sourceCountry.Items[0],
+            Operations = new List<Operation>
+            {
+                new() {
+                    OperationType = OperationType.Buy,
+                    OperationDate = DateOnly.Parse("2021-01-01"),
+                    Value = 88,
+                    Quantiy = 2
+                },
+                new() {
+                    OperationType = OperationType.Buy,
+                    OperationDate = DateOnly.Parse("2021-02-01"),
+                    Value = 90,
+                    Quantiy = 2
+                },
+                new() {
+                    OperationType = OperationType.Buy,
+                    OperationDate = DateOnly.Parse("2021-03-01"),
+                    Value = 92,
+                    Quantiy = 2
+                },
+                new() {
+                    OperationType = OperationType.Sell,
+                    OperationDate = DateOnly.Parse("2021-02-20"),
+                    Value = 87,
+                    Quantiy = 4
+                },
+                new() {
+                    OperationType = OperationType.Sell,
+                    OperationDate = DateOnly.Parse("2022-02-20"),
+                    Value = 100,
+                    Quantiy = 2
+                },
+                new() {
+                    OperationType = OperationType.Buy,
+                    OperationDate = DateOnly.Parse("2023-02-20"),
+                    Value = 120,
+                    Quantiy = 5
+                }
+            }
+        };
+        await _securityRepo.AddSecurity(security);
+    }
+    
     private async Task CreateUsers()
     {
         if (!await ShouldCreateAuthentication())
@@ -83,7 +148,8 @@ internal class SeedData
             Password = "Example_user1"
         };
 
-        await _authRepo.RegisterUser(regularUser);
+        var regularUserId = await _authRepo.RegisterUser(regularUser);
+        RegularUserId = regularUserId;
     }
 
     private async Task CreateCountries()

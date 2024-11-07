@@ -43,11 +43,13 @@ internal class EFAuthRepository : IAuthRepository
         return persistenceUser?.ToUser();
     }
 
-    public async Task RegisterUser(CreateUser newUser)
+    public async Task<string> RegisterUser(CreateUser newUser)
     {
         var user = new EFUser();
         await _userStore.SetUserNameAsync(user, newUser.UserName, CancellationToken.None);
         await _userStore.SetEmailAsync(user, newUser.Email, CancellationToken.None);
-        var result = await _userManager.CreateAsync(user, newUser.Password);
+        //TODO: Handle result
+        await _userManager.CreateAsync(user, newUser.Password);
+        return user.Id;
     }
 }
