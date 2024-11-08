@@ -40,6 +40,11 @@ public class AuthenticationController : ControllerBase
         } else {
             userName = user.UserName;
         }
-        await _signInManager.PasswordSignInAsync(userName, userIdentity.Password, userIdentity.RememberMe, lockoutOnFailure: true);
+        await _signInManager.PasswordSignInAsync(
+            userName,
+            userIdentity.Password, 
+            userIdentity.RememberMe,
+            lockoutOnFailure: true
+        );
     }
 }
