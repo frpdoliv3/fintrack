@@ -1,0 +1,3 @@
+namespace FinTrack.Application.Security.GetSecurityStatus;
+
+public record GetSecurityStatusResponse(SecurityStatus SecurityStatus);

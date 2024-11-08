@@ -32,10 +32,17 @@ internal class EFSecurityRepository: ISecurityRepository
     {
         var operations = _context.Operations
             .Where(o => o.Security.Id == securityId)
-            .IgnoreAutoIncludes()
             .OrderBy(o => o.OperationDate);
         
         return await PagedRepository<Operation>.PagedQuery(operations, pageNumber, pageSize);
+    }
+
+    public IAsyncEnumerable<Operation> GetOperationsForSecurity(ulong securityId)
+    {
+        return _context.Operations
+            .Where(o => o.Security.Id == securityId)
+            .OrderBy(o => o.OperationDate)
+            .AsAsyncEnumerable();
     }
     
     public async Task<bool> Exists(Expression<Func<Security, bool>> predicate)

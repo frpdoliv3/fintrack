@@ -120,7 +120,7 @@ namespace FinTrack.Persistence.Migrations
                     b.Property<int>("OperationType")
                         .HasColumnType("int");
 
-                    b.Property<long>("Quantiy")
+                    b.Property<long>("Quantity")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("SecurityId")

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinTrack.Persistence.Migrations
 {
     [DbContext(typeof(FinTrackDbContext))]
-    [Migration("20241029153908_InitialCreate")]
+    [Migration("20241108125813_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -123,7 +123,7 @@ namespace FinTrack.Persistence.Migrations
                     b.Property<int>("OperationType")
                         .HasColumnType("int");
 
-                    b.Property<long>("Quantiy")
+                    b.Property<long>("Quantity")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("SecurityId")

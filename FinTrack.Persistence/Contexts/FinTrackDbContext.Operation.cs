@@ -25,7 +25,7 @@ public partial class FinTrackDbContext
             .IsRequired();
 
         modelBuilder.Entity<Operation>()
-            .Property(o => o.Quantiy)
+            .Property(o => o.Quantity)
             .IsRequired();
 
         modelBuilder.Entity<Operation>()

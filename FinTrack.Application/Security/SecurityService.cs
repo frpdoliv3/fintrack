@@ -1,6 +1,8 @@
 ﻿using FinTrack.Application.Security.CreateSecurity;
 using FinTrack.Application.Security.GetSecurity;
+using FinTrack.Application.Security.GetSecurityStatus;
 using FinTrack.Domain.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Entities = FinTrack.Domain.Entities;
 using UnauthorizedAccessException = FinTrack.Domain.Exceptions.UnauthorizedAccessException;
 
@@ -40,12 +42,31 @@ public class SecurityService
         int pageNumber,
         int pageSize
     ) {
-        var existsForId = await _securityRepo
-            .Exists(s => s.OwnerId == ownerId && s.Id == securityId);
-        if (!existsForId)
+        if (!await ValidSecurityOwnership(ownerId, securityId))
         {
             throw new UnauthorizedAccessException();
         }
         return await _securityRepo.GetOperationsForSecurity(securityId, pageNumber, pageSize);
+    }
+
+    public async Task<GetSecurityStatusResponse> GetOperationStatus(string ownerId, ulong securityId)
+    {
+        if (!await ValidSecurityOwnership(ownerId, securityId))
+        {
+            throw new UnauthorizedAccessException();
+        }
+
+        var operations = _securityRepo.GetOperationsForSecurity(securityId);
+        if (!await OperationOrderValidator.ValidateOperations(operations))
+        {
+            return new GetSecurityStatusResponse(SecurityStatus.InvalidOperationOrder);
+        }
+        return new GetSecurityStatusResponse(SecurityStatus.Ok);
+    }
+
+    private async Task<bool> ValidSecurityOwnership(string ownerId, ulong securityId)
+    {
+        var existsForId = await _securityRepo.Exists(s => s.OwnerId == ownerId && s.Id == securityId);
+        return existsForId;
     }
 }

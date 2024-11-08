@@ -85,34 +85,7 @@ public sealed class CreateSecurityValidator: HasOwnerIdValidator<CreateSecurityR
 
         // Rules for operations
         RuleFor(s => s.Operations)
-            .Must(ValidateOperations)
+            .Must(OperationOrderValidator.ValidateOperations)
             .WithMessage(_ => SecurityMessages.InvalidOperationOrderError);
-    }
-
-    private static bool ValidateOperations(List<CreateOperationRequest> operations)
-    {
-        operations.Sort((a, b) => 
-            a.OperationDate.CompareTo(b.OperationDate));
-        decimal curQuantity = 0;
-        foreach (CreateOperationRequest operation in operations)
-        {
-            switch (operation.OperationType)
-            {
-                case OperationType.Sell:
-                    curQuantity -= operation.Quantity;
-                    break;
-                case OperationType.Buy:
-                    curQuantity += operation.Quantity;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            if (curQuantity < 0)
-            {
-                return false;
-            }
-        }
-        return true;
     }
 }

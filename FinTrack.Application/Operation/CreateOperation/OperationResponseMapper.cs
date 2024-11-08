@@ -11,7 +11,7 @@ public static class OperationResponseMapper
             OperationType: operation.OperationType,
             OperationDate: operation.OperationDate,
             Value: operation.Value,
-            Quantity: operation.Quantiy,
+            Quantity: operation.Quantity,
             ExpensesAndCharges: operation.ExpensesAndCharges,
             ForeignTaxes: operation.ForeignTaxes
         );

@@ -238,7 +238,7 @@ namespace FinTrack.Persistence.Migrations
                     OperationType = table.Column<int>(type: "int", nullable: false),
                     OperationDate = table.Column<DateOnly>(type: "date", nullable: false),
                     Value = table.Column<decimal>(type: "decimal(19,4)", nullable: false),
-                    Quantiy = table.Column<long>(type: "bigint", nullable: false),
+                    Quantity = table.Column<long>(type: "bigint", nullable: false),
                     ForeignTaxes = table.Column<decimal>(type: "decimal(19,4)", nullable: false),
                     ExpensesAndCharges = table.Column<decimal>(type: "decimal(19,4)", nullable: false),
                     SecurityId = table.Column<decimal>(type: "decimal(20,0)", nullable: false)

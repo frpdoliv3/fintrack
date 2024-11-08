@@ -18,7 +18,7 @@ public record CreateOperationRequest(
             OperationType = OperationType,
             OperationDate = OperationDate,
             Value = Value,
-            Quantiy = (uint) Quantity,
+            Quantity = (uint) Quantity,
             ForeignTaxes = ForeignTaxes,
             ExpensesAndCharges = ExpensesAndCharges
         };

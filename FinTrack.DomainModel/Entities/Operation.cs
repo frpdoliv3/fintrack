@@ -10,7 +10,7 @@ public class Operation
     public required OperationType OperationType { get; set; }
     public required DateOnly OperationDate {  get; set; }
     public required decimal Value { get; set; }
-    public required uint Quantiy { get; set; } = 1;
+    public required uint Quantity { get; set; } = 1;
     public decimal ForeignTaxes { get; set; }
     public decimal ExpensesAndCharges { get; set; }
     public Security Security { get; set; } = null!;

@@ -13,7 +13,9 @@ public class SecuritiesController: ControllerBase
     private const string GetSecurityByIdName = "GetSecurityById";
     
     private readonly SecurityService _securityService;
-
+    
+    private string UserId => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+    
     public SecuritiesController(SecurityService securityService) {
         _securityService = securityService;
     }
@@ -32,8 +34,7 @@ public class SecuritiesController: ControllerBase
     [HttpGet("{securityId}", Name = GetSecurityByIdName)]
     public async Task<IActionResult> GetSecurityById([FromRoute] uint securityId)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
-        var fetchedSecurity = await _securityService.GetSecurityById(securityId, userId);
+        var fetchedSecurity = await _securityService.GetSecurityById(securityId, UserId);
         return fetchedSecurity == null ? 
             NotFound() :
             Ok(fetchedSecurity);
@@ -45,12 +46,24 @@ public class SecuritiesController: ControllerBase
         [FromQuery(Name = "page")] int pageNumber = 1, 
         [FromQuery(Name = "page_size")] int pageSize = 10
     ) {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
         try
         {
             var operations = await _securityService
-                .GetOperationsForId(userId, securityId, pageNumber, pageSize);
+                .GetOperationsForId(UserId, securityId, pageNumber, pageSize);
             return Ok(operations);
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpGet("{securityId}/status")]
+    public async Task<IActionResult> GetStatus([FromRoute] uint securityId)
+    {
+        try
+        {
+            return Ok(await _securityService.GetOperationStatus(UserId, securityId));
         }
         catch (UnauthorizedAccessException)
         {

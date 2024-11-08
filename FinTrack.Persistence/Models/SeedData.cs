@@ -79,37 +79,37 @@ internal class SeedData
                     OperationType = OperationType.Buy,
                     OperationDate = DateOnly.Parse("2021-01-01"),
                     Value = 88,
-                    Quantiy = 2
+                    Quantity = 2
                 },
                 new() {
                     OperationType = OperationType.Buy,
                     OperationDate = DateOnly.Parse("2021-02-01"),
                     Value = 90,
-                    Quantiy = 2
+                    Quantity = 2
                 },
                 new() {
                     OperationType = OperationType.Buy,
                     OperationDate = DateOnly.Parse("2021-03-01"),
                     Value = 92,
-                    Quantiy = 2
+                    Quantity = 2
                 },
                 new() {
                     OperationType = OperationType.Sell,
                     OperationDate = DateOnly.Parse("2021-02-20"),
                     Value = 87,
-                    Quantiy = 4
+                    Quantity = 4
                 },
                 new() {
                     OperationType = OperationType.Sell,
                     OperationDate = DateOnly.Parse("2022-02-20"),
                     Value = 100,
-                    Quantiy = 2
+                    Quantity = 2
                 },
                 new() {
                     OperationType = OperationType.Buy,
                     OperationDate = DateOnly.Parse("2023-02-20"),
                     Value = 120,
-                    Quantiy = 5
+                    Quantity = 5
                 }
             }
         };

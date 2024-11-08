@@ -15,7 +15,7 @@ public class OperationsController: ControllerBase
         _securityRepo = securityRepo;
     }
     
-    [HttpGet("{operationId}")]
+    [HttpDelete("{operationId}")]
     public async Task<IActionResult> DeleteOperation(ulong operationId)
     {
         var operation = await _securityRepo
