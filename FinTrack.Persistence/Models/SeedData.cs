@@ -17,7 +17,7 @@ internal class SeedData
     private readonly FinTrackDbContext _context;
     private readonly ICurrencyRepository _currencyRepo;
     private readonly ISecurityRepository _securityRepo;
-    private string RegularUserId = string.Empty;
+    private string _regularUserId = string.Empty;
     
     public SeedData(IServiceProvider serviceProvider, string resourceBasePath)
     {
@@ -71,7 +71,7 @@ internal class SeedData
             Name = "Vanguard FTSE All-World UCITS ETF USD Acc",
             Isin = "IE00BK5BQT80",
             NativeCurrency = nativeCurrency.Items[0],
-            OwnerId = RegularUserId,
+            OwnerId = _regularUserId,
             SourceCountry = sourceCountry.Items[0],
             Operations = new List<Operation>
             {
@@ -149,7 +149,7 @@ internal class SeedData
         };
 
         var regularUserId = await _authRepo.RegisterUser(regularUser);
-        RegularUserId = regularUserId;
+        _regularUserId = regularUserId;
     }
 
     private async Task CreateCountries()
