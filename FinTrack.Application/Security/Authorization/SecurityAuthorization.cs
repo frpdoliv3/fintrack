@@ -6,5 +6,5 @@ public static class SecurityAuthorization
 {
     public const string ViewSecurityPolicy = "ViewSecurityDetailsPolicy";
     
-    public class SameAuthorRequirement: IAuthorizationRequirement;
+    public class AuthorRequirement: IAuthorizationRequirement;
 }

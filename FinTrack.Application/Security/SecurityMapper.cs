@@ -1,4 +1,5 @@
 ﻿using FinTrack.Application.Operation.CreateOperation;
+using FinTrack.Application.Security.CreateEditSecurity;
 using FinTrack.Application.Security.GetSecurity;
 using FinTrack.Application.Security.GetSecurityStatus;
 using FinTrack.Domain.Interfaces;
@@ -17,29 +18,29 @@ public class SecurityMapper
         _countryRepo = countryRepo;
     }
 
-    public async Task<Entities.Security> ToSecurity(CreateSecurityRequest createSecurityRequest)
+    public async Task<Entities.Security> ToSecurity(CreateEditSecurityRequest createEditSecurityRequest)
     {
         var nativeCurrency = await _currencyRepo
-            .GetCurrencyById(createSecurityRequest.NativeCurrency);
+            .GetCurrencyById(createEditSecurityRequest.NativeCurrency);
         
-        var counterpartyCountry = createSecurityRequest.CounterpartyCountry != null ? 
-            await _countryRepo.GetCountryById(createSecurityRequest.CounterpartyCountry.Value) : 
+        var counterpartyCountry = createEditSecurityRequest.CounterpartyCountry != null ? 
+            await _countryRepo.GetCountryById(createEditSecurityRequest.CounterpartyCountry.Value) : 
             null;
         
-        var sourceCountry = createSecurityRequest.SourceCountry != null ? 
-            await _countryRepo.GetCountryById(createSecurityRequest.SourceCountry.Value) : 
+        var sourceCountry = createEditSecurityRequest.SourceCountry != null ? 
+            await _countryRepo.GetCountryById(createEditSecurityRequest.SourceCountry.Value) : 
             null;
 
         return new Entities.Security
         {
-            Name = createSecurityRequest.Name,
-            Isin = createSecurityRequest.Isin,
+            Name = createEditSecurityRequest.Name,
+            Isin = createEditSecurityRequest.Isin,
             NativeCurrency = nativeCurrency!,
             CounterpartyCountry = counterpartyCountry,
             SourceCountry = sourceCountry,
-            IssuingNIF = createSecurityRequest.IssuingNIF,
-            OwnerId = createSecurityRequest.OwnerId!,
-            Operations = createSecurityRequest.Operations
+            IssuingNIF = createEditSecurityRequest.IssuingNIF,
+            OwnerId = createEditSecurityRequest.OwnerId!,
+            Operations = createEditSecurityRequest.Operations
                 .Select(o => o.ToOperation())
                 .ToList()
         };

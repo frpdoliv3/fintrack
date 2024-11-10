@@ -1,9 +1,9 @@
 ﻿using FinTrack.Application.Operation.CreateOperation;
 using FinTrack.Application.Utils;
 
-namespace FinTrack.Application.Security.CreateSecurity;
+namespace FinTrack.Application.Security.CreateEditSecurity;
 
-public record CreateSecurityRequest(
+public record CreateEditSecurityRequest(
     string Name,
     string Isin,
     uint NativeCurrency,

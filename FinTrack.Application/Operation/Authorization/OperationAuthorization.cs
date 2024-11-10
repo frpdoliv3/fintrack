@@ -6,5 +6,5 @@ public class OperationAuthorization
 {
     public const string ChangeOperationPolicy = "ChangeOperationPolicy";
     
-    public class SameAuthorRequirement : IAuthorizationRequirement { }
+    public class AuthorRequirement : IAuthorizationRequirement { }
 }

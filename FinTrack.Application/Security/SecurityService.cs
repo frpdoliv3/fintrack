@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using FinTrack.Application.Security.Authorization;
+using FinTrack.Application.Security.CreateEditSecurity;
 using FinTrack.Application.Security.CreateSecurity;
 using FinTrack.Application.Security.GetSecurity;
 using FinTrack.Application.Security.GetSecurityStatus;
@@ -26,9 +27,9 @@ public class SecurityService
         _authService = authService;
     }
 
-    public async Task<GetSecurityResponse> AddSecurity(CreateSecurityRequest createSecurityRequest)
+    public async Task<GetSecurityResponse> AddSecurity(CreateEditSecurityRequest createEditSecurityRequest)
     {
-        var domainSecurity = await _securityMapper.ToSecurity(createSecurityRequest); 
+        var domainSecurity = await _securityMapper.ToSecurity(createEditSecurityRequest); 
         var createdSecurity = await _securityRepo.AddSecurity(domainSecurity);
         return _securityMapper.ToGetSecurityResponse(createdSecurity)!;
     }
@@ -72,4 +73,12 @@ public class SecurityService
         }
         return new GetSecurityStatusResponse(SecurityStatus.Ok);
     }
+
+    /*public async Task<GetSecurityResponse> UpdateSecurity(
+        ulong securityId,
+        CreateEditSecurityRequest updateSecurityRequest
+    )
+    {
+        
+    }*/
 }

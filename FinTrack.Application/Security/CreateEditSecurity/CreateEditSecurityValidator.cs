@@ -1,17 +1,14 @@
 ﻿using CheckDigits.Net;
-using FinTrack.Application.Operation;
-using FinTrack.Application.Operation.CreateOperation;
 using FinTrack.Application.Utils;
-using FinTrack.Domain.Entities;
 using FinTrack.Domain.Interfaces;
 using FinTrack.Resources;
 using FluentValidation;
 
-namespace FinTrack.Application.Security.CreateSecurity;
+namespace FinTrack.Application.Security.CreateEditSecurity;
 
-public sealed class CreateSecurityValidator: HasOwnerIdValidator<CreateSecurityRequest> 
+public sealed class CreateEditSecurityValidator: HasOwnerIdValidator<CreateEditSecurityRequest> 
 {
-    public CreateSecurityValidator(
+    public CreateEditSecurityValidator(
         ICountryRepository countryRepo,
         ICurrencyRepository currencyRepo,
         ISecurityRepository securityRepo

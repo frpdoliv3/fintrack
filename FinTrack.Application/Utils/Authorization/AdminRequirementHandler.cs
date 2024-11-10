@@ -1,29 +1,27 @@
 using System.Security.Claims;
-
 using FinTrack.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Entities = FinTrack.Domain.Entities;
 
-namespace FinTrack.Application.Utils;
+namespace FinTrack.Application.Utils.Authorization;
 
-public abstract class AdminBypassAuthorizationHandler<R, T> : 
-    AuthorizationHandler<R, T> where R : IAuthorizationRequirement
+public class AdminRequirementHandler: AuthorizationHandler<AdminRequirement>
 {
     private readonly IAuthRepository _authRepository;
 
-    protected AdminBypassAuthorizationHandler(IAuthRepository authRepository)
+    protected AdminRequirementHandler(IAuthRepository authRepository)
     {
         _authRepository = authRepository;
     }
     
-    protected abstract Task<bool> UserIsOwner(T entity, string userId);
     
-    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, R requirement, T resource)
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, AdminRequirement requirement)
     {
         var userId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (userId == null) { return; }
+
         var isAdmin = await _authRepository.HasRole(userId, Entities.UserRole.Admin);
-        if (await UserIsOwner(resource, userId) || isAdmin)
+        if (isAdmin)
         {
             context.Succeed(requirement);
         }

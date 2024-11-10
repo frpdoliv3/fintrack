@@ -5,6 +5,7 @@ using FinTrack.Application.Operation.Authorization;
 using FinTrack.Application.Security;
 using FinTrack.Application.Security.Authorization;
 using FinTrack.Application.Security.CreateSecurity;
+using FinTrack.Application.Utils.Authorization;
 using Microsoft.AspNetCore.Authorization;
 
 namespace FinTrack.Application;
@@ -20,7 +21,8 @@ public static class ServiceExtensions
         services.AddScoped<SecurityMapper>();
         
         // Authorization
-        services.AddScoped<IAuthorizationHandler, SecurityAuthorizationHandler>();
+        services.AddScoped<IAuthorizationHandler, AdminRequirementHandler>();
+        services.AddScoped<IAuthorizationHandler, SecurityAuthorRequirementHandler>();
         services.AddScoped<IAuthorizationHandler, OperationAuthorizationHandler>();
         
         // Validation Services

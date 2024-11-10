@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using FinTrack.Application.Security;
+using FinTrack.Application.Security.CreateEditSecurity;
 using FinTrack.Application.Security.CreateSecurity;
 using FinTrack.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -23,7 +24,7 @@ public class SecuritiesController: ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateSecurity([FromBody] CreateSecurityRequest security)
+    public async Task<IActionResult> CreateSecurity([FromBody] CreateEditSecurityRequest security)
     {
         var createdSecurity = await _securityService.AddSecurity(security);
         return CreatedAtRoute(
@@ -71,5 +72,14 @@ public class SecuritiesController: ControllerBase
         {
             return NotFound();
         }
+    }
+
+    [HttpPatch("{securityId}")]
+    public async Task<IActionResult> UpdateSecurity(
+        ulong securityId,
+        [FromBody] CreateEditSecurityRequest security
+    )
+    {
+        return Ok();
     }
 }
