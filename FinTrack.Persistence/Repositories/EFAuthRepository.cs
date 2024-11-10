@@ -27,23 +27,35 @@ internal class EFAuthRepository : IAuthRepository
         _context = context;
     }
 
+    private async Task<EFUser?> FindUserById(string id)
+    {
+        return await _userManager.FindByIdAsync(id);
+    }
+    
     public async Task<bool> ExistsWithId(string userId)
     {
         return await _userManager.Users.AnyAsync(u => u.Id == userId);
     }
 
-    public Task<bool> ExistsAnyUser()
+    public Task<bool> ExistsAny()
     {
         return _context.Users.AnyAsync();
     }
 
-    public async Task<User?> FindUserByEmail(string email)
+    public async Task<User?> FindByEmail(string email)
     {
         var persistenceUser = await _userManager.FindByEmailAsync(email);
         return persistenceUser?.ToUser();
     }
-
-    public async Task<string> RegisterUser(CreateUser newUser)
+    
+    public async Task<bool> HasRole(string userId, string role)
+    {
+        var user = await FindUserById(userId);
+        if (user == null) { return false; }
+        return await _userManager.IsInRoleAsync(user, role);
+    }
+    
+    public async Task<string> Register(CreateUser newUser)
     {
         var user = new EFUser();
         await _userStore.SetUserNameAsync(user, newUser.UserName, CancellationToken.None);

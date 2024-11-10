@@ -41,7 +41,7 @@ internal class SeedData
     
     private async Task<bool> ShouldCreateAuthentication()
     {
-        if (await _authRepo.ExistsAnyUser())
+        if (await _authRepo.ExistsAny())
         {
             return false;
         }
@@ -130,7 +130,7 @@ internal class SeedData
             Password = "Example_admin1"
         };
 
-        await _authRepo.RegisterUser(adminUser);
+        await _authRepo.Register(adminUser);
         foreach (var role in UserRole.GetUserRoles())
         {
             await _roleManager.CreateAsync(new IdentityRole(role));
@@ -148,7 +148,7 @@ internal class SeedData
             Password = "Example_user1"
         };
 
-        var regularUserId = await _authRepo.RegisterUser(regularUser);
+        var regularUserId = await _authRepo.Register(regularUser);
         _regularUserId = regularUserId;
     }
 

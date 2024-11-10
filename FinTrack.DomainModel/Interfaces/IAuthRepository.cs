@@ -3,8 +3,9 @@
 namespace FinTrack.Domain.Interfaces;
 public interface IAuthRepository
 {
-    public Task<string> RegisterUser(CreateUser newUser);
-    public Task<User?> FindUserByEmail(string email);
-    public Task<bool> ExistsAnyUser();
+    public Task<string> Register(CreateUser newUser);
+    public Task<User?> FindByEmail(string email);
+    public Task<bool> ExistsAny();
     public Task<bool> ExistsWithId(string userId);
+    public Task<bool> HasRole(string userId, string role);
 }

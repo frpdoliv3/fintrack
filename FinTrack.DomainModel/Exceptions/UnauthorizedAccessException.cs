@@ -1,3 +1,3 @@
-﻿namespace FinTrack.Domain.Exceptions;
+namespace FinTrack.Domain.Exceptions;
 
-public class UnauthorizedAccessException: Exception;
+public class UnauthorizedAccessException : Exception;

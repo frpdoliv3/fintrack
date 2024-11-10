@@ -1,6 +1,8 @@
 ﻿using System.Security.Claims;
 using FinTrack.Application.Security;
 using FinTrack.Application.Security.CreateSecurity;
+using FinTrack.Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UnauthorizedAccessException = FinTrack.Domain.Exceptions.UnauthorizedAccessException;
 
@@ -13,11 +15,11 @@ public class SecuritiesController: ControllerBase
     private const string GetSecurityByIdName = "GetSecurityById";
     
     private readonly SecurityService _securityService;
+    private readonly IAuthorizationService _authService;
     
-    private string UserId => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
-    
-    public SecuritiesController(SecurityService securityService) {
+    public SecuritiesController(IAuthorizationService authService, SecurityService securityService) {
         _securityService = securityService;
+        _authService = authService;
     }
 
     [HttpPost]
@@ -34,7 +36,7 @@ public class SecuritiesController: ControllerBase
     [HttpGet("{securityId}", Name = GetSecurityByIdName)]
     public async Task<IActionResult> GetSecurityById([FromRoute] uint securityId)
     {
-        var fetchedSecurity = await _securityService.GetSecurityById(securityId, UserId);
+        var fetchedSecurity = await _securityService.GetSecurityById(User, securityId);
         return fetchedSecurity == null ? 
             NotFound() :
             Ok(fetchedSecurity);
@@ -49,7 +51,7 @@ public class SecuritiesController: ControllerBase
         try
         {
             var operations = await _securityService
-                .GetOperationsForId(UserId, securityId, pageNumber, pageSize);
+                .GetOperationsForId(User, securityId, pageNumber, pageSize);
             return Ok(operations);
         }
         catch (UnauthorizedAccessException)
@@ -63,7 +65,7 @@ public class SecuritiesController: ControllerBase
     {
         try
         {
-            return Ok(await _securityService.GetOperationStatus(UserId, securityId));
+            return Ok(await _securityService.GetOperationStatus(User, securityId));
         }
         catch (UnauthorizedAccessException)
         {

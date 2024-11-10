@@ -45,8 +45,9 @@ public class SecurityMapper
         };
     }
 
-    public GetSecurityResponse ToGetSecurityResponse(Entities.Security security)
+    public GetSecurityResponse? ToGetSecurityResponse(Entities.Security? security)
     {
+        if (security == null) { return null; }
         return new GetSecurityResponse(
             Id: security.Id,
             Name: security.Name,

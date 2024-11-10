@@ -1,5 +1,4 @@
-﻿using FinTrack.Application.Operation;
-using FinTrack.Application.Operation.CreateOperation;
+﻿using FinTrack.Application.Operation.CreateOperation;
 using FinTrack.Application.Utils;
 
 namespace FinTrack.Application.Security.CreateSecurity;

@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Identity;
 using FinTrack.Persistence.Models;
 using FinTrack.Persistence.Contexts;
 using System.Text.Json.Serialization;
+using FinTrack.Application.Operation.Authorization;
+using FinTrack.Application.Security.Authorization;
+using FinTrack.Application.Utils;
 using FinTrack.Web;
 using FinTrack.Web.Filters;
 using FluentValidation.AspNetCore;
@@ -17,7 +20,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(opts =>
+{
+    opts.AddPolicy(
+        SecurityAuthorization.ViewSecurityPolicy,
+        policy => policy.Requirements.Add(new SecurityAuthorization.SameAuthorRequirement())
+    );
+    opts.AddPolicy(
+        OperationAuthorization.ChangeOperationPolicy,
+        policy => policy.Requirements.Add(new OperationAuthorization.SameAuthorRequirement()));
+});
 builder.Services.AddAuthentication()
     .AddBearerToken(IdentityConstants.BearerScheme);
 

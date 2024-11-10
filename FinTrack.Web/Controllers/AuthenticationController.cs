@@ -25,14 +25,14 @@ public class AuthenticationController : ControllerBase
     [AllowAnonymous]
     public async Task Register([FromBody] CreateUser registerRequest)
     {
-        await _authRepo.RegisterUser(registerRequest);
+        await _authRepo.Register(registerRequest);
     }
 
     [HttpPost("[action]")]
     [AllowAnonymous]
     public async Task Login([FromBody] LoginUserRequest userIdentity)
     {
-        var user = await _authRepo.FindUserByEmail(userIdentity.Identity);
+        var user = await _authRepo.FindByEmail(userIdentity.Identity);
         string userName;
         if (user == null)
         {

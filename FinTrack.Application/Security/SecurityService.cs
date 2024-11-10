@@ -1,8 +1,10 @@
-﻿using FinTrack.Application.Security.CreateSecurity;
+﻿using System.Security.Claims;
+using FinTrack.Application.Security.Authorization;
+using FinTrack.Application.Security.CreateSecurity;
 using FinTrack.Application.Security.GetSecurity;
 using FinTrack.Application.Security.GetSecurityStatus;
 using FinTrack.Domain.Interfaces;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Authorization;
 using Entities = FinTrack.Domain.Entities;
 using UnauthorizedAccessException = FinTrack.Domain.Exceptions.UnauthorizedAccessException;
 
@@ -12,46 +14,53 @@ public class SecurityService
 {
     private readonly SecurityMapper _securityMapper;
     private readonly ISecurityRepository _securityRepo;
+    private readonly IAuthorizationService _authService;
     
-    public SecurityService(SecurityMapper securityMapper, ISecurityRepository securityRepo)
-    {
+    public SecurityService(
+        IAuthorizationService authService,
+        SecurityMapper securityMapper,
+        ISecurityRepository securityRepo
+    ) {
         _securityMapper = securityMapper;
         _securityRepo = securityRepo;
+        _authService = authService;
     }
 
     public async Task<GetSecurityResponse> AddSecurity(CreateSecurityRequest createSecurityRequest)
     {
         var domainSecurity = await _securityMapper.ToSecurity(createSecurityRequest); 
         var createdSecurity = await _securityRepo.AddSecurity(domainSecurity);
-        return _securityMapper.ToGetSecurityResponse(createdSecurity);
+        return _securityMapper.ToGetSecurityResponse(createdSecurity)!;
     }
 
-    public async Task<GetSecurityResponse?> GetSecurityById(ulong securityId, string userId)
+    public async Task<GetSecurityResponse?> GetSecurityById(ClaimsPrincipal user, ulong securityId)
     {
+        var authResult = await _authService
+            .AuthorizeAsync(user, securityId, SecurityAuthorization.ViewSecurityPolicy);
         var domainSecurity = await _securityRepo.GetSecurityById(securityId);
-        if (domainSecurity == null || domainSecurity.OwnerId != userId)
-        {
-            return null;
-        }
-        return _securityMapper.ToGetSecurityResponse(domainSecurity);
+        return authResult.Succeeded ? _securityMapper.ToGetSecurityResponse(domainSecurity) : null;
     }
 
     public async Task<Entities.PagedList<Entities.Operation>> GetOperationsForId(
-        string ownerId,
+        ClaimsPrincipal user,
         ulong securityId,
         int pageNumber,
         int pageSize
     ) {
-        if (!await ValidSecurityOwnership(ownerId, securityId))
+        var authResult = await _authService
+            .AuthorizeAsync(user, securityId, SecurityAuthorization.ViewSecurityPolicy);
+        if (!authResult.Succeeded)
         {
             throw new UnauthorizedAccessException();
         }
         return await _securityRepo.GetOperationsForSecurity(securityId, pageNumber, pageSize);
     }
 
-    public async Task<GetSecurityStatusResponse> GetOperationStatus(string ownerId, ulong securityId)
+    public async Task<GetSecurityStatusResponse> GetOperationStatus(ClaimsPrincipal user, ulong securityId)
     {
-        if (!await ValidSecurityOwnership(ownerId, securityId))
+        var authResult = await _authService
+            .AuthorizeAsync(user, securityId, SecurityAuthorization.ViewSecurityPolicy);
+        if (!authResult.Succeeded)
         {
             throw new UnauthorizedAccessException();
         }
@@ -62,11 +71,5 @@ public class SecurityService
             return new GetSecurityStatusResponse(SecurityStatus.InvalidOperationOrder);
         }
         return new GetSecurityStatusResponse(SecurityStatus.Ok);
-    }
-
-    private async Task<bool> ValidSecurityOwnership(string ownerId, ulong securityId)
-    {
-        var existsForId = await _securityRepo.Exists(s => s.OwnerId == ownerId && s.Id == securityId);
-        return existsForId;
     }
 }

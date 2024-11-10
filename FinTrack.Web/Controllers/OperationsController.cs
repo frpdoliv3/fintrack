@@ -1,5 +1,7 @@
 using System.Security.Claims;
+using FinTrack.Application.Operation.Authorization;
 using FinTrack.Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinTrack.Web.Controllers;
@@ -8,10 +10,12 @@ namespace FinTrack.Web.Controllers;
 [Route("[controller]")]
 public class OperationsController: ControllerBase
 {
+    private readonly IAuthorizationService _authService;
     private readonly ISecurityRepository _securityRepo;
     
-    public OperationsController(ISecurityRepository securityRepo)
+    public OperationsController(IAuthorizationService authService, ISecurityRepository securityRepo)
     {
+        _authService = authService;
         _securityRepo = securityRepo;
     }
     
@@ -25,9 +29,11 @@ public class OperationsController: ControllerBase
             return NotFound();
         }
 
-        if (operation.Security.OwnerId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+        var authResult = await _authService
+            .AuthorizeAsync(User, operation, OperationAuthorization.ChangeOperationPolicy);
+        if (!authResult.Succeeded)
         {
-            return Forbid();
+            return NotFound();
         }
         await _securityRepo.DeleteOperation(operation);
         return Ok();
