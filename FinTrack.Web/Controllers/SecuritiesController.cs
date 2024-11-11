@@ -16,11 +16,9 @@ public class SecuritiesController: ControllerBase
     private const string GetSecurityByIdName = "GetSecurityById";
     
     private readonly SecurityService _securityService;
-    private readonly IAuthorizationService _authService;
     
-    public SecuritiesController(IAuthorizationService authService, SecurityService securityService) {
+    public SecuritiesController(SecurityService securityService) {
         _securityService = securityService;
-        _authService = authService;
     }
 
     [HttpPost]
@@ -80,6 +78,13 @@ public class SecuritiesController: ControllerBase
         [FromBody] EditSecurityRequest security
     )
     {
-        return Ok();
+        security.Id = securityId;
+        var updatedSecurity = await _securityService.UpdateSecurity(User, security);
+        if (updatedSecurity == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(updatedSecurity);
     }
 }

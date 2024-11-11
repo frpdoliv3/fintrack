@@ -10,11 +10,9 @@ using FinTrack.Persistence.Contexts;
 using System.Text.Json.Serialization;
 using FinTrack.Application.Operation.Authorization;
 using FinTrack.Application.Security.Authorization;
-using FinTrack.Application.Utils;
 using FinTrack.Application.Utils.Authorization;
 using FinTrack.Web;
 using FinTrack.Web.Filters;
-using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +30,10 @@ builder.Services.AddAuthorization(opts =>
     );
     opts.AddPolicy(OperationAuthorization.ChangeOperationPolicy, 
         policy => policy.Requirements.Add(new OperationAuthorization.AuthorRequirement()));
+    opts.AddPolicy(
+        SecurityAuthorization.ChangeSecurityPolicy,
+        policy => policy.Requirements.Add(new SecurityAuthorization.AuthorRequirement())
+    );
 });
 builder.Services.AddAuthentication()
     .AddBearerToken(IdentityConstants.BearerScheme);
@@ -77,8 +79,6 @@ builder.Services.AddSwaggerGen();
 // Add other layer's services
 builder.Services.ConfigurePersistenceApp(builder.Configuration);
 builder.Services.ConfigureApplication();
-
-builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationRulesToSwagger();
 
 var app = builder.Build();

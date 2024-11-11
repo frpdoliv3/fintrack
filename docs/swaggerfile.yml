@@ -226,13 +226,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateSecurityRequest'
+              $ref: '#/components/schemas/EditSecurityRequest'
           text/json:
             schema:
-              $ref: '#/components/schemas/CreateSecurityRequest'
+              $ref: '#/components/schemas/EditSecurityRequest'
           application/*+json:
             schema:
-              $ref: '#/components/schemas/CreateSecurityRequest'
+              $ref: '#/components/schemas/EditSecurityRequest'
       responses:
         '200':
           description: OK
@@ -377,6 +377,7 @@ components:
       additionalProperties: false
     CreateSecurityRequest:
       required:
+        - isin
         - name
         - nativeCurrency
         - sourceCountry
@@ -386,15 +387,14 @@ components:
           minLength: 1
           type: string
         isin:
+          minLength: 1
           type: string
-          nullable: true
         nativeCurrency:
           type: integer
           format: int32
         counterpartyCountry:
           type: integer
           format: int32
-          nullable: true
         sourceCountry:
           type: integer
           format: int32
@@ -449,6 +449,28 @@ components:
         numberToMajor:
           type: integer
           format: int32
+      additionalProperties: false
+    EditSecurityRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        isin:
+          type: string
+          nullable: true
+        nativeCurrency:
+          type: integer
+          format: int32
+        counterpartyCountry:
+          type: integer
+          format: int32
+        sourceCountry:
+          type: integer
+          format: int32
+        issuingNIF:
+          type: string
+          nullable: true
       additionalProperties: false
     GetSecurityResponse:
       type: object

@@ -17,15 +17,22 @@ internal class EFSecurityRepository: ISecurityRepository
     
     public async Task<Security> AddSecurity(Security security)
     {
-        await _context.Securities.AddAsync(security);
+        var createdSecurity = await _context.Securities.AddAsync(security);
         await _context.SaveChangesAsync();
-        return security;
+        return createdSecurity.Entity;
     }
     
     public async Task<Security?> GetSecurityById(ulong id)
     {
         return await _context.Securities
             .FindAsync(id);
+    }
+
+    public async Task<Security?> UpdateSecurity(Security security)
+    {
+        var updatedSecurity = _context.Securities.Update(security);
+        await _context.SaveChangesAsync();
+        return updatedSecurity.Entity;
     }
 
     public async Task<PagedList<Operation>> GetOperationsForSecurity(ulong securityId, int pageNumber, int pageSize)
