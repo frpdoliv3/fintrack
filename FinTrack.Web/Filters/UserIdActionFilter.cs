@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
-using FinTrack.Application.Utils;
+using FinTrack.Application.Security.EntitiesBase;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace FinTrack.Web;
+namespace FinTrack.Web.Filters;
 
 public class UserIdActionFilter: IActionFilter
 {

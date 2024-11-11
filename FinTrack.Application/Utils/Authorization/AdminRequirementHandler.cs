@@ -7,11 +7,11 @@ namespace FinTrack.Application.Utils.Authorization;
 
 public class AdminRequirementHandler: AuthorizationHandler<AdminRequirement>
 {
-    private readonly IAuthRepository _authRepository;
+    private readonly IAuthRepository _authRepo;
 
-    protected AdminRequirementHandler(IAuthRepository authRepository)
+    public AdminRequirementHandler(IAuthRepository authRepo)
     {
-        _authRepository = authRepository;
+        _authRepo = authRepo;
     }
     
     
@@ -20,7 +20,7 @@ public class AdminRequirementHandler: AuthorizationHandler<AdminRequirement>
         var userId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (userId == null) { return; }
 
-        var isAdmin = await _authRepository.HasRole(userId, Entities.UserRole.Admin);
+        var isAdmin = await _authRepo.HasRole(userId, Entities.UserRole.Admin);
         if (isAdmin)
         {
             context.Succeed(requirement);

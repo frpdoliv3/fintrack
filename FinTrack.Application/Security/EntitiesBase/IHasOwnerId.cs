@@ -1,4 +1,4 @@
-﻿namespace FinTrack.Application.Utils;
+﻿namespace FinTrack.Application.Security.EntitiesBase;
 
 public interface IHasOwnerId
 {

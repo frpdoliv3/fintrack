@@ -212,6 +212,30 @@ paths:
       responses:
         '200':
           description: OK
+    patch:
+      tags:
+        - Securities
+      parameters:
+        - name: securityId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSecurityRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreateSecurityRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateSecurityRequest'
+      responses:
+        '200':
+          description: OK
   '/securities/{securityId}/operations':
     get:
       tags:
@@ -355,7 +379,6 @@ components:
       required:
         - name
         - nativeCurrency
-        - ownerId
         - sourceCountry
       type: object
       properties:
@@ -368,11 +391,6 @@ components:
         nativeCurrency:
           type: integer
           format: int32
-        operations:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateOperationRequest'
-          nullable: true
         counterpartyCountry:
           type: integer
           format: int32
@@ -383,9 +401,11 @@ components:
         issuingNIF:
           type: string
           nullable: true
-        ownerId:
-          minLength: 1
-          type: string
+        operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateOperationRequest'
+          nullable: true
       additionalProperties: false
     CreateUser:
       required:
