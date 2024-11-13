@@ -73,4 +73,10 @@ internal class EFSecurityRepository: ISecurityRepository
         _context.Operations.Remove(operation);
         await _context.SaveChangesAsync();
     }
+
+    public async Task DeleteSecurity(Security security)
+    {
+        _context.Securities.Remove(security);
+        await _context.SaveChangesAsync();
+    }
 }

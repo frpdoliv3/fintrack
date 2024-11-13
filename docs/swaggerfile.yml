@@ -236,6 +236,19 @@ paths:
       responses:
         '200':
           description: OK
+    delete:
+      tags:
+        - Securities
+      parameters:
+        - name: securityId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
   '/securities/{securityId}/operations':
     get:
       tags:

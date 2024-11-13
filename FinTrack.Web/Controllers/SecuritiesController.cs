@@ -85,4 +85,15 @@ public class SecuritiesController: ControllerBase
 
         return Ok(updatedSecurity);
     }
+
+    [HttpDelete("{securityId}")]
+    public async Task<IActionResult> DeleteSecurity([FromRoute] ulong securityId)
+    {
+        var deleteResult = await _securityService.DeleteSecurity(User, securityId);
+        if (!deleteResult)
+        {
+            return NotFound();
+        }
+        return NoContent();
+    }
 }

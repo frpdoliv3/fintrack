@@ -36,6 +36,6 @@ public class OperationsController: ControllerBase
             return NotFound();
         }
         await _securityRepo.DeleteOperation(operation);
-        return Ok();
+        return NoContent();
     }
 }

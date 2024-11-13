@@ -13,4 +13,5 @@ public interface ISecurityRepository
     public IAsyncEnumerable<Operation> GetOperationsForSecurity(ulong securityId);
     public Task<Operation?> GetOperationById(ulong operationId);
     public Task DeleteOperation(Operation operation);
+    public Task DeleteSecurity(Security security);
 }

@@ -95,4 +95,18 @@ public class SecurityService
         var updatedSecurity = await _securityRepo.UpdateSecurity(mappedSecurity);
         return _securityMapper.ToGetSecurityResponse(updatedSecurity);
     }
+
+    public async Task<bool> DeleteSecurity(ClaimsPrincipal user, ulong securityId)
+    {
+        var authResult = await _authService
+            .AuthorizeAsync(user, securityId, SecurityAuthorization.ChangeSecurityPolicy);
+
+        if (!authResult.Succeeded) { return false; }
+
+        var security = await _securityRepo.GetSecurityById(securityId);
+        if (security == null) { return false; }
+
+        await _securityRepo.DeleteSecurity(security);
+        return true;
+    }
 }
