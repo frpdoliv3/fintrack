@@ -32,9 +32,9 @@ internal class EFCountryRepository : ICountryRepository
         return await PagedRepository<Country>.PagedQuery(countries, pageNumber, pageSize);
     }
 
-    public async Task<bool> Exists(Expression<Func<Country, bool>> predicate)
+    public bool Exists(Expression<Func<Country, bool>> predicate)
     {
-        return await _context.Countries.AnyAsync(predicate);
+        return _context.Countries.Any(predicate);
     }
 
     public async Task<Country?> GetCountryById(uint id)

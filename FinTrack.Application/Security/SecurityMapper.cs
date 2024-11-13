@@ -59,4 +59,41 @@ public class SecurityMapper
             IssuingNIF: security.IssuingNIF
         );
     }
+
+    public async Task<Entities.Security> UpdateSecurity(EditSecurityRequest updateRequest, Entities.Security security)
+    {
+        security.Name = updateRequest.Name;
+        security.Isin = updateRequest.Isin;
+
+        var shouldUpdateNativeCurrency = updateRequest.NativeCurrency != security.NativeCurrency.Id;
+        if (shouldUpdateNativeCurrency)
+        {
+            var nativeCurrency = await _currencyRepo.GetCurrencyById(updateRequest.NativeCurrency);
+            security.NativeCurrency = nativeCurrency!;
+        }
+
+        if (
+            updateRequest.CounterpartyCountry != default && 
+            updateRequest.CounterpartyCountry != security.CounterpartyCountry?.Id
+        ) {
+            var counterpartyCountry = await _countryRepo.GetCountryById(updateRequest.CounterpartyCountry);
+            security.CounterpartyCountry = counterpartyCountry;
+        }
+        if (updateRequest.CounterpartyCountry == default)
+        {
+            security.CounterpartyCountry = null;
+        }
+        
+        if (updateRequest.SourceCountry != default && updateRequest.SourceCountry != security.SourceCountry?.Id) {
+            var sourceCountry = await _countryRepo.GetCountryById(updateRequest.SourceCountry);
+            security.SourceCountry = sourceCountry;
+        }
+        if (updateRequest.SourceCountry == default)
+        {
+            security.SourceCountry = null;
+        }
+        
+        security.IssuingNIF = updateRequest.IssuingNIF;
+        return security;
+    }
 }

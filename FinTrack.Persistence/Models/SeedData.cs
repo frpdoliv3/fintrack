@@ -150,6 +150,15 @@ internal class SeedData
 
         var regularUserId = await _authRepo.Register(regularUser);
         _regularUserId = regularUserId;
+        
+        var regularUser2 = new CreateUser
+        {
+            UserName = "fr.pdoliv3",
+            Email = "fr.pdoliv3@gmail.com",
+            Password = "Example_user2"
+        };
+
+        await _authRepo.Register(regularUser2);
     }
 
     private async Task CreateCountries()

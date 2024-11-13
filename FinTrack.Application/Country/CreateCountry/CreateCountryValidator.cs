@@ -10,7 +10,7 @@ namespace FinTrack.Application.Country.CreateCountry;
  */
 public sealed class CreateCountryValidator : ValidatorBase<CreateCountryRequest>
 {
-    public CreateCountryValidator(ICountryRepository countryRepository): base()
+    public CreateCountryValidator(ICountryRepository countryRepository)
     {
         // Rules for Name
         RuleFor(x => x.Name)
@@ -18,11 +18,11 @@ public sealed class CreateCountryValidator : ValidatorBase<CreateCountryRequest>
             .WithMessage(_ => GeneralMessages.EmptyNameError);
         
         RuleFor(x => x.Name)
-            .MustAsync(async (request, cancellation) =>
+            .Must(name =>
             {
-                return !await countryRepository.Exists(x => x.Name == request);
+                return !countryRepository.Exists(x => x.Name == name);
             })
-            .WithMessage(_ => CountryMessages.DuplicateNameError); ;
+            .WithMessage(_ => CountryMessages.DuplicateNameError);
         
         // Rules for Alpha3Code
         RuleFor(x => x.Alpha3Code)
@@ -30,9 +30,9 @@ public sealed class CreateCountryValidator : ValidatorBase<CreateCountryRequest>
             .WithMessage(_ => CountryMessages.Alpha3CodeLengthError);
             
         RuleFor(x => x.Alpha3Code)
-            .MustAsync(async(request, cancellation) =>
+            .Must(alpha3Code =>
             {
-                return !await countryRepository.Exists(x => x.Alpha3Code == request);
+                return !countryRepository.Exists(x => x.Alpha3Code == alpha3Code);
             })
             .WithMessage(_ => CountryMessages.DuplicateAlpha3CodeError);
         
@@ -42,9 +42,9 @@ public sealed class CreateCountryValidator : ValidatorBase<CreateCountryRequest>
             .WithMessage(_ => CountryMessages.Alpha2CodeLengthError);
         
         RuleFor(x => x.Alpha2Code)
-            .MustAsync(async(request, cancellation) =>
+            .Must(alpha2Code =>
             {
-                return !await countryRepository.Exists(x => x.Alpha2Code == request);
+                return !countryRepository.Exists(x => x.Alpha2Code == alpha2Code);
             })
             .WithMessage(_ => CountryMessages.DuplicateAlpha2CodeError);
     }

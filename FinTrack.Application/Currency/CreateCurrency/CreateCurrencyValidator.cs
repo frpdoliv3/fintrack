@@ -22,9 +22,9 @@ public sealed class CreateCurrencyValidator: ValidatorBase<CreateCurrencyRequest
             .WithMessage(_ => CurrencyMessages.OverflowNameError);
 
         RuleFor(x => x.Name)
-            .MustAsync(async (request, cancellation) =>
+            .Must(name =>
             {
-                return !await currencyRepository.Exists(x => x.Name == request);
+                return !currencyRepository.Exists(x => x.Name == name);
             })
             .WithMessage(_ => CurrencyMessages.DuplicateNameError);
 
@@ -39,9 +39,9 @@ public sealed class CreateCurrencyValidator: ValidatorBase<CreateCurrencyRequest
             .WithMessage(_ => CurrencyMessages.Alpha3CodeLengthError);
         
         RuleFor(x => x.Alpha3Code)
-            .MustAsync(async (request, _) =>
+            .Must(alpha3Code =>
             {
-                return !await currencyRepository.Exists(x => x.Alpha3Code == request);
+                return !currencyRepository.Exists(x => x.Alpha3Code == alpha3Code);
             })
             .WithMessage(_ => CurrencyMessages.DuplicateAlpha3CodeError);
 

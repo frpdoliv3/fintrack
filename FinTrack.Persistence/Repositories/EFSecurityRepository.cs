@@ -1,6 +1,5 @@
 ﻿using System.Linq.Expressions;
 using FinTrack.Domain.Entities;
-using FinTrack.Domain.Exceptions;
 using FinTrack.Domain.Interfaces;
 using FinTrack.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -28,11 +27,10 @@ internal class EFSecurityRepository: ISecurityRepository
             .FindAsync(id);
     }
 
-    public async Task<Security?> UpdateSecurity(Security security)
+    public async Task<Security> UpdateSecurity(Security security)
     {
-        var updatedSecurity = _context.Securities.Update(security);
         await _context.SaveChangesAsync();
-        return updatedSecurity.Entity;
+        return security;
     }
 
     public async Task<PagedList<Operation>> GetOperationsForSecurity(ulong securityId, int pageNumber, int pageSize)
@@ -52,9 +50,14 @@ internal class EFSecurityRepository: ISecurityRepository
             .AsAsyncEnumerable();
     }
     
-    public async Task<bool> Exists(Expression<Func<Security, bool>> predicate)
+    public async Task<bool> ExistsAsync(Expression<Func<Security, bool>> predicate)
     {
         return await _context.Securities.AnyAsync(predicate);
+    }
+
+    public bool Exists(Expression<Func<Security, bool>> predicate)
+    {
+        return _context.Securities.Any(predicate);
     }
 
     public async Task<Operation?> GetOperationById(ulong operationId)

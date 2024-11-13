@@ -212,7 +212,7 @@ paths:
       responses:
         '200':
           description: OK
-    patch:
+    put:
       tags:
         - Securities
       parameters:
@@ -451,14 +451,19 @@ components:
           format: int32
       additionalProperties: false
     EditSecurityRequest:
+      required:
+        - isin
+        - name
+        - nativeCurrency
+        - sourceCountry
       type: object
       properties:
         name:
+          minLength: 1
           type: string
-          nullable: true
         isin:
+          minLength: 1
           type: string
-          nullable: true
         nativeCurrency:
           type: integer
           format: int32

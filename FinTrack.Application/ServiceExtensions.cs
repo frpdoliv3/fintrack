@@ -21,9 +21,8 @@ public static class ServiceExtensions
         services.AddScoped<SecurityMapper>();
         
         // Authorization
-        services.AddScoped<IAuthorizationHandler, AdminRequirementHandler>();
-        services.AddScoped<IAuthorizationHandler, SecurityAuthorRequirementHandler>();
-        services.AddScoped<IAuthorizationHandler, OperationAuthorizationHandler>();
+        services.AddSecurityAuthorization();
+        services.AddOperationAuthorization();
         
         // Validation Services
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());

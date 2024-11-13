@@ -10,10 +10,10 @@ public class CreateSecurityRequest: EntitiesBase.ISecurityDetails
     public uint NativeCurrency { get; init; }
     public uint CounterpartyCountry { get; init; } 
     public uint SourceCountry { get; init; }
-    public string IssuingNIF { get; init; } = null!;
+    public string? IssuingNIF { get; init; } = null!;
     
     [JsonIgnore]
-    public string OwnerId { get; set; } = null!; 
+    public string? OwnerId { get; set; } = null!; 
 
     public List<CreateOperationRequest> Operations { get; init; } = new();
 }

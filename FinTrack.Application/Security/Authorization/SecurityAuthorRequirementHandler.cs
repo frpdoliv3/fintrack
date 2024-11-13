@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace FinTrack.Application.Security.Authorization;
 
-public class SecurityAuthorRequirementHandler 
-    : AuthorizationHandler<SecurityAuthorization.AuthorRequirement, ulong>
+public class SecurityAuthorRequirementHandler<T>
+    : AuthorizationHandler<T, ulong> where T : IAuthorizationRequirement
 {
     private readonly ISecurityRepository _securityRepo;
     
@@ -15,14 +15,14 @@ public class SecurityAuthorRequirementHandler
 
     protected override async Task HandleRequirementAsync(
         AuthorizationHandlerContext context,
-        SecurityAuthorization.AuthorRequirement requirement,
+        T requirement,
         ulong securityId
     ) {
         var userId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (userId == null) { return; }
 
         var hasAuthorship = await _securityRepo
-            .Exists(s => s.Id == securityId && s.OwnerId == userId);
+            .ExistsAsync(s => s.Id == securityId && s.OwnerId == userId);
         if (hasAuthorship)
         {
             context.Succeed(requirement);

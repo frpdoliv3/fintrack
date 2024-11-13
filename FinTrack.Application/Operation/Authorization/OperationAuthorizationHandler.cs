@@ -5,12 +5,12 @@ using Entities = FinTrack.Domain.Entities;
 
 namespace FinTrack.Application.Operation.Authorization;
 
-public class OperationAuthorizationHandler
-    : AuthorizationHandler<OperationAuthorization.AuthorRequirement, Entities.Operation>
+public class OperationAuthorizationHandler<T>
+    : AuthorizationHandler<T, Entities.Operation> where T : IAuthorizationRequirement
 {
     protected override Task HandleRequirementAsync(
         AuthorizationHandlerContext context,
-        OperationAuthorization.AuthorRequirement requirement,
+        T requirement,
         Entities.Operation resource
     ) {
         var userId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

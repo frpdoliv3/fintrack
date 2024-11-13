@@ -9,3 +9,4 @@ public class EditSecurityValidator(
     ICurrencyRepository currencyRepo,
     ISecurityRepository securityRepo)
     : SecurityDetailsValidator<EditSecurityRequest>(countryRepo, currencyRepo, securityRepo);
+    

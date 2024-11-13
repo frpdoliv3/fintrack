@@ -22,9 +22,9 @@ internal class EFCurrencyRepository : ICurrencyRepository
         return currency;
     }
 
-    public async Task<bool> Exists(Expression<Func<Currency, bool>> predicate)
+    public bool Exists(Expression<Func<Currency, bool>> predicate)
     {
-        return await _context.Currencies.AnyAsync(predicate);
+        return _context.Currencies.Any(predicate);
     }
 
     public async Task<Currency?> GetCurrencyById(uint id)

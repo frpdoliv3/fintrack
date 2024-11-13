@@ -14,7 +14,16 @@ public class SecurityDetailsValidator<T>: ValidatorBase<T> where T : ISecurityDe
         ISecurityRepository securityRepo
     )
     {
+        // Rules for Name
+        RuleFor(s => s.Name)
+            .NotEmpty()
+            .WithMessage(_ => GeneralMessages.EmptyNameError);
+        
         // Rules for ISIN
+        RuleFor(s => s.Isin)
+            .NotEmpty()
+            .WithMessage(_ => SecurityMessages.IsinValueError);
+        
         RuleFor(s => s.Isin)
             .Must((request) =>
             {
@@ -25,9 +34,9 @@ public class SecurityDetailsValidator<T>: ValidatorBase<T> where T : ISecurityDe
             .WithMessage(_ => SecurityMessages.IsinValueError);
 
         RuleFor(s => s.Isin)
-            .MustAsync(async (request, isin, _) =>
+            .Must((request, isin) =>
             {
-                return !await securityRepo
+                return !securityRepo
                     .Exists(s => s.Isin == isin && s.OwnerId == request.OwnerId);
             })
             .When(s => s.Isin != null)
@@ -35,43 +44,58 @@ public class SecurityDetailsValidator<T>: ValidatorBase<T> where T : ISecurityDe
 
         // Rules for NativeCurrency
         RuleFor(s => s.NativeCurrency)
-            .MustAsync(async (request, _) =>
+            .NotEmpty()
+            .WithMessage(_ => GeneralMessages.EmptyCurrencyError);
+        
+        RuleFor(s => s.NativeCurrency)
+            .Must(nativeCurrencyId =>
             {
-                return await currencyRepo.Exists(c => c.Id == request);
+                return currencyRepo.Exists(c => c.Id == nativeCurrencyId);
             })
             .When(s => s.NativeCurrency != default)
             .WithMessage(_ => GeneralMessages.InvalidCurrencyError);
 
         // Rules for CounterpartyCountry
         RuleFor(s => s.CounterpartyCountry)
-            .MustAsync(async (request, _) =>
+            .Must(counterpartyCountryId =>
             {
-                return await countryRepo.Exists(c => c.Id == request);
+                return countryRepo.Exists(c => c.Id == counterpartyCountryId);
             })
             .When(s => s.CounterpartyCountry != default)
             .WithMessage(_ => GeneralMessages.InvalidCountryError);
 
         // Rules for source country
         RuleFor(s => s.SourceCountry)
-            .MustAsync(async (request, _) =>
+            .NotEmpty()
+            .WithMessage(_ => GeneralMessages.EmptyCountryError);
+        
+        RuleFor(s => s.SourceCountry)
+            .Must(sourceCountryId =>
             {
-                return await countryRepo.Exists(c => c.Id == request);
+                return countryRepo.Exists(c => c.Id == sourceCountryId);
             })
-            .When(s => s.IssuingNIF == null)
+            .When(s => s.SourceCountry != default)
             .WithMessage(_ => GeneralMessages.InvalidCountryError);
-
+        
         //Inter-property rules
         RuleFor(s => s.SourceCountry)
             .Empty()
             .Unless(s => s.IssuingNIF == null);
 
-        RuleFor(s => s.IssuingNIF)
+        RuleFor(s => s.SourceCountry)
             .NotEmpty()
+            .When(s => s.IssuingNIF == null);
+
+        RuleFor(s => s.IssuingNIF)
             .Must(IsValidNIF.Validate!)
-            .When(s => s.SourceCountry == default);
+            .When(s => s.IssuingNIF != null);
 
         RuleFor(s => s.IssuingNIF)
             .Empty()
             .Unless(s => s.SourceCountry == default);
+        
+        RuleFor(s => s.IssuingNIF)
+            .NotEmpty()
+            .When(s => s.SourceCountry == default);
     }
 }

@@ -13,6 +13,7 @@ using FinTrack.Application.Security.Authorization;
 using FinTrack.Application.Utils.Authorization;
 using FinTrack.Web;
 using FinTrack.Web.Filters;
+using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,15 +25,20 @@ builder.Services.AddAuthorization(opts =>
     opts.AddPolicy(
         SecurityAuthorization.ViewSecurityPolicy, policy =>
         {
-            policy.Requirements.Add(new SecurityAuthorization.AuthorRequirement());
-            policy.Requirements.Add(new AdminRequirement());
+            policy.Requirements.Add(new SecurityAuthorization.ViewSecurityRequirement());
         }
     );
-    opts.AddPolicy(OperationAuthorization.ChangeOperationPolicy, 
-        policy => policy.Requirements.Add(new OperationAuthorization.AuthorRequirement()));
     opts.AddPolicy(
-        SecurityAuthorization.ChangeSecurityPolicy,
-        policy => policy.Requirements.Add(new SecurityAuthorization.AuthorRequirement())
+        SecurityAuthorization.ChangeSecurityPolicy, policy =>
+        {
+            policy.Requirements.Add(new SecurityAuthorization.ChangeSecurityRequirement());
+        }
+    );
+    opts.AddPolicy(
+        OperationAuthorization.ChangeOperationPolicy, policy =>
+        {
+            policy.Requirements.Add(new OperationAuthorization.ChangeOperationRequirement());
+        }
     );
 });
 builder.Services.AddAuthentication()
@@ -79,6 +85,11 @@ builder.Services.AddSwaggerGen();
 // Add other layer's services
 builder.Services.ConfigurePersistenceApp(builder.Configuration);
 builder.Services.ConfigureApplication();
+
+builder.Services.AddFluentValidationAutoValidation(opts =>
+{
+    
+});
 builder.Services.AddFluentValidationRulesToSwagger();
 
 var app = builder.Build();

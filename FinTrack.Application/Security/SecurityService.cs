@@ -45,6 +45,7 @@ public class SecurityService
     {
         var authResult = await _authService
             .AuthorizeAsync(user, securityId, SecurityAuthorization.ViewSecurityPolicy);
+        if (!authResult.Succeeded) { return null; }
         var domainSecurity = await _securityRepo.GetSecurityById(securityId);
         return authResult.Succeeded ? _securityMapper.ToGetSecurityResponse(domainSecurity) : null;
     }
@@ -89,47 +90,9 @@ public class SecurityService
         var authResult = await _authService
             .AuthorizeAsync(user, security.Id, SecurityAuthorization.ChangeSecurityPolicy);
         if (!authResult.Succeeded) { return null; }
-        
-        if (editSecurity.Name != null)
-        {
-            security.Name = editSecurity.Name;
-        }
 
-        if (editSecurity.Isin != null)
-        {
-            security.Isin = editSecurity.Isin;
-        }
-
-        if (editSecurity.NativeCurrency != security.NativeCurrency.Id) {
-            var newNativeCurrency = await _currencyRepo.GetCurrencyById(editSecurity.NativeCurrency);
-            security.NativeCurrency = newNativeCurrency!;
-        }
-        
-        // If the new is default the database is not consulted
-        var shouldUpdateCounterpartyCountry = security.CounterpartyCountry == null ||
-                                              security.CounterpartyCountry.Id != editSecurity.CounterpartyCountry;
-        if (shouldUpdateCounterpartyCountry)
-        {
-            var newCounterpartyCountry = editSecurity.CounterpartyCountry == default ? 
-                null : 
-                await _countryRepo.GetCountryById(editSecurity.CounterpartyCountry);
-            security.CounterpartyCountry = newCounterpartyCountry;
-        }
-
-        if (editSecurity.SourceCountry != default)
-        {
-            var newSourceCountry = await _countryRepo.GetCountryById(editSecurity.SourceCountry);
-            security.SourceCountry = newSourceCountry!;
-            security.IssuingNIF = null;
-        }
-
-        if (editSecurity.IssuingNIF != null)
-        {
-            security.IssuingNIF = editSecurity.IssuingNIF;
-            security.SourceCountry = null;
-        }
-
-        var updatedSecurity = await _securityRepo.UpdateSecurity(security);
+        var mappedSecurity = await _securityMapper.UpdateSecurity(editSecurity, security);
+        var updatedSecurity = await _securityRepo.UpdateSecurity(mappedSecurity);
         return _securityMapper.ToGetSecurityResponse(updatedSecurity);
     }
 }

@@ -1,9 +1,7 @@
-﻿using System.Security.Claims;
-using FinTrack.Application.Security;
+﻿using FinTrack.Application.Security;
 using FinTrack.Application.Security.CreateSecurity;
 using FinTrack.Application.Security.EditSecurity;
-using FinTrack.Domain.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using UnauthorizedAccessException = FinTrack.Domain.Exceptions.UnauthorizedAccessException;
 
@@ -27,7 +25,7 @@ public class SecuritiesController: ControllerBase
         var createdSecurity = await _securityService.AddSecurity(security);
         return CreatedAtRoute(
             GetSecurityByIdName,
-            new { id = createdSecurity.Id },
+            new { securityId = createdSecurity.Id },
             createdSecurity
         );
     }
@@ -72,7 +70,7 @@ public class SecuritiesController: ControllerBase
         }
     }
 
-    [HttpPatch("{securityId}")]
+    [HttpPut("{securityId}")]
     public async Task<IActionResult> UpdateSecurity(
         ulong securityId,
         [FromBody] EditSecurityRequest security
