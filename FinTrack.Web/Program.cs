@@ -41,8 +41,9 @@ builder.Services.AddAuthorization(opts =>
         }
     );
 });
+
 builder.Services.AddAuthentication()
-    .AddBearerToken(IdentityConstants.BearerScheme);
+    .AddCookie(IdentityConstants.ApplicationScheme);
 
 builder.Services
     .AddIdentityCore<EFUser>()

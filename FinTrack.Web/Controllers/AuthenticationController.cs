@@ -18,7 +18,6 @@ public class AuthenticationController : ControllerBase
     {
         _authRepo = authRepo;
         _signInManager = signInManager;
-        _signInManager.AuthenticationScheme = IdentityConstants.BearerScheme;
     }
 
     [HttpPost("[action]")]
@@ -40,6 +39,7 @@ public class AuthenticationController : ControllerBase
         } else {
             userName = user.UserName;
         }
+
         await _signInManager.PasswordSignInAsync(
             userName,
             userIdentity.Password, 
