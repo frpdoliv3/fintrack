@@ -41,6 +41,31 @@ paths:
       responses:
         '200':
           description: OK
+  /refresh-token-cookie:
+    post:
+      tags:
+        - Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveRefreshTokenRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/SaveRefreshTokenRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/SaveRefreshTokenRequest'
+      responses:
+        '200':
+          description: OK
+  /refresh:
+    get:
+      tags:
+        - Authentication
+      responses:
+        '200':
+          description: OK
   /countries:
     post:
       tags:
@@ -529,3 +554,12 @@ components:
         - Sell
         - Buy
       type: string
+    SaveRefreshTokenRequest:
+      required:
+        - refreshToken
+      type: object
+      properties:
+        refreshToken:
+          minLength: 1
+          type: string
+      additionalProperties: false

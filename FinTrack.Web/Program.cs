@@ -15,6 +15,7 @@ using FinTrack.Web;
 using FinTrack.Web.Filters;
 using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,7 +44,8 @@ builder.Services.AddAuthorization(opts =>
 });
 
 builder.Services.AddAuthentication()
-    .AddCookie(IdentityConstants.ApplicationScheme);
+    .AddBearerToken(IdentityConstants.BearerScheme);
+
 
 builder.Services
     .AddIdentityCore<EFUser>()
@@ -87,10 +89,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.ConfigurePersistenceApp(builder.Configuration);
 builder.Services.ConfigureApplication();
 
-builder.Services.AddFluentValidationAutoValidation(opts =>
-{
-    
-});
+builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationRulesToSwagger();
 
 var app = builder.Build();
