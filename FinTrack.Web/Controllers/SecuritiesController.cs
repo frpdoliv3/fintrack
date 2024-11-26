@@ -1,6 +1,9 @@
 ﻿using FinTrack.Application.Security;
 using FinTrack.Application.Security.CreateSecurity;
 using FinTrack.Application.Security.EditSecurity;
+using FinTrack.Application.Security.GetOperations;
+using FinTrack.Application.Security.GetSecurity;
+using FinTrack.Application.Security.GetSecurityStatus;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using UnauthorizedAccessException = FinTrack.Domain.Exceptions.UnauthorizedAccessException;
@@ -13,16 +16,34 @@ public class SecuritiesController: ControllerBase
 {
     private const string GetSecurityByIdName = "GetSecurityById";
     
-    private readonly SecurityService _securityService;
+    private readonly CreateSecurityUseCase _createSecurityUseCase;
+    private readonly GetSecurityByIdUseCase _getSecurityByIdUseCase;
+    private readonly GetOperationsForIdUseCase _getOperationsForIdUseCase;
+    private readonly GetSecurityStatusUseCase _getSecurityStatusUseCase;
+    private readonly EditSecurityUseCase _editSecurityUseCase;
+    private readonly DeleteSecurityUseCase _deleteSecurityUseCase;
     
-    public SecuritiesController(SecurityService securityService) {
-        _securityService = securityService;
+    public SecuritiesController(
+        CreateSecurityUseCase createSecurityUseCase,
+        GetSecurityByIdUseCase getSecurityByIdUseCase,
+        GetOperationsForIdUseCase getOperationsForIdUseCase,
+        GetSecurityStatusUseCase getSecurityStatusUseCase,
+        EditSecurityUseCase editSecurityUseCase,
+        DeleteSecurityUseCase deleteSecurityUseCase
+    )
+    {
+        _createSecurityUseCase = createSecurityUseCase;
+        _getSecurityByIdUseCase = getSecurityByIdUseCase;
+        _getOperationsForIdUseCase = getOperationsForIdUseCase;
+        _getSecurityStatusUseCase = getSecurityStatusUseCase;
+        _editSecurityUseCase = editSecurityUseCase;
+        _deleteSecurityUseCase = deleteSecurityUseCase;
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateSecurity([FromBody] CreateSecurityRequest security)
     {
-        var createdSecurity = await _securityService.AddSecurity(security);
+        var createdSecurity = await _createSecurityUseCase.Execute(security);
         return CreatedAtRoute(
             GetSecurityByIdName,
             new { securityId = createdSecurity.Id },
@@ -33,7 +54,7 @@ public class SecuritiesController: ControllerBase
     [HttpGet("{securityId}", Name = GetSecurityByIdName)]
     public async Task<IActionResult> GetSecurityById([FromRoute] uint securityId)
     {
-        var fetchedSecurity = await _securityService.GetSecurityById(User, securityId);
+        var fetchedSecurity = await _getSecurityByIdUseCase.Execute(User, securityId);
         return fetchedSecurity == null ? 
             NotFound() :
             Ok(fetchedSecurity);
@@ -47,8 +68,8 @@ public class SecuritiesController: ControllerBase
     ) {
         try
         {
-            var operations = await _securityService
-                .GetOperationsForId(User, securityId, pageNumber, pageSize);
+            var operations = await _getOperationsForIdUseCase
+                .Execute(User, securityId, pageNumber, pageSize);
             return Ok(operations);
         }
         catch (UnauthorizedAccessException)
@@ -62,7 +83,7 @@ public class SecuritiesController: ControllerBase
     {
         try
         {
-            return Ok(await _securityService.GetOperationStatus(User, securityId));
+            return Ok(await _getSecurityStatusUseCase.Execute(User, securityId));
         }
         catch (UnauthorizedAccessException)
         {
@@ -77,7 +98,7 @@ public class SecuritiesController: ControllerBase
     )
     {
         security.Id = securityId;
-        var updatedSecurity = await _securityService.UpdateSecurity(User, security);
+        var updatedSecurity = await _editSecurityUseCase.Execute(User, security);
         if (updatedSecurity == null)
         {
             return NotFound();
@@ -89,7 +110,7 @@ public class SecuritiesController: ControllerBase
     [HttpDelete("{securityId}")]
     public async Task<IActionResult> DeleteSecurity([FromRoute] ulong securityId)
     {
-        var deleteResult = await _securityService.DeleteSecurity(User, securityId);
+        var deleteResult = await _deleteSecurityUseCase.Execute(User, securityId);
         if (!deleteResult)
         {
             return NotFound();
