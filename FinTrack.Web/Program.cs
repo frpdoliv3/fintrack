@@ -3,19 +3,17 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using System.Text.Json;
 using FinTrack.Application;
-using FinTrack.Persistence;
+using FinTrack.Infrastructure;
 using Microsoft.AspNetCore.Identity;
-using FinTrack.Persistence.Models;
-using FinTrack.Persistence.Contexts;
+using FinTrack.Infrastructure.Models;
+using FinTrack.Infrastructure.Contexts;
 using System.Text.Json.Serialization;
 using FinTrack.Application.Operation.Authorization;
 using FinTrack.Application.Security.Authorization;
-using FinTrack.Application.Utils.Authorization;
 using FinTrack.Web;
 using FinTrack.Web.Filters;
 using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -109,8 +107,6 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
-
-//app.MapIdentityApi<EFUser>();
 
 app.Services.SaveSwaggerJson();
 

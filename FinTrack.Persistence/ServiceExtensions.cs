@@ -1,11 +1,11 @@
 ﻿using FinTrack.Domain.Interfaces;
-using FinTrack.Persistence.Contexts;
-using FinTrack.Persistence.Repositories;
+using FinTrack.Infrastructure.Contexts;
+using FinTrack.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FinTrack.Persistence;
+namespace FinTrack.Infrastructure;
 
 public static class ServiceExtensions
 {

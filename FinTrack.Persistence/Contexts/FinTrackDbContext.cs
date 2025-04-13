@@ -1,8 +1,8 @@
-﻿using FinTrack.Persistence.Models;
+﻿using FinTrack.Infrastructure.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace FinTrack.Persistence.Contexts;
+namespace FinTrack.Infrastructure.Contexts;
 
 public partial class FinTrackDbContext : IdentityDbContext<EFUser>
 {

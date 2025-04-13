@@ -1,7 +1,7 @@
 ﻿using FinTrack.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace FinTrack.Persistence.Models;
+namespace FinTrack.Infrastructure.Models;
 
 public class EFUser: IdentityUser
 {

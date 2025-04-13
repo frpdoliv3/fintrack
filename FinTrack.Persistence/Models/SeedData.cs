@@ -1,12 +1,12 @@
 ﻿using FinTrack.Domain.Entities;
 using FinTrack.Domain.Interfaces;
-using FinTrack.Persistence.Contexts;
+using FinTrack.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 
-namespace FinTrack.Persistence.Models;
+namespace FinTrack.Infrastructure.Models;
 internal class SeedData
 {
     private readonly string _resourceBasePath;

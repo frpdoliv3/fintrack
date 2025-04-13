@@ -2,7 +2,7 @@
 using FinTrack.Application.Authentication.SaveRefreshToken;
 using FinTrack.Domain.Entities;
 using FinTrack.Domain.Interfaces;
-using FinTrack.Persistence.Models;
+using FinTrack.Infrastructure.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Authorization;

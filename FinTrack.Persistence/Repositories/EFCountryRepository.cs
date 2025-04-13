@@ -1,10 +1,10 @@
 ﻿using FinTrack.Domain.Entities;
 using FinTrack.Domain.Interfaces;
-using FinTrack.Persistence.Contexts;
+using FinTrack.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace FinTrack.Persistence.Repositories;
+namespace FinTrack.Infrastructure.Repositories;
 
 internal class EFCountryRepository : ICountryRepository
 {

@@ -1,9 +1,9 @@
-﻿using FinTrack.Persistence.Contexts;
+﻿using FinTrack.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace FinTrack.Persistence.Models;
+namespace FinTrack.Infrastructure.Models;
 
 public class MigrationService
 {

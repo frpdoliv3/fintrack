@@ -1,10 +1,10 @@
 ﻿using System.Linq.Expressions;
 using FinTrack.Domain.Entities;
 using FinTrack.Domain.Interfaces;
-using FinTrack.Persistence.Contexts;
+using FinTrack.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace FinTrack.Persistence.Repositories;
+namespace FinTrack.Infrastructure.Repositories;
 internal class EFSecurityRepository: ISecurityRepository
 {
     private readonly FinTrackDbContext _context;

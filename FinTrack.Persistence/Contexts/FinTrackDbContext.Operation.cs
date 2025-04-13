@@ -1,7 +1,7 @@
 ﻿using FinTrack.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace FinTrack.Persistence.Contexts;
+namespace FinTrack.Infrastructure.Contexts;
 public partial class FinTrackDbContext
 {
     public DbSet<Operation> Operations => Set<Operation>();

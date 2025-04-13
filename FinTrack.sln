@@ -12,7 +12,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinTrack.Web", "FinTrack.We
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinTrack.Domain", "FinTrack.DomainModel\FinTrack.Domain.csproj", "{AA6ACEA2-8488-457C-BBCB-015BB11A92A2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinTrack.Persistence", "FinTrack.Persistence\FinTrack.Persistence.csproj", "{456B964B-DF4E-4DC9-83D8-60E0C6F7F528}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinTrack.Infrastructure", "FinTrack.Persistence\FinTrack.Infrastructure.csproj", "{456B964B-DF4E-4DC9-83D8-60E0C6F7F528}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinTrack.Application", "FinTrack.Application\FinTrack.Application.csproj", "{C0B53BF9-A73A-425F-9CFB-CB29B936A5CC}"
 EndProject

@@ -1,7 +1,7 @@
 ﻿using FinTrack.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace FinTrack.Persistence.Repositories;
+namespace FinTrack.Infrastructure.Repositories;
 
 internal static class PagedRepository<T>
 {
