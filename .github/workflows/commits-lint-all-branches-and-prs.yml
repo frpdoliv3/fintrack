@@ -1,4 +1,4 @@
-name: Commitlint
+name: commits-lint-all-branches-and-prs
 on:
     push:
         branches: ['**']
